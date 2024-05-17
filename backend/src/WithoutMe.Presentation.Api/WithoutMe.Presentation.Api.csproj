@@ -10,4 +10,8 @@
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\WithoutMe.Application\WithoutMe.Application.csproj" />
+	</ItemGroup>
+
 </Project>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>WithoutMe.Domain.Shared</Title>
+		<AssemblyName>WithoutMe.Domain.Shared</AssemblyName>
+		<PackageId>WithoutMe.Domain.Shared</PackageId>
+		<Description>无我领域共享组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WithoutMe.Domain\WithoutMe.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

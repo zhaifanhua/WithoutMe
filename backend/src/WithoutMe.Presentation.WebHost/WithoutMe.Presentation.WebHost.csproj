@@ -10,4 +10,8 @@
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\WithoutMe.Presentation.Api\WithoutMe.Presentation.Api.csproj" />
+	</ItemGroup>
+
 </Project>

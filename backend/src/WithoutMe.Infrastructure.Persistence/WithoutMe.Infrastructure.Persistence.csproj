@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>WithoutMe.Infrastructure.Persistence</Title>
+		<AssemblyName>WithoutMe.Infrastructure.Persistence</AssemblyName>
+		<PackageId>WithoutMe.Infrastructure.Persistence</PackageId>
+		<Description>无我基础设施数据持久化组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="8.1.3" />
+	  <PackageReference Include="Volo.Abp.EntityFrameworkCore.PostgreSql" Version="8.1.3" />
+	  <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.1.3" />
+	  <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" Version="8.1.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WithoutMe.Infrastructure\WithoutMe.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>
