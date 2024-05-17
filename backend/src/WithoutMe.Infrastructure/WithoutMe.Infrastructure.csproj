@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>WithoutMe.Infrastructure</Title>
+		<AssemblyName>WithoutMe.Infrastructure</AssemblyName>
+		<PackageId>WithoutMe.Infrastructure</PackageId>
+		<Description>无我基础设施组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+</Project>

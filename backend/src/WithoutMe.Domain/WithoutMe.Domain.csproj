@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>WithoutMe.Domain</Title>
+		<AssemblyName>WithoutMe.Domain</AssemblyName>
+		<PackageId>WithoutMe.Domain</PackageId>
+		<Description>无我领域组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+</Project>
