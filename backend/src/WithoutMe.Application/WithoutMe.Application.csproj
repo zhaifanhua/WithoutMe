@@ -17,6 +17,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\WithoutMe.Domain.Shared\WithoutMe.Domain.Shared.csproj" />
 	  <ProjectReference Include="..\WithoutMe.Domain\WithoutMe.Domain.csproj" />
+	  <ProjectReference Include="..\WithoutMe.Infrastructure.Persistence\WithoutMe.Infrastructure.Persistence.csproj" />
 	  <ProjectReference Include="..\WithoutMe.Infrastructure\WithoutMe.Infrastructure.csproj" />
 	</ItemGroup>
 

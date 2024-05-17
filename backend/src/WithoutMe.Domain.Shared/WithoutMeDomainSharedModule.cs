@@ -19,6 +19,7 @@ namespace WithoutMe.Domain.Shared;
 /// <summary>
 /// 无我领域共享模块
 /// </summary>
+[DependsOn(typeof(WithoutMeDomainModule))]
 public class WithoutMeDomainSharedModule : AbpModule
 {
 }

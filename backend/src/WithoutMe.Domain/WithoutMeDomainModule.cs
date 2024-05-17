@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 
 namespace WithoutMe.Domain;
@@ -20,7 +19,6 @@ namespace WithoutMe.Domain;
 /// <summary>
 /// 无我领域模块
 /// </summary>
-[DependsOn(typeof(AbpIdentityDomainModule))]
 public class WithoutMeDomainModule : AbpModule
 {
 }

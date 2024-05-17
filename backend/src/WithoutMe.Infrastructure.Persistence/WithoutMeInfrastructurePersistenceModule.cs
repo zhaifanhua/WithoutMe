@@ -12,13 +12,35 @@
 
 #endregion <<版权版本注释>>
 
+using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.MySQL;
+using Volo.Abp.EntityFrameworkCore.PostgreSql;
+using Volo.Abp.EntityFrameworkCore.Sqlite;
+using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.Modularity;
+using WithoutMe.Domain;
 
 namespace WithoutMe.Infrastructure.Persistence;
 
 /// <summary>
 /// 无我基础设施数据持久化模块
 /// </summary>
+[DependsOn(
+    typeof(WithoutMeDomainModule),
+    typeof(WithoutMeInfrastructureModule),
+    typeof(AbpEntityFrameworkCoreModule),
+    typeof(AbpEntityFrameworkCoreMySQLModule),
+    typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCorePostgreSqlModule),
+    typeof(AbpEntityFrameworkCoreSqliteModule)
+    )]
 public class WithoutMeInfrastructurePersistenceModule : AbpModule
 {
+    /// <summary>
+    /// 配置服务
+    /// </summary>
+    /// <param name="context"></param>
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+    }
 }

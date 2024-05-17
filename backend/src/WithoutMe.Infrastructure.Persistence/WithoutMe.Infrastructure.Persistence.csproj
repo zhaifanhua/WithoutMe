@@ -18,6 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\WithoutMe.Domain\WithoutMe.Domain.csproj" />
 	  <ProjectReference Include="..\WithoutMe.Infrastructure\WithoutMe.Infrastructure.csproj" />
 	</ItemGroup>
 
