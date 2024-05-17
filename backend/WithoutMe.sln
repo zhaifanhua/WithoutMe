@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Core", "1.Core", "{28FA60F1-F110-4884-9188-FE239574F0FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Test", "2.Test", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Other", "3.Other", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		CodeMaid.config = CodeMaid.config
+		props\common.props = props\common.props
+		nuget\LICENSE = nuget\LICENSE
+		nuget\readme.md = nuget\readme.md
+		nuget\readme.png = nuget\readme.png
+		snks\WithoutMe.snk = snks\WithoutMe.snk
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD12BB5A-EB6A-4FA7-A0AD-BEA6178584F5}
+	EndGlobalSection
+EndGlobal
