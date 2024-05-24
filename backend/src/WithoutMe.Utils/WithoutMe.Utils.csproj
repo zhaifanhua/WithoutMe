@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>WithoutMe.Utils</Title>
+		<AssemblyName>WithoutMe.Utils</AssemblyName>
+		<PackageId>WithoutMe.Utils</PackageId>
+		<Description>无我工具组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="XiHan.Utils" Version="0.5.3" />
+	</ItemGroup>
+
+</Project>

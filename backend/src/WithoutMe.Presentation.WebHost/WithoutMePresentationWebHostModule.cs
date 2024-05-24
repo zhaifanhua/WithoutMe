@@ -13,11 +13,14 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.OpenApi.Models;
 using Volo.Abp;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using WithoutMe.Application;
+using WithoutMe.Presentation.WebHost.Options;
+using WithoutMe.Presentation.WebHost.Setups;
+using WithoutMe.Presentation.WebHost.Setups.Apps;
+using SwaggerOptions = WithoutMe.Presentation.WebHost.Options.SwaggerOptions;
 
 namespace WithoutMe.Presentation.WebHost;
 
@@ -31,20 +34,73 @@ namespace WithoutMe.Presentation.WebHost;
 public class WithoutMePresentationWebHostModule : AbpModule
 {
     /// <summary>
+    /// 预配置服务
+    /// </summary>
+    /// <param name="context"></param>
+    public override void PreConfigureServices(ServiceConfigurationContext context)
+    {
+        var configuration = context.Services.GetConfiguration();
+        ArgumentNullException.ThrowIfNull(configuration);
+
+        var cors = configuration.GetSection("Cors");
+        var swagger = configuration.GetSection("Swagger");
+
+        PreConfigure<CorsOptions>(preConfigOptions =>
+        {
+            preConfigOptions.IsEnabled = cors.GetValue<bool>(nameof(preConfigOptions.IsEnabled));
+            preConfigOptions.PolicyName = cors.GetValue<string>(nameof(preConfigOptions.PolicyName)) ?? string.Empty;
+            preConfigOptions.Origins = cors.GetSection(nameof(preConfigOptions.Origins)).Get<string[]>() ?? [];
+            preConfigOptions.Headers = cors.GetSection(nameof(preConfigOptions.Headers)).Get<string[]>() ?? [];
+        });
+        PreConfigure<SwaggerOptions>(preConfigOptions =>
+        {
+            preConfigOptions.RoutePrefix = swagger.GetValue<string>(nameof(preConfigOptions.RoutePrefix)) ?? string.Empty;
+            preConfigOptions.PublishGroup = swagger.GetSection(nameof(preConfigOptions.PublishGroup)).Get<string[]>() ?? [];
+        });
+    }
+
+    /// <summary>
     /// 配置服务
     /// </summary>
     /// <param name="context"></param>
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var services = context.Services;
-        services.AddAbpSwaggerGen(
-            options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Test API", Version = "v1" });
-                options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FullName);
-            }
-        );
+
+        // 对象映射
+        services.AddMapsterSetup();
+        // 缓存
+        services.AddCacheSetup();
+        // SqlSugar
+        services.AddSqlSugarSetup();
+        // Http上下文
+        services.AddHttpPollySetup();
+        // 性能分析
+        services.AddMiniProfilerSetup();
+        // 接口文档
+        services.AddSwaggerSetup();
+        // 路由
+        services.AddRouteSetup();
+        // 限流
+        services.AddRateLimiterSetup();
+        // 跨域
+        services.AddCorsSetup();
+        // 鉴权授权
+        services.AddAuthSetup();
+        // Controllers
+        services.AddControllersSetup();
+        // RabbitMQ
+        services.AddRabbitMqSetup();
+        // 即时通讯
+        services.AddSignalRSetup();
+        // 健康检查
+        services.AddHealthChecks();
+        // 响应缓存
+        services.AddResponseCacheSetup();
+        // 终端
+        services.AddEndpointsApiExplorer();
+        // 任务队列
+        services.AddJobSetup();
     }
 
     /// <summary>

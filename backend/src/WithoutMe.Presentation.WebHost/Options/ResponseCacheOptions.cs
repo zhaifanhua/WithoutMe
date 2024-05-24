@@ -3,24 +3,24 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:WithoutMeDomainModule
-// Guid:75f40c89-fbb0-4503-bfb6-2f94448d5701
+// FileName:ResponseCacheOptions
+// Guid:a52b817e-cb85-4188-809f-9d50d20414af
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-05-17 下午 01:21:36
+// CreateTime:2024-05-24 下午 05:22:25
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using Volo.Abp.Domain;
-using Volo.Abp.Modularity;
-
-namespace WithoutMe.Domain;
+namespace WithoutMe.Presentation.WebHost.Options;
 
 /// <summary>
-/// 无我领域模块
+/// 响应缓存
 /// </summary>
-[DependsOn(typeof(AbpDddDomainModule))]
-public class WithoutMeDomainModule : AbpModule
+public class ResponseCacheOptions
 {
+    /// <summary>
+    /// 是否可用
+    /// </summary>
+    public bool IsEnabled { get; set; }
 }

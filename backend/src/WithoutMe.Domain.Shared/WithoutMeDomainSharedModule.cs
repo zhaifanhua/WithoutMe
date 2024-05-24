@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Volo.Abp.Domain;
 using Volo.Abp.Modularity;
 
 namespace WithoutMe.Domain.Shared;
@@ -19,7 +20,10 @@ namespace WithoutMe.Domain.Shared;
 /// <summary>
 /// 无我领域共享模块
 /// </summary>
-[DependsOn(typeof(WithoutMeDomainModule))]
+[DependsOn(
+    typeof(WithoutMeDomainModule),
+    typeof(AbpDddDomainSharedModule)
+    )]
 public class WithoutMeDomainSharedModule : AbpModule
 {
 }
