@@ -24,7 +24,7 @@ using WithoutMe.Presentation.WebHost.Common.Swagger;
 using WithoutMe.Presentation.WebHost.Options;
 using XiHan.Utils.Hardware;
 
-namespace WithoutMe.Presentation.WebHost.Setups.Apps;
+namespace WithoutMe.Presentation.WebHost.Setups;
 
 /// <summary>
 /// SwaggerSetup

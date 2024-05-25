@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:MiniProfilerOptions
-// Guid:f40c5fd9-2598-413c-926c-294d9b5322c5
+// FileName:WebHostOptions
+// Guid:f97374a5-1f8f-4e97-958d-9967a88b7cda
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-05-24 下午 05:26:06
+// CreateTime:2024-05-24 下午 05:27:05
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,12 +15,17 @@
 namespace WithoutMe.Presentation.WebHost.Options;
 
 /// <summary>
-/// 性能分析
+/// WebHostOptions
 /// </summary>
-public class MiniprofilerOptions
+public class WebHostOptions
 {
     /// <summary>
-    /// 是否可用
+    /// 端口
     /// </summary>
-    public bool IsEnabled { get; set; }
+    public int Port { get; set; }
+
+    /// <summary>
+    /// 是否演示模式
+    /// </summary>
+    public bool IsDemoMode { get; set; }
 }

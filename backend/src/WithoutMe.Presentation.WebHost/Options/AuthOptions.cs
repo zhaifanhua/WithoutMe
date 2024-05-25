@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using WithoutMe.Presentation.WebHost.Options.Authorize;
+
 namespace WithoutMe.Presentation.WebHost.Options;
 
 /// <summary>
@@ -20,129 +22,37 @@ namespace WithoutMe.Presentation.WebHost.Options;
 public class AuthOptions
 {
     /// <summary>
-    /// Jwt
+    /// Github
     /// </summary>
-    public class Jwt
-    {
-        /// <summary>
-        /// 颁发者
-        /// </summary>
-        public string Issuer { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 签收者
-        /// </summary>
-        public string Audience { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 秘钥
-        /// </summary>
-        public string SymmetricKey { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 过期时间
-        /// </summary>
-        public int Expires { get; set; }
-
-        /// <summary>
-        /// 过期时间容错值
-        /// </summary>
-        public int ClockSkew { get; set; }
-    }
+    public GithubOptions Github { get; set; } = new GithubOptions();
 
     /// <summary>
-    /// QQ 授权配置
+    /// Gitee
     /// </summary>
-    public class Qq
-    {
-        /// <summary>
-        /// 客户端(AppId)
-        /// </summary>
-        public string ClientId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 客户端密钥(AppKey)
-        /// </summary>
-        public string ClientSecret { get; set; } = string.Empty;
-    }
+    public GiteeOptions Gitee { get; set; } = new GiteeOptions();
 
     /// <summary>
-    /// WeChat 授权配置
+    /// Alipay
     /// </summary>
-    public class WeChat
-    {
-        /// <summary>
-        /// 客户端(AppId)
-        /// </summary>
-        public string ClientId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 客户端密钥(AppKey)
-        /// </summary>
-        public string ClientSecret { get; set; } = string.Empty;
-    }
+    public AlipayOptions Alipay { get; set; } = new AlipayOptions();
 
     /// <summary>
-    /// Alipay 授权配置
+    /// Dingtalk
     /// </summary>
-    public class Alipay
-    {
-        /// <summary>
-        /// 客户端(AppId)
-        /// </summary>
-        public string ClientId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 客户端密钥(AppKey)
-        /// </summary>
-        public string ClientSecret { get; set; } = string.Empty;
-    }
+    public DingtalkOptions Dingtalk { get; set; } = new DingtalkOptions();
 
     /// <summary>
-    /// Github 授权配置
+    /// Microsoft
     /// </summary>
-    public class Github
-    {
-        /// <summary>
-        /// 客户端(AppId)
-        /// </summary>
-        public string ClientId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 客户端密钥(AppKey)
-        /// </summary>
-        public string ClientSecret { get; set; } = string.Empty;
-    }
+    public MicrosoftOptions Microsoft { get; set; } = new MicrosoftOptions();
 
     /// <summary>
-    /// Gitlab 授权配置
+    /// Weibo
     /// </summary>
-    public class Gitlab
-    {
-        /// <summary>
-        /// 客户端(AppId)
-        /// </summary>
-        public string ClientId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 客户端密钥(AppKey)
-        /// </summary>
-        public string ClientSecret { get; set; } = string.Empty;
-    }
+    public WeiboOptions Weibo { get; set; } = new WeiboOptions();
 
     /// <summary>
-    /// Gitee 授权配置
+    /// QQ
     /// </summary>
-    public class Gitee
-    {
-        /// <summary>
-        /// 客户端(AppId)
-        /// </summary>
-        public string ClientId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 客户端密钥(AppKey)
-        /// </summary>
-        public string ClientSecret { get; set; } = string.Empty;
-    }
+    public QQOptions QQ { get; set; } = new QQOptions();
 }
