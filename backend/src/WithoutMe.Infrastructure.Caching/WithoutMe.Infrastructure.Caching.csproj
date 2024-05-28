@@ -6,12 +6,16 @@
 		<Title>WithoutMe.Infrastructure</Title>
 		<AssemblyName>WithoutMe.Infrastructure</AssemblyName>
 		<PackageId>WithoutMe.Infrastructure</PackageId>
-		<Description>无我基础设施组件库</Description>
+		<Description>无我基础设施缓存组件库</Description>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Volo.Abp.Core" Version="8.1.3" />
+		<PackageReference Include="Volo.Abp.Core" Version="8.1.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WithoutMe.Core\WithoutMe.Core.csproj" />
 	</ItemGroup>
 
 </Project>

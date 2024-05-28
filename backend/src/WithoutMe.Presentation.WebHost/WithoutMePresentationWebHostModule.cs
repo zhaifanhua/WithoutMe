@@ -35,17 +35,14 @@ namespace WithoutMe.Presentation.WebHost;
 public class WithoutMePresentationWebHostModule : AbpModule
 {
     /// <summary>
-    /// AppSettings
-    /// </summary>
-    public AppOptions AppOptions { get; set; } = new AppOptions();
-
-    /// <summary>
     /// 预配置服务
     /// </summary>
     /// <param name="context"></param>
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
         var configuration = context.Services.GetConfiguration();
+
+        var appOptions = new AppOptions();
 
         PreConfigure<WebHostOptions>(options =>
         {
@@ -54,7 +51,7 @@ public class WithoutMePresentationWebHostModule : AbpModule
             options.Port = app.GetValue<int>(nameof(options.Port));
             options.IsDemoMode = app.GetValue<bool>(nameof(options.IsDemoMode));
 
-            AppOptions.WebHostOptions = options;
+            appOptions.WebHostOptions = options;
         });
         PreConfigure<CorsOptions>(options =>
         {
@@ -65,7 +62,7 @@ public class WithoutMePresentationWebHostModule : AbpModule
             options.Origins = cors.GetSection(nameof(options.Origins)).Get<string[]>() ?? [];
             options.Headers = cors.GetSection(nameof(options.Headers)).Get<string[]>() ?? [];
 
-            AppOptions.CorsOptions = options;
+            appOptions.CorsOptions = options;
         });
         PreConfigure<SwaggerOptions>(options =>
         {
@@ -74,7 +71,7 @@ public class WithoutMePresentationWebHostModule : AbpModule
             options.RoutePrefix = swagger.GetValue<string>(nameof(options.RoutePrefix)) ?? string.Empty;
             options.PublishGroup = swagger.GetSection(nameof(options.PublishGroup)).Get<string[]>() ?? [];
 
-            AppOptions.SwaggerOptions = options;
+            appOptions.SwaggerOptions = options;
         });
         PreConfigure<MiniprofilerOptions>(options =>
         {
@@ -82,7 +79,7 @@ public class WithoutMePresentationWebHostModule : AbpModule
 
             options.IsEnabled = miniProfiler.GetValue<bool>(nameof(options.IsEnabled));
 
-            AppOptions.MiniprofilerOptions = options;
+            appOptions.MiniprofilerOptions = options;
         });
         PreConfigure<JwtOptions>(options =>
         {
@@ -94,7 +91,7 @@ public class WithoutMePresentationWebHostModule : AbpModule
             options.Expires = jwt.GetValue<int>(nameof(options.Expires));
             options.ClockSkew = jwt.GetValue<int>(nameof(options.ClockSkew));
 
-            AppOptions.JwtOptions = options;
+            appOptions.JwtOptions = options;
         });
         PreConfigure<AuthOptions>(options =>
         {
@@ -158,12 +155,12 @@ public class WithoutMePresentationWebHostModule : AbpModule
                 Scope = qqOptions.GetValue<string>(nameof(options.QQ.Scope)) ?? string.Empty
             };
 
-            AppOptions.AuthOptions = options;
+            appOptions.AuthOptions = options;
         });
 
         PreConfigure<AppOptions>(options =>
         {
-            options = AppOptions;
+            options = appOptions;
         });
     }
 
@@ -174,13 +171,6 @@ public class WithoutMePresentationWebHostModule : AbpModule
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var services = context.Services;
-        services.ExecutePreConfiguredActions<WebHostOptions>();
-        services.ExecutePreConfiguredActions<CorsOptions>();
-        services.ExecutePreConfiguredActions<SwaggerOptions>();
-        services.ExecutePreConfiguredActions<MiniprofilerOptions>();
-        services.ExecutePreConfiguredActions<JwtOptions>();
-        services.ExecutePreConfiguredActions<AuthOptions>();
-        services.ExecutePreConfiguredActions<AppOptions>();
 
         // 对象映射
         services.AddMapsterSetup();

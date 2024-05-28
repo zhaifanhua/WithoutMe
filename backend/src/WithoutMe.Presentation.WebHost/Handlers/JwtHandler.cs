@@ -14,11 +14,12 @@
 
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
-using WithoutMe.Infrastructures.Consts;
+using WithoutMe.Core.Consts;
 using WithoutMe.Presentation.WebHost.Options;
 using XiHan.Utils.Extensions.System;
 
@@ -29,6 +30,40 @@ namespace WithoutMe.Presentation.WebHost.Handlers;
 /// </summary>
 public static class JwtHandler
 {
+    private static JwtOptions _options = new();
+
+    /// <summary>
+    /// 设置 Jwt 配置
+    /// </summary>
+    /// <param name="options"></param>
+    public static void SetJwtOptions([NotNull] JwtOptions options)
+    {
+        _options = options;
+    }
+
+    /// <summary>
+    /// 获取 Jwt 配置
+    /// </summary>
+    /// <returns></returns>
+    public static JwtOptions GetJwtOptions()
+    {
+        try
+        {
+            // 读取配置
+            JwtOptions jwtOptions = _options;
+            // 判断结果
+            jwtOptions.GetProperties().ForEach(setting =>
+            {
+                if (setting.PropertyValue.IsNullOrZero()) throw new ArgumentNullException(nameof(setting.PropertyName));
+            });
+            return jwtOptions;
+        }
+        catch (Exception ex)
+        {
+            throw new AuthenticationException($"获取 JwtOptions 配置出错！", ex);
+        }
+    }
+
     /// <summary>
     /// Token 颁发
     /// </summary>
@@ -36,12 +71,12 @@ public static class JwtHandler
     /// <returns></returns>
     public static string TokenIssue(TokenModel tokenModel)
     {
-        var authJwtSetting = GetAuthJwtSetting();
+        var jwtOptions = GetJwtOptions();
 
         try
         {
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-            SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+            SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(jwtOptions.SymmetricKey));
             SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
 
             // Nuget引入：Microsoft.IdentityModel.Tokens
@@ -60,15 +95,15 @@ public static class JwtHandler
                 // 自定义选项
                 claims: claims,
                 // 颁发者
-                issuer: authJwtSetting.Issuer,
+                issuer: jwtOptions.Issuer,
                 // 签收者
-                audience: authJwtSetting.Audience,
+                audience: jwtOptions.Audience,
                 // 秘钥
                 signingCredentials: credentials,
                 // 生效时间
                 notBefore: DateTime.UtcNow,
                 // 过期时间
-                expires: DateTime.UtcNow.AddMinutes(authJwtSetting.Expires)
+                expires: DateTime.UtcNow.AddMinutes(jwtOptions.Expires)
             );
             var accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
             return accessToken;
@@ -118,12 +153,12 @@ public static class JwtHandler
     /// <returns></returns>
     public static bool IsSafeVerifyToken(string token)
     {
-        var authJwtSetting = GetAuthJwtSetting();
+        var jwtOptions = GetJwtOptions();
 
         try
         {
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-            SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+            SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(jwtOptions.SymmetricKey));
             SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
             token = token.ParseToString().Replace("Bearer ", string.Empty);
             // 开始Token校验
@@ -146,9 +181,9 @@ public static class JwtHandler
     /// <returns></returns>
     public static TokenValidationParameters GetTokenVerifyParams()
     {
-        var authJwtSetting = GetAuthJwtSetting();
+        var jwtOptions = GetJwtOptions();
         // 签名密钥
-        SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+        SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(jwtOptions.SymmetricKey));
         // 令牌验证参数
         TokenValidationParameters tokenValidationParameters = new()
         {
@@ -159,15 +194,15 @@ public static class JwtHandler
             //是否验证颁发者
             ValidateIssuer = true,
             // 颁发者
-            ValidIssuer = authJwtSetting.Issuer,
+            ValidIssuer = jwtOptions.Issuer,
             // 是否验证签收者
             ValidateAudience = true,
             // 签收者
-            ValidAudience = authJwtSetting.Audience,
+            ValidAudience = jwtOptions.Audience,
             // 是否验证失效时间
             ValidateLifetime = true,
             // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
-            ClockSkew = TimeSpan.FromSeconds(authJwtSetting.ClockSkew),
+            ClockSkew = TimeSpan.FromSeconds(jwtOptions.ClockSkew),
             // 需要过期时间
             RequireExpirationTime = true
         };
@@ -218,67 +253,6 @@ public static class JwtHandler
             ? bearerToken[prefixLenght..]
             : throw new AuthenticationException("获取 JWT Bearer Token 失败！");
     }
-
-    /// <summary>
-    /// 获取 AuthJwt 配置
-    /// </summary>
-    /// <returns></returns>
-    public static AuthJwtSetting GetAuthJwtSetting()
-    {
-        try
-        {
-            // 读取配置
-            AuthJwtSetting authJwtSetting = new()
-            {
-                Issuer = AppOptions.Auth.Jwt.Issuer.GetValue(),
-                Audience = AppOptions.Auth.Jwt.Audience.GetValue(),
-                SymmetricKey = AppOptions.Auth.Jwt.SymmetricKey.GetValue(),
-                ClockSkew = AppOptions.Auth.Jwt.ClockSkew.GetValue(),
-                Expires = AppOptions.Auth.Jwt.Expires.GetValue()
-            };
-            // 判断结果
-            authJwtSetting.GetProperties().ForEach(setting =>
-            {
-                if (setting.PropertyValue.IsNullOrZero()) throw new ArgumentNullException(nameof(setting.PropertyName));
-            });
-            return authJwtSetting;
-        }
-        catch (Exception ex)
-        {
-            throw new AuthenticationException($"获取 AppSettings.Auth.Jwt 配置出错！", ex);
-        }
-    }
-}
-
-/// <summary>
-/// AuthJwt 配置
-/// </summary>
-public class AuthJwtSetting
-{
-    /// <summary>
-    /// 颁发者
-    /// </summary>
-    public string Issuer { get; init; } = string.Empty;
-
-    /// <summary>
-    /// 签收者
-    /// </summary>
-    public string Audience { get; init; } = string.Empty;
-
-    /// <summary>
-    /// 秘钥
-    /// </summary>
-    public string SymmetricKey { get; init; } = string.Empty;
-
-    /// <summary>
-    /// 过期时间容错值
-    /// </summary>
-    public int ClockSkew { get; init; }
-
-    /// <summary>
-    /// 过期时间
-    /// </summary>
-    public int Expires { get; init; }
 }
 
 /// <summary>

@@ -3,26 +3,26 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:DatabaseOptions
-// Guid:5e0b073f-022c-41d8-8ad3-b4b35769af55
+// FileName:DatabaseConfigOptions
+// Guid:bf9a2a4b-f2a2-4a8f-b627-d60090c2cf3d
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-05-24 下午 06:06:14
+// CreateTime:2024-05-28 下午 05:13:02
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace WithoutMe.Presentation.WebHost.Options;
+namespace WithoutMe.Infrastructure.Persistence.Options;
 
 /// <summary>
-/// DatabaseOptions
+/// 数据库配置
 /// </summary>
-public class DatabaseOptions
+public class DatabaseConfigOptions
 {
     /// <summary>
     /// 连接配置
     /// </summary>
-    public DatabaseConfig[] DatabaseConfigs { get; set; } = [];
+    public DatabaseOptions[] DatabaseOptions { get; set; } = [];
 
     /// <summary>
     /// 控制台打印

@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace WithoutMe.Infrastructures.Consts;
+namespace WithoutMe.Core.Consts;
 
 /// <summary>
 /// 全局静态常量

@@ -3,28 +3,22 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:WithoutMeApplicationModule
-// Guid:1b7a33b0-d261-4d23-92bd-73cd787f25c5
+// FileName:WithoutMeCoreModule
+// Guid:c649b5e3-1349-499b-a75c-559a23fafabd
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-05-17 下午 01:21:02
+// CreateTime:2024-05-28 下午 05:30:39
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using Volo.Abp.Modularity;
-using WithoutMe.Domain.Shared;
-using WithoutMe.Infrastructure.Persistence;
 
-namespace WithoutMe.Application;
+namespace WithoutMe.Core;
 
 /// <summary>
-/// 无我应用模块
+/// 无我核心模块
 /// </summary>
-[DependsOn(
-    typeof(WithoutMeDomainSharedModule),
-    typeof(WithoutMeInfrastructurePersistenceModule)
-    )]
-public class WithoutMeApplicationModule : AbpModule
+public class WithoutMeCoreModule : AbpModule
 {
 }

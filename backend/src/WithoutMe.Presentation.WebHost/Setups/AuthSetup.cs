@@ -34,6 +34,10 @@ public static class AuthSetup
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        // 初始化Jwt处理器
+        var jwtOptions = services.ExecutePreConfiguredActions<JwtOptions>();
+        JwtHandler.SetJwtOptions(jwtOptions);
+
         // 身份验证(默认用JwtBearer认证)
         services.AddAuthentication(options =>
         {
@@ -66,13 +70,13 @@ public static class AuthSetup
                         {
                             var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
-                            if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
+                            if (jwtToken.Issuer != JwtHandler.GetJwtOptions().Issuer)
                             {
                                 failedResult = ApiResult.Unauthorized("授权因颁发者伪造无法读取！");
                                 context.Response.Headers.Append("Token-Error-Iss", "Issuer is wrong!");
                             }
 
-                            if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
+                            if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetJwtOptions().Audience)
                             {
                                 failedResult = ApiResult.Unauthorized("授权因签收者伪造无法读取！");
                                 context.Response.Headers.Append("Token-Error-Aud", "Audience is wrong!");
@@ -104,34 +108,34 @@ public static class AuthSetup
             })
             .AddQQ(options =>
             {
-                options.ClientId = AppOptions.Auth.Qq.ClientId.GetValue();
-                options.ClientSecret = AppOptions.Auth.Qq.ClientSecret.GetValue();
+                options.ClientId = AppOptions.AuthOptions.Qq.ClientId.GetValue();
+                options.ClientSecret = AppOptions.AuthOptions.Qq.ClientSecret.GetValue();
             })
             .AddWeixin(options =>
             {
-                options.ClientId = AppOptions.Auth.WeChat.ClientId.GetValue();
-                options.ClientSecret = AppOptions.Auth.WeChat.ClientSecret.GetValue();
+                options.ClientId = AppOptions.AuthOptions.WeChat.ClientId.GetValue();
+                options.ClientSecret = AppOptions.AuthOptions.WeChat.ClientSecret.GetValue();
             })
             .AddAlipay(options =>
             {
-                options.ClientId = AppOptions.Auth.Alipay.ClientId.GetValue();
-                options.ClientSecret = AppOptions.Auth.Alipay.ClientSecret.GetValue();
+                options.ClientId = AppOptions.AuthOptions.Alipay.ClientId.GetValue();
+                options.ClientSecret = AppOptions.AuthOptions.Alipay.ClientSecret.GetValue();
             })
             .AddGitHub(options =>
             {
-                options.ClientId = AppOptions.Auth.Github.ClientId.GetValue();
-                options.ClientSecret = AppOptions.Auth.Github.ClientSecret.GetValue();
+                options.ClientId = AppOptions.AuthOptions.Github.ClientId.GetValue();
+                options.ClientSecret = AppOptions.AuthOptions.Github.ClientSecret.GetValue();
                 options.Scope.Add("user:email");
             })
             .AddGitLab(options =>
             {
-                options.ClientId = AppOptions.Auth.Gitlab.ClientId.GetValue();
-                options.ClientSecret = AppOptions.Auth.Gitlab.ClientSecret.GetValue();
+                options.ClientId = AppOptions.AuthOptions.Gitlab.ClientId.GetValue();
+                options.ClientSecret = AppOptions.AuthOptions.Gitlab.ClientSecret.GetValue();
             })
             .AddGitee(options =>
             {
-                options.ClientId = AppOptions.Auth.Gitee.ClientId.GetValue();
-                options.ClientSecret = AppOptions.Auth.Gitee.ClientSecret.GetValue();
+                options.ClientId = AppOptions.AuthOptions.Gitee.ClientId.GetValue();
+                options.ClientSecret = AppOptions.AuthOptions.Gitee.ClientSecret.GetValue();
             });
         // 认证授权
         services.AddAuthorization();

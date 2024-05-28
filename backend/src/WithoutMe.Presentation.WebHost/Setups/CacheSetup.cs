@@ -31,26 +31,28 @@ public static class CacheSetup
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        // 内存缓存(默认开启)
-        services.AddMemoryCache();
-        services.AddSingleton<IAppCacheService, AppCacheService>();
+        //var cacheOptions = services.ExecutePreConfiguredActions<CacheOptions>();
 
-        // 分布式缓存
-        var isEnabledRedisCache = AppOptions.Cache.RedisCache.IsEnabled.GetValue();
-        if (isEnabledRedisCache)
-        {
-            // CSRedis
-            var connectionString = AppOptions.Cache.RedisCache.ConnectionString.GetValue();
-            var prefix = AppOptions.Cache.RedisCache.Prefix.GetValue();
-            var redisStr = $"{connectionString}, prefix = {prefix}";
-            CSRedisClient redisClient = new(redisStr);
-            // 用法一：基于 Redis 初始化 IDistributedCache
-            services.AddSingleton(redisClient);
-            services.AddSingleton<IDistributedCache>(new CSRedisCache(redisClient));
-            // 用法二：帮助类直接调用
-            RedisHelper.Initialization(redisClient);
-            services.AddDistributedMemoryCache();
-        }
+        //// 内存缓存(默认开启)
+        //services.AddMemoryCache();
+        //services.AddSingleton<IAppCacheService, AppCacheService>();
+
+        //// 分布式缓存
+        //var isEnabledRedisCache = AppOptions.Cache.RedisCache.IsEnabled.GetValue();
+        //if (isEnabledRedisCache)
+        //{
+        //    // CSRedis
+        //    var connectionString = AppOptions.Cache.RedisCache.ConnectionString.GetValue();
+        //    var prefix = AppOptions.Cache.RedisCache.Prefix.GetValue();
+        //    var redisStr = $"{connectionString}, prefix = {prefix}";
+        //    CSRedisClient redisClient = new(redisStr);
+        //    // 用法一：基于 Redis 初始化 IDistributedCache
+        //    services.AddSingleton(redisClient);
+        //    services.AddSingleton<IDistributedCache>(new CSRedisCache(redisClient));
+        //    // 用法二：帮助类直接调用
+        //    RedisHelper.Initialization(redisClient);
+        //    services.AddDistributedMemoryCache();
+        //}
 
         return services;
     }
