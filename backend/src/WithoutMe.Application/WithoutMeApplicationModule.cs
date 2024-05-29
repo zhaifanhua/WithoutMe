@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Volo.Abp.Modularity;
-using WithoutMe.Domain.Shared;
-using WithoutMe.Infrastructure.Persistence;
+using WithoutMe.Application.Contracts;
+using WithoutMe.Domain;
 
 namespace WithoutMe.Application;
 
@@ -22,8 +22,8 @@ namespace WithoutMe.Application;
 /// 无我应用模块
 /// </summary>
 [DependsOn(
-    typeof(WithoutMeDomainSharedModule),
-    typeof(WithoutMeInfrastructurePersistenceModule)
+    typeof(WithoutMeDomainModule),
+    typeof(WithoutMeApplicationContractsModule)
     )]
 public class WithoutMeApplicationModule : AbpModule
 {

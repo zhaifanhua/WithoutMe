@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Volo.Abp;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
-using WithoutMe.Application;
+using WithoutMe.Presentation.HttpApi;
 using WithoutMe.Presentation.WebHost.Handlers;
 using WithoutMe.Presentation.WebHost.Options;
 using WithoutMe.Presentation.WebHost.Options.Authorize;
@@ -29,7 +29,7 @@ namespace WithoutMe.Presentation.WebHost;
 /// 无我界面主机模块
 /// </summary>
 [DependsOn(
-    typeof(WithoutMeApplicationModule),
+    typeof(WithoutMePresentationHttpApiModule),
     typeof(AbpSwashbuckleModule)
     )]
 public class WithoutMePresentationWebHostModule : AbpModule

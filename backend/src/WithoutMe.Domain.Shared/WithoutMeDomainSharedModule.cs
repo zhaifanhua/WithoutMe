@@ -14,6 +14,7 @@
 
 using Volo.Abp.Domain;
 using Volo.Abp.Modularity;
+using WithoutMe.Core;
 
 namespace WithoutMe.Domain.Shared;
 
@@ -21,7 +22,7 @@ namespace WithoutMe.Domain.Shared;
 /// 无我领域共享模块
 /// </summary>
 [DependsOn(
-    typeof(WithoutMeDomainModule),
+    typeof(WithoutMeCoreModule),
     typeof(AbpDddDomainSharedModule)
     )]
 public class WithoutMeDomainSharedModule : AbpModule

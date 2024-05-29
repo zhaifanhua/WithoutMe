@@ -26,7 +26,7 @@ namespace WithoutMe.Presentation.WebHost.Filters;
 [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
 public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
-    private static readonly ILogger Logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
+    //private static readonly ILogger Logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
 
     /// <summary>
     /// 当异常发生时
@@ -36,29 +36,29 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnExceptionAsync(ExceptionContext context)
     {
-        // 异常是否被处理过，没有则在这里处理
-        if (context.ExceptionHandled == false)
-        {
-            context.Result = context.Exception switch
-            {
-                // 参数异常
-                ArgumentException => new JsonResult(ApiResult.UnprocessableEntity()),
-                // 认证授权异常
-                AuthenticationException => new JsonResult(ApiResult.Unauthorized()),
-                // 禁止访问异常
-                UnauthorizedAccessException => new JsonResult(ApiResult.Forbidden()),
-                // 数据未找到异常
-                FileNotFoundException => new JsonResult(ApiResult.NotFound()),
-                // 未实现异常
-                NotImplementedException => new JsonResult(ApiResult.NotImplemented()),
-                // 自定义异常
-                CustomException => new JsonResult(ApiResult.BadRequest(context.Exception.Message)),
-                // 异常默认返回服务器错误，不直接明文显示
-                _ => new JsonResult(ApiResult.InternalServerError())
-            };
+        //// 异常是否被处理过，没有则在这里处理
+        //if (context.ExceptionHandled == false)
+        //{
+        //    context.Result = context.Exception switch
+        //    {
+        //        // 参数异常
+        //        ArgumentException => new JsonResult(ApiResult.UnprocessableEntity()),
+        //        // 认证授权异常
+        //        AuthenticationException => new JsonResult(ApiResult.Unauthorized()),
+        //        // 禁止访问异常
+        //        UnauthorizedAccessException => new JsonResult(ApiResult.Forbidden()),
+        //        // 数据未找到异常
+        //        FileNotFoundException => new JsonResult(ApiResult.NotFound()),
+        //        // 未实现异常
+        //        NotImplementedException => new JsonResult(ApiResult.NotImplemented()),
+        //        // 自定义异常
+        //        CustomException => new JsonResult(ApiResult.BadRequest(context.Exception.Message)),
+        //        // 异常默认返回服务器错误，不直接明文显示
+        //        _ => new JsonResult(ApiResult.InternalServerError())
+        //    };
 
-            Logger.Error(context.Exception, "系统异常");
-        }
+        //    Logger.Error(context.Exception, "系统异常");
+        //}
 
         // 标记异常已经处理过了
         context.ExceptionHandled = true;

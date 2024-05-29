@@ -37,26 +37,26 @@ public class ResourceFilterAsyncAttribute(int syncTimeout = 30) : Attribute, IAs
     /// <returns></returns>
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
-        var appCacheService = App.GetRequiredService<IAppCacheService>();
+        //var appCacheService = App.GetRequiredService<IAppCacheService>();
 
-        var apiResourceCacheKey = GetCacheKey(context.HttpContext);
+        //var apiResourceCacheKey = GetCacheKey(context.HttpContext);
 
-        // 若存在此资源，直接返回缓存资源
-        if (appCacheService.Exists(apiResourceCacheKey))
-        {
-            context.Result = appCacheService.Get(apiResourceCacheKey) as ActionResult;
-        }
-        else
-        {
-            // 请求构造函数和方法,调用下一个过滤器
-            var resourceExecuted = await next();
-            // 执行结果，若不存在此资源，缓存请求后的资源(请求构造函数和方法)
-            if (resourceExecuted.Result != null)
-            {
-                var result = resourceExecuted.Result as ActionResult;
-                _ = appCacheService.SetWithMinutes(apiResourceCacheKey, result!, _syncTimeout);
-            }
-        }
+        //// 若存在此资源，直接返回缓存资源
+        //if (appCacheService.Exists(apiResourceCacheKey))
+        //{
+        //    context.Result = appCacheService.Get(apiResourceCacheKey) as ActionResult;
+        //}
+        //else
+        //{
+        //    // 请求构造函数和方法,调用下一个过滤器
+        //    var resourceExecuted = await next();
+        //    // 执行结果，若不存在此资源，缓存请求后的资源(请求构造函数和方法)
+        //    if (resourceExecuted.Result != null)
+        //    {
+        //        var result = resourceExecuted.Result as ActionResult;
+        //        _ = appCacheService.SetWithMinutes(apiResourceCacheKey, result!, _syncTimeout);
+        //    }
+        //}
     }
 
     /// <summary>

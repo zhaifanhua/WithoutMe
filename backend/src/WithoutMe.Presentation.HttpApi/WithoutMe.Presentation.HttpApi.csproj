@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>WithoutMe.Presentation.HttpApi</Title>
+		<AssemblyName>WithoutMe.Presentation.HttpApi</AssemblyName>
+		<PackageId>WithoutMe.Presentation.HttpApi</PackageId>
+		<Description>无我界面接口组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WithoutMe.Application.Contracts\WithoutMe.Application.Contracts.csproj" />
+	</ItemGroup>
+
+</Project>

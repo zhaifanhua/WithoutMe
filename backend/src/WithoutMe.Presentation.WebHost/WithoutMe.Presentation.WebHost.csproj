@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WithoutMe.Application\WithoutMe.Application.csproj" />
+	  <ProjectReference Include="..\WithoutMe.Presentation.HttpApi\WithoutMe.Presentation.HttpApi.csproj" />
 	</ItemGroup>
 
 </Project>

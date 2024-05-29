@@ -18,8 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WithoutMe.Core\WithoutMe.Core.csproj" />
-	  <ProjectReference Include="..\WithoutMe.Domain.Shared\WithoutMe.Domain.Shared.csproj" />
+	  <ProjectReference Include="..\WithoutMe.Domain\WithoutMe.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

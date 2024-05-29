@@ -18,7 +18,7 @@ using Volo.Abp.EntityFrameworkCore.PostgreSql;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.Modularity;
-using WithoutMe.Domain.Shared;
+using WithoutMe.Domain;
 
 namespace WithoutMe.Infrastructure.Persistence;
 
@@ -26,7 +26,7 @@ namespace WithoutMe.Infrastructure.Persistence;
 /// 无我基础设施数据持久化模块
 /// </summary>
 [DependsOn(
-    typeof(WithoutMeDomainSharedModule),
+    typeof(WithoutMeDomainModule),
     typeof(AbpEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCoreMySQLModule),
     typeof(AbpEntityFrameworkCoreSqlServerModule),

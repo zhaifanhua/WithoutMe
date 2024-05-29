@@ -41,28 +41,28 @@ public class ResultFilterAsyncAttribute(bool isIgnore = false) : Attribute, IAsy
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        if (IsIgnore || context.HttpContext.IsDownloadFile()) return;
+        //if (IsIgnore || context.HttpContext.IsDownloadFile()) return;
 
-        // 结果不为空就做序列化处理
-        context.Result = context.Result switch
-        {
-            // 如果是 CustomResult，则转换为 JsonResult
-            ApiResult customResult => new JsonResult(customResult),
-            // 如果是 ContentResult，则转换为 JsonResult
-            ContentResult contentResult => new JsonResult(contentResult.Content),
-            // 如果是 ObjectResult，则转换为 JsonResult
-            ObjectResult objectResult => new JsonResult(objectResult.Value),
-            // 如果是 JsonResult，则转换为 JsonResult
-            JsonResult jsonResult => new JsonResult(jsonResult.Value),
-            // 如果是 EmptyResult，则转换为 JsonResult
-            EmptyResult => new JsonResult(null),
-            // 其他直接返回
-            _ => context.Result
-        };
-        // 请求构造函数和方法,调用下一个过滤器
-        var resultExecuted = await next();
-        // 执行结果
-        _ = JsonSerializer.Serialize(resultExecuted.Result);
+        //// 结果不为空就做序列化处理
+        //context.Result = context.Result switch
+        //{
+        //    // 如果是 CustomResult，则转换为 JsonResult
+        //    ApiResult customResult => new JsonResult(customResult),
+        //    // 如果是 ContentResult，则转换为 JsonResult
+        //    ContentResult contentResult => new JsonResult(contentResult.Content),
+        //    // 如果是 ObjectResult，则转换为 JsonResult
+        //    ObjectResult objectResult => new JsonResult(objectResult.Value),
+        //    // 如果是 JsonResult，则转换为 JsonResult
+        //    JsonResult jsonResult => new JsonResult(jsonResult.Value),
+        //    // 如果是 EmptyResult，则转换为 JsonResult
+        //    EmptyResult => new JsonResult(null),
+        //    // 其他直接返回
+        //    _ => context.Result
+        //};
+        //// 请求构造函数和方法,调用下一个过滤器
+        //var resultExecuted = await next();
+        //// 执行结果
+        //_ = JsonSerializer.Serialize(resultExecuted.Result);
 
         await Task.CompletedTask;
     }

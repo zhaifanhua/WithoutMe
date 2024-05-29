@@ -19,7 +19,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
-using WithoutMe.Core.Consts;
+using WithoutMe.Domain.Shared.Consts;
 using WithoutMe.Presentation.WebHost.Options;
 using XiHan.Utils.Extensions.System;
 

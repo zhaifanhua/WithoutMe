@@ -14,13 +14,17 @@
 
 using Volo.Abp.Domain;
 using Volo.Abp.Modularity;
+using WithoutMe.Domain.Shared;
 
 namespace WithoutMe.Domain;
 
 /// <summary>
 /// 无我领域模块
 /// </summary>
-[DependsOn(typeof(AbpDddDomainModule))]
+[DependsOn(
+    typeof(WithoutMeDomainSharedModule),
+    typeof(AbpDddDomainModule)
+    )]
 public class WithoutMeDomainModule : AbpModule
 {
 }
