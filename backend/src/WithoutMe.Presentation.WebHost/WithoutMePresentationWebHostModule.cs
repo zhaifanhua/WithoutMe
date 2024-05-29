@@ -46,10 +46,10 @@ public class WithoutMePresentationWebHostModule : AbpModule
 
         PreConfigure<WebHostOptions>(options =>
         {
-            var app = configuration.GetSection("WebHost");
+            var webHost = configuration.GetSection("WebHost");
 
-            options.Port = app.GetValue<int>(nameof(options.Port));
-            options.IsDemoMode = app.GetValue<bool>(nameof(options.IsDemoMode));
+            options.Port = webHost.GetValue<int>(nameof(options.Port));
+            options.IsDemoMode = webHost.GetValue<bool>(nameof(options.IsDemoMode));
 
             appOptions.WebHostOptions = options;
         });
@@ -174,8 +174,6 @@ public class WithoutMePresentationWebHostModule : AbpModule
 
         // 对象映射
         services.AddMapsterSetup();
-        // 缓存
-        services.AddCacheSetup();
         // SqlSugar
         //services.AddSqlSugarSetup();
         // Http上下文
@@ -200,8 +198,6 @@ public class WithoutMePresentationWebHostModule : AbpModule
         services.AddSignalRSetup();
         // 健康检查
         services.AddHealthChecks();
-        // 响应缓存
-        services.AddResponseCacheSetup();
         // 终端
         services.AddEndpointsApiExplorer();
         // 任务队列

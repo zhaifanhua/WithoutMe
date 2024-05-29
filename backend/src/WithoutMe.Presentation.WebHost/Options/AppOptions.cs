@@ -48,9 +48,4 @@ public partial class AppOptions
     /// AuthOptions
     /// </summary>
     public AuthOptions AuthOptions { get; set; } = new AuthOptions();
-
-    /// <summary>
-    /// CacheOptions
-    /// </summary>
-    public CacheOptions CacheOptions { get; set; } = new CacheOptions();
 }

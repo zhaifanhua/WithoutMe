@@ -20,7 +20,7 @@ var config = builder.Configuration;
 
 var host = builder.WebHost;
 // 端口
-var port = config.GetValue<int>("Port");
+var port = config.GetValue<int>("WebHost:Port");
 host.UseUrls($"http://*:{port}");
 // 设置接口超时时间和上传大小
 host.ConfigureKestrel(options =>

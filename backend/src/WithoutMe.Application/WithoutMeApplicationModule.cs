@@ -15,6 +15,8 @@
 using Volo.Abp.Modularity;
 using WithoutMe.Application.Contracts;
 using WithoutMe.Domain;
+using WithoutMe.Infrastructure.Caching;
+using WithoutMe.Infrastructure.Persistence;
 
 namespace WithoutMe.Application;
 
@@ -23,6 +25,8 @@ namespace WithoutMe.Application;
 /// </summary>
 [DependsOn(
     typeof(WithoutMeDomainModule),
+    typeof(WithoutMeInfrastructureCachingModule),
+    typeof(WithoutMeInfrastructurePersistenceModule),
     typeof(WithoutMeApplicationContractsModule)
     )]
 public class WithoutMeApplicationModule : AbpModule
