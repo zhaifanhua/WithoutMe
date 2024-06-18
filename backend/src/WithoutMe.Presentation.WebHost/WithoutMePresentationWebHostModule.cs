@@ -48,7 +48,6 @@ public class WithoutMePresentationWebHostModule : AbpModule
         {
             var webHost = configuration.GetSection("WebHost");
 
-            options.Port = webHost.GetValue<int>(nameof(options.Port));
             options.IsDemoMode = webHost.GetValue<bool>(nameof(options.IsDemoMode));
 
             appOptions.WebHostOptions = options;

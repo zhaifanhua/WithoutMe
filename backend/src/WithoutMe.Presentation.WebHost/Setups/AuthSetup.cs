@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.IdentityModel.Tokens.Jwt;
 using WithoutMe.Presentation.WebHost.Handlers;
 using WithoutMe.Presentation.WebHost.Options;
 

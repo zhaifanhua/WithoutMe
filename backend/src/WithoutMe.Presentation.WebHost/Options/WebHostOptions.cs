@@ -20,11 +20,6 @@ namespace WithoutMe.Presentation.WebHost.Options;
 public class WebHostOptions
 {
     /// <summary>
-    /// 端口
-    /// </summary>
-    public int Port { get; set; }
-
-    /// <summary>
     /// 是否演示模式
     /// </summary>
     public bool IsDemoMode { get; set; }
