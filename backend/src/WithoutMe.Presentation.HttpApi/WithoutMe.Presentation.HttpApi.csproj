@@ -11,7 +11,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WithoutMe.Application.Contracts\WithoutMe.Application.Contracts.csproj" />
+	  <ProjectReference Include="..\WithoutMe.Application\WithoutMe.Application.csproj" />
 	</ItemGroup>
 
 </Project>

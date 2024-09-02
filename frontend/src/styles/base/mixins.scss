@@ -1,0 +1,105 @@
+// 指令
+
+@import './variables.scss';
+
+// 混合响应 断点配置
+$breakpoints: (
+  xs: 480px,
+  // 超小屏设备 phone
+  sm: 768px,
+  // 小屏设备 pad
+  md: 992px,
+  // 中屏设备 notebook
+  lg: 1200px,
+  // 大屏设备 desktop
+  xl: 1920px,
+  // 超大屏设备 tv
+);
+@mixin useAutoScale($breakpoint: md) {
+  $scale: map-get($breakpoints, $breakpoint);
+  @media only screen and (min-width: $scale) {
+    @content;
+  }
+}
+
+// 边框圆角
+@mixin useBorderRadius(
+  $top-left: $base-border-radius,
+  $top-right: $base-border-radius,
+  $bottom-right: $base-border-radius,
+  $bottom-left: $base-border-radius
+) {
+  border-top-left-radius: $top-left;
+  border-top-right-radius: $top-right;
+  border-bottom-right-radius: $bottom-right;
+  border-bottom-left-radius: $bottom-left;
+  // 如果所有参数都相同，可以设置统一的圆角
+  @if $top-left == $top-right == $bottom-right == $bottom-left {
+    border-radius: $top-left;
+  }
+}
+
+// 阴影
+@mixin useBoxShadow($shadow: $base-box-shadow) {
+  box-shadow: $shadow;
+}
+
+// 过渡效果
+@mixin useTransition($transition: $base-transition) {
+  transition: $transition;
+}
+
+// 弹性盒子布局
+@mixin useFlexBox($direction: row, $content: center, $items: center, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  place-content: $content;
+  place-items: $items;
+  text-align: $align;
+}
+
+// 元素的堆叠顺序
+$z-layers: (
+  background: -1,
+  default: 1,
+  dropdown: 1000,
+  modal: 1100,
+  overlay: 1200,
+  loading: 1300,
+  notification: 1400,
+  cursor: 9999,
+);
+@mixin useZindex($layer: default) {
+  $index: map-get($z-layers, $layer);
+  z-index: $index;
+}
+
+// 高斯模糊
+@mixin useBackdropFilter($blur: $base-filter-blur) {
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// 文字省略号显示
+@mixin useTextEllipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 清除浮动
+@mixin useClearFix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// 可点击元素的悬停效果
+@mixin useHoverEffect {
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}

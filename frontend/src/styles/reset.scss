@@ -1,0 +1,110 @@
+// 重置全局样式
+
+// 清除元素的默认边距和填充
+:root,
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+// 设置默认字体和颜色
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+  font-style: normal;
+  font-weight: normal;
+}
+
+// 移除链接的下划线和默认行为
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// 移除图片的默认边框和间距
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+
+// 移除列表项的标记
+ol,
+ul,
+li {
+  list-style: none;
+}
+
+// 移除按钮和输入框的默认样式
+button,
+input,
+select,
+textarea {
+  font: inherit; // 继承字体样式
+  color: inherit; // 继承文本颜色
+}
+
+// 清除表单元素的默认样式
+fieldset {
+  border: none;
+}
+
+// 设置表格的默认样式
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td,
+th,
+caption {
+  text-align: left;
+}
+
+// 滚动条
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+// 滚动条上的按钮（上下箭头）
+::-webkit-scrollbar-button {
+  background-color: #7b7b7b80;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+// 滚动条上的滚动滑块
+::-webkit-scrollbar-thumb {
+  background-color: #7b7b7b80;
+  border-radius: 5px;
+}
+// 滚动条轨道
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  border-radius: 5px;
+}
