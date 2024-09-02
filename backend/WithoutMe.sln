@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithoutMe.Domain.Shared", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithoutMe.Infrastructure.Persistence", "src\WithoutMe.Infrastructure.Persistence\WithoutMe.Infrastructure.Persistence.csproj", "{96F6B315-B510-4B2E-9CB0-8F9C50CBCD1A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{004B7C23-4B17-4689-ABF3-1DE9A610E0F7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Domain", "3.Domain", "{004B7C23-4B17-4689-ABF3-1DE9A610E0F7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infrastructure", "{01B031D6-130B-41CD-ADDD-EE1D3BE12123}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Infrastructure", "2.Infrastructure", "{01B031D6-130B-41CD-ADDD-EE1D3BE12123}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Application", "4.Application", "{6450DD10-038F-4973-AF9B-BB0921180C5C}"
 EndProject
@@ -41,9 +41,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Common", "1.Common", "{FD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithoutMe.Core", "src\WithoutMe.Core\WithoutMe.Core.csproj", "{25B8EE0D-D994-4B21-9810-8F14DBA1012D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithoutMe.Application.Contracts", "src\WithoutMe.Application.Contracts\WithoutMe.Application.Contracts.csproj", "{4E35A0BB-F17B-4481-BD49-D4D4AC8A49E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithoutMe.Application.Contracts", "src\WithoutMe.Application.Contracts\WithoutMe.Application.Contracts.csproj", "{4E35A0BB-F17B-4481-BD49-D4D4AC8A49E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithoutMe.Presentation.HttpApi", "src\WithoutMe.Presentation.HttpApi\WithoutMe.Presentation.HttpApi.csproj", "{145068FB-2747-4A77-A6EC-2FD38E1DF6F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithoutMe.Presentation.HttpApi", "src\WithoutMe.Presentation.HttpApi\WithoutMe.Presentation.HttpApi.csproj", "{145068FB-2747-4A77-A6EC-2FD38E1DF6F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

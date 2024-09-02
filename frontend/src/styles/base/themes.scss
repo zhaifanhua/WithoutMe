@@ -1,0 +1,107 @@
+// 主题
+
+@import './variables.scss';
+
+$themes: (
+  // 浅色主题
+  light:
+    (
+      // 主要文本颜色
+      text-color: $base-text-color-light,
+      text-color-translucent: $base-text-color-light-translucent,
+      text-color-opaque: $base-text-color-light-opaque,
+      text-color-hover: $base-text-color-light-hover,
+      text-color-active: $base-text-color-light-active,
+      // 次要文本颜色
+      text-color-secondary: $base-text-color-secondary-light,
+      text-color-secondary-translucent: $base-text-color-secondary-light-translucent,
+      text-color-secondary-opaque: $base-text-color-secondary-light-opaque,
+      text-color-secondary-hover: $base-text-color-secondary-light-hover,
+      text-color-secondary-active: $base-text-color-secondary-light-active,
+
+      // 按钮颜色
+      btn-color: $base-btn-color-light,
+      btn-color-translucent: $base-btn-color-light-translucent,
+      btn-color-hover: $base-btn-color-light-hover,
+      btn-color-active: $base-btn-color-light-active,
+      btn-color-disabled: $base-btn-color-light-disabled,
+
+      // 整体背景
+      bg-color: $base-bg-color-light,
+      bg-color-translucent: $base-bg-color-light-translucent,
+      bg-color-opaque: $base-bg-color-light-opaque,
+      bg-color-hover: $base-bg-color-light-hover,
+      bg-color-active: $base-bg-color-light-active,
+      // 模块背景
+      module-bg-color: $base-module-bg-color-light,
+      module-bg-color-translucent: $base-module-bg-color-light-translucent,
+      module-bg-color-opaque: $base-module-bg-color-light-opaque,
+      module-bg-color-hover: $base-module-bg-color-light-hover,
+      module-bg-color-active: $base-module-bg-color-light-active,
+
+      // 链接颜色
+      link-color: $base-link-color-light,
+      link-color-hover: $base-link-color-light-hover,
+      link-color-active: $base-link-color-light-active,
+      link-color-visted: $base-link-color-light-visted
+    ),
+  // 深色主题
+  dark:
+    (
+      // 主要文本颜色
+      text-color: $base-text-color-dark,
+      text-color-translucent: $base-text-color-dark-translucent,
+      text-color-opaque: $base-text-color-dark-opaque,
+      text-color-hover: $base-text-color-dark-hover,
+      text-color-active: $base-text-color-dark-active,
+      // 次要文本颜色
+      text-color-secondary: $base-text-color-secondary-dark,
+      text-color-secondary-translucent: $base-text-color-secondary-dark-translucent,
+      text-color-secondary-opaque: $base-text-color-secondary-dark-opaque,
+      text-color-secondary-hover: $base-text-color-secondary-dark-hover,
+      text-color-secondary-active: $base-text-color-secondary-dark-active,
+
+      // 按钮颜色
+      btn-color: $base-btn-color-dark,
+      btn-color-translucent: $base-btn-color-dark-translucent,
+      btn-color-hover: $base-btn-color-dark-hover,
+      btn-color-active: $base-btn-color-dark-active,
+      btn-color-disabled: $base-btn-color-dark-disabled,
+
+      // 整体背景
+      bg-color: $base-bg-color-dark,
+      bg-color-translucent: $base-bg-color-dark-translucent,
+      bg-color-opaque: $base-bg-color-dark-opaque,
+      bg-color-hover: $base-bg-color-dark-hover,
+      bg-color-active: $base-bg-color-dark-active,
+      // 模块背景
+      module-bg-color: $base-module-bg-color-dark,
+      module-bg-color-translucent: $base-module-bg-color-dark-translucent,
+      module-bg-color-opaque: $base-module-bg-color-dark-opaque,
+      module-bg-color-hover: $base-module-bg-color-dark-hover,
+      module-bg-color-active: $base-module-bg-color-dark-active,
+
+      // 链接颜色
+      link-color: $base-link-color-dark,
+      link-color-hover: $base-link-color-dark-hover,
+      link-color-active: $base-link-color-dark-active,
+      link-color-visted: $base-link-color-dark-visted
+    )
+);
+
+// 当前主题
+$currentTheme: light;
+// 使用主题
+@mixin useTheme() {
+  @each $theme, $map in $themes {
+    $currentTheme: $theme !global;
+    html[data-theme='#{$theme}'] & {
+      @content;
+    }
+  }
+}
+// 获取主题变量
+@function getVar($key) {
+  $themeMap: map-get($themes, $currentTheme);
+  @return map-get($themeMap, $key);
+}
