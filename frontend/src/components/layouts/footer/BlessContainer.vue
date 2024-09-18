@@ -2,7 +2,9 @@
 
 <template>
   <div id="bless-container" class="bless-container">
-    <span>{{ bless }}</span>
+    <p v-if="bless">
+      <span>{{ bless }}</span>
+    </p>
   </div>
 </template>
 

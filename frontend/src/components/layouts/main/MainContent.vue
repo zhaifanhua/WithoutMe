@@ -12,6 +12,7 @@
 
 <style scoped lang="scss">
   @import '@/styles/base/mixins.scss';
+  @import '@/styles/base/themes.scss';
 
   .main-content {
     grid-area: main-content;
@@ -20,6 +21,9 @@
     @include useZindex;
     @include useBorderRadius;
     // todo 暂定，后续需要调整为下层组件
-    @include useBackdropFilter($base-module-bg-filter-blur);
+    // @include useBackdropFilter($base-module-bg-filter-blur);
+    @include useTheme {
+      background-color: getVar(module-bg-color);
+    }
   }
 </style>

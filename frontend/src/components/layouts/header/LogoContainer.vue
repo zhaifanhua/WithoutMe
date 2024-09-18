@@ -1,4 +1,4 @@
-<!-- LOGO容器组件 -->
+<!-- 图标容器组件 -->
 
 <template>
   <div id="logo-container" class="logo-container">
@@ -20,8 +20,6 @@
 
   .logo-container {
     grid-area: logo-container;
-    height: 80px;
-    width: 80px;
     @include useFlexBox;
 
     .avatar {

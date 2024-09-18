@@ -1,20 +1,19 @@
 <!-- 光标组件 -->
 
 <template>
-  <div ref="cursorContainer" class="cursor-container" v-show="cursorContainerDisplay">
+  <div class="cursor-container" v-show="cursorContainerDisplay">
     <div ref="cursor" class="cursor" :style="cursorStyle"></div>
     <div ref="cursorTrajectory" class="cursor-trajectory" :style="cursorTrajectoryStyle"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, reactive, ref, computed } from 'vue';
+  import { onMounted, onUnmounted, reactive, ref, useTemplateRef, computed } from 'vue';
 
   // 定义光标容器、是否显示、光标、光标轨迹、光标轨迹速度
-  const cursorContainer = ref<HTMLElement | null>(null);
+  const cursorRef = useTemplateRef('cursor');
+  const cursorTrajectoryRef = useTemplateRef('cursorTrajectory');
   const cursorContainerDisplay = ref<boolean>(false);
-  const cursor = ref<HTMLElement | null>(null);
-  const cursorTrajectory = ref<HTMLElement | null>(null);
   const cursorSpeed = ref(0.16);
 
   // 定义光标及光标轨迹大小、相对坐标、光标坐标
@@ -82,15 +81,15 @@
     cursorConfig.axis.left = lerpStyleLeft(cursorConfig.pageX, cursorConfig.size);
   };
   const mouseDown = (e: MouseOrTouchEvent): void => {
-    cursor.value.classList.add('active');
-    cursorTrajectory.value.classList.add('active');
+    cursorRef.value.classList.add('active');
+    cursorTrajectoryRef.value.classList.add('active');
 
     mouseEventConfig.isMouseDown = true;
     mouseEventConfig.startY = e.clientY || e.touches[0].clientY || e.targetTouches[0].clientY;
   };
   const mouseUp = (e: MouseOrTouchEvent): void => {
-    cursor.value.classList.remove('active');
-    cursorTrajectory.value.classList.remove('active');
+    cursorRef.value.classList.remove('active');
+    cursorTrajectoryRef.value.classList.remove('active');
 
     mouseEventConfig.endY = e.clientY || mouseEventConfig.endY;
     if (
@@ -154,7 +153,7 @@
 
 <style lang="scss">
   @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  // @import '@/styles/base/themes.scss';
 
   .cursor,
   .cursor-trajectory {
@@ -165,15 +164,16 @@
     transition: 0.25s ease-in-out;
     transition-property: scale, transform, background-color, border-color;
     scale: 1;
-    @include useZindex('cursor');
+    @include useZindex(cursor);
   }
 
   .cursor {
     border-radius: 50%;
     border-color: transparent;
-    @include useTheme {
-      background-color: getVar(text-color);
-    }
+    // @include useTheme {
+    //   background-color: getVar(text-color);
+    // }
+    background-color: black;
 
     &.active {
       scale: 4;
@@ -183,9 +183,10 @@
   .cursor-trajectory {
     border-radius: 30%;
     background-color: transparent;
-    @include useTheme {
-      border: 2px solid getVar(text-color);
-    }
+    // @include useTheme {
+    //   border: 2px solid getVar(text-color);
+    // }
+    border: 2px solid black;
 
     &.active {
       scale: 0.25;

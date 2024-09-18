@@ -4,13 +4,13 @@
     <ul>
       <li>
         <RouterLink to="/">
-          <Icon icon="iconamoon:home-bold" />
+          <Icon icon="iconamoon:home-duotone" />
           <span>主页</span>
         </RouterLink>
       </li>
       <li>
         <RouterLink to="/about">
-          <Icon icon="iconamoon:home-bold" />
+          <Icon icon="tdesign:look-around" />
           <span>关于</span>
         </RouterLink>
       </li>
@@ -35,8 +35,8 @@
 
   .navbar {
     grid-area: navbar;
-    margin-right: 10px;
-    width: 200px;
+    margin-right: $base-gap-sm;
+    width: $base-navbar-width;
     height: 500px;
     @include useZindex(overlay);
     @include useBorderRadius;
@@ -58,8 +58,8 @@
           font-weight: 600;
           font-size: 18px;
           transition: all 0.2s ease-in-out;
-          @include useFlexBox(row, center, left, center);
-          @include useBackdropFilter($base-module-bg-filter-blur);
+          @include useFlexBox(row, start, center, center);
+          // @include useBackdropFilter($base-module-bg-filter-blur);
           @include useBorderRadius;
           @include useTheme {
             background-color: getVar(module-bg-color);
@@ -67,7 +67,7 @@
           }
 
           & > * {
-            margin-left: 20px;
+            margin-left: 16px;
           }
         }
 

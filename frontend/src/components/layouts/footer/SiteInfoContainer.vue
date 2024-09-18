@@ -4,35 +4,56 @@
   <div id="site-info-container" class="site-info-container">
     <div v-if="siteOptimization">
       <p>
-        <a :href="siteOptimization.map">网站地图</a>
-        <span>&nbsp;</span>
-        <a :href="siteOptimization.statistics">站长统计</a>
+        <span v-if="siteOptimization.map">
+          <a :href="siteOptimization.map">网站地图</a>
+        </span>
       </p>
       <p>
         <span>致谢</span>
-        <a :href="siteOptimization.cdnUrl">
-          <img class="upyun-logo" src="/images/icon/upyun.png" :alt="siteOptimization.cdnName" />
-        </a>
+        <span>&nbsp;</span>
+        <span v-if="siteOptimization.cdnName">{{ siteOptimization.cdnName }}</span>
+        <span v-if="siteOptimization.cdnUrl">
+          <a :href="siteOptimization.cdnUrl">
+            <img class="cdn-logo" :src="siteOptimization.cdnLogo" />
+          </a>
+        </span>
+        <span>&nbsp;</span>
         <span>提供云加速服务</span>
       </p>
     </div>
-
-    <p v-if="siteAuthor">
-      <span>Copyright &copy;</span>
-      <time> {{ siteAuthor.startYear }}-{{ siteAuthor.endYear }} </time>
-      <span>&nbsp;</span>
-      <a :href="siteAuthor.author.url" target="_blank">
-        {{ siteAuthor.author.name }}
-      </a>
-      <span>&nbsp;</span>
-      <span>All Rights Reserved.</span>
-    </p>
-
-    <p v-if="siteIcp">
-      <a v-if="siteIcp.icp" :href="siteIcp.icpUrl" target="_blank">{{ siteIcp.icp }}</a>
-      <span>&nbsp;</span>
-      <a v-if="siteIcp.police" :href="siteIcp.policeUrl" target="_blank">{{ siteIcp.police }}</a>
-    </p>
+    <div v-if="siteAuthor">
+      <p>
+        <span>Copyright</span>
+        <span>&nbsp;</span>
+        <span>&copy;</span>
+        <span v-if="siteAuthor.startYear">
+          <time>{{ siteAuthor.startYear }}</time>
+          <span>-</span>
+        </span>
+        <span v-if="siteAuthor.endYear">
+          <time>{{ siteAuthor.endYear }} </time>
+        </span>
+        <span>&nbsp;</span>
+        <span v-if="siteAuthor.author">
+          <a :href="siteAuthor.author.url" target="_blank">
+            {{ siteAuthor.author.name }}
+          </a>
+        </span>
+        <span>&nbsp;</span>
+        <span>All Rights Reserved.</span>
+      </p>
+    </div>
+    <div v-if="siteIcp">
+      <p>
+        <span v-if="siteIcp.icp">
+          <a :href="siteIcp.icpUrl" target="_blank">{{ siteIcp.icp }}</a>
+        </span>
+        <span>&nbsp;</span>
+        <span v-if="siteIcp.police">
+          <a :href="siteIcp.policeUrl" target="_blank">{{ siteIcp.police }}</a>
+        </span>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -72,7 +93,7 @@
           display: inline-block;
           vertical-align: middle;
 
-          &.upyun-logo {
+          &.cdn-logo {
             height: 12px;
           }
         }

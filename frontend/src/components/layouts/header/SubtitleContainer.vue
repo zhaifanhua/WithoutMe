@@ -2,7 +2,9 @@
 
 <template>
   <div id="subtitle-container" class="subtitle-container">
-    <span>{{ siteSubtitle }}</span>
+    <p v-if="siteSubtitle">
+      <span>{{ siteSubtitle }}</span>
+    </p>
   </div>
 </template>
 

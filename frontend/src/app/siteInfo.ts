@@ -5,13 +5,13 @@
 const env = import.meta.env;
 
 // 环境信息
-const isDev = env.DEV;
-const isProd = env.PROD;
-const isServer = env.SSR;
-const isClient = !isServer;
+export const isDev = env.DEV;
+export const isProd = env.PROD;
+export const isServer = env.SSR;
+export const isClient = !isServer;
 
 // 站点基础信息
-const siteBaseInfo = {
+export const siteBaseInfo = {
   title: {
     cn: env.VITE_SITE_TITLE_CN,
     en: env.VITE_SITE_TITLE_EN,
@@ -27,7 +27,7 @@ const siteBaseInfo = {
   bless: env.VITE_SITE_BLESS,
 };
 // 站点作者信息
-const siteAuthorInfo = {
+export const siteAuthorInfo = {
   startYear: env.VITE_SITE_START_YEAR,
   endYear: new Date().getFullYear(),
   author: {
@@ -37,18 +37,16 @@ const siteAuthorInfo = {
   },
 };
 // 站点优化信息
-const siteOptimizationInfo = {
+export const siteOptimizationInfo = {
   map: env.VITE_SITE_MAP,
-  statistics: env.VITE_SITE_STATISTICS,
   cdnName: env.VITE_SITE_CDN_NAME,
+  cdnLogo: env.VITE_SITE_CDN_LOGO,
   cdnUrl: env.VITE_SITE_CDN_URL,
 };
 // 站点备案信息
-const siteIcpInfo = {
+export const siteIcpInfo = {
   icp: env.VITE_SITE_ICP,
   icpUrl: env.VITE_SITE_ICP_URL,
   police: env.VITE_SITE_POLICE,
   policeUrl: env.VITE_SITE_POLICE_URL,
 };
-
-export { isDev, isProd, isServer, isClient, siteBaseInfo, siteAuthorInfo, siteOptimizationInfo, siteIcpInfo };

@@ -1,8 +1,19 @@
 import { resolve } from 'node:path';
 import { loadEnv, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import AutoImport from 'unplugin-auto-import/vite';
 import pkg from './package.json';
+
+const appInfo: AppInfo = {
+  name: pkg.name,
+  version: pkg.version,
+  revisionDate: pkg.revisionDate,
+  author: pkg.author,
+  license: pkg.license,
+  homepage: pkg.homepage,
+  repository: pkg.repository,
+  dependencies: pkg.dependencies,
+  devDependencies: pkg.devDependencies,
+};
 
 export default defineConfig(({ command, mode }) => {
   const envConfig = loadEnv(mode, process.cwd(), '');
@@ -10,21 +21,9 @@ export default defineConfig(({ command, mode }) => {
   return {
     root: resolve(__dirname),
     define: {
-      __APP_NAME__: JSON.stringify(pkg.name),
-      __APP_VERSION__: JSON.stringify(pkg.version),
-      __APP_REVISION_DATE__: JSON.stringify(pkg.revisionDate),
-      __APP_DESCRIPTION__: JSON.stringify(pkg.description),
-      __APP_AUTHOR__: JSON.stringify(pkg.author),
-      __APP_LICENSE__: JSON.stringify(pkg.license),
-      __APP_HOMEPAGE__: JSON.stringify(pkg.homepage),
-      __APP_REPOSITORY__: JSON.stringify(pkg.repository),
+      __APP_INFO__: JSON.stringify(appInfo),
     },
-    plugins: [
-      vue(),
-      AutoImport({
-        imports: ['vue'],
-      }),
-    ],
+    plugins: [vue()],
     resolve: {
       alias: [
         {

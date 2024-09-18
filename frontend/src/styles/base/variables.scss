@@ -1,4 +1,5 @@
 // 变量
+@use 'sass:color';
 
 // ================================= 基础 =================================
 // 颜色
@@ -18,11 +19,34 @@ $base-color-silver: #c0c0c0;
 $base-color-bronze: #cd7f32;
 // 主色调
 $base-color-primary: #3498db;
+$base-color-primary-translucent: rgba($base-color-primary, 0.5);
+$base-color-primary-light: color.adjust($base-color-primary, $lightness: 20%);
+$base-color-primary-dark: color.adjust($base-color-primary, $lightness: -20%);
+// 辅助色
 $base-color-secondary: #2ecc71;
+$base-color-secondary-translucent: rgba($base-color-secondary, 0.5);
+$base-color-secondary-light: color.adjust($base-color-secondary, $lightness: 20%);
+$base-color-secondary-dark: color.adjust($base-color-secondary, $lightness: -20%);
+// 成功色
 $base-color-success: #4cd964;
+$base-color-success-translucent: rgba($base-color-success, 0.5);
+$base-color-success-light: color.adjust($base-color-success, $lightness: 20%);
+$base-color-success-dark: color.adjust($base-color-success, $lightness: -20%);
+// 危险色
 $base-color-danger: #ff3b31;
+$base-color-danger-translucent: rgba($base-color-danger, 0.5);
+$base-color-danger-light: color.adjust($base-color-danger, $lightness: 20%);
+$base-color-danger-dark: color.adjust($base-color-danger, $lightness: -20%);
+// 警告色
 $base-color-warning: #f1c40f;
+$base-color-warning-translucent: rgba($base-color-warning, 0.5);
+$base-color-warning-light: color.adjust($base-color-warning, $lightness: 20%);
+$base-color-warning-dark: color.adjust($base-color-warning, $lightness: -20%);
+// 信息色
 $base-color-info: #34e2e2;
+$base-color-info-translucent: rgba($base-color-info, 0.5);
+$base-color-info-light: color.adjust($base-color-info, $lightness: 20%);
+$base-color-info-dark: color.adjust($base-color-info, $lightness: -20%);
 // 灰色调
 $base-color-gray-100: #ededed;
 $base-color-gray-200: #d7d7d7;
@@ -84,12 +108,6 @@ $base-box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
 $base-box-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
 $base-box-shadow-none: none;
 
-// 间隙
-$base-gap: 1rem; // ~12px
-$base-gap-sm: $base-gap * 0.618; // ~8px
-$base-gap-xs: $base-gap-sm * 0.5; // ~4px
-$base-gap-lg: $base-gap-sm * 2; // ~14px
-
 // 动画
 $base-animation: 1s;
 $base-animation-fast: $base-animation * 0.5;
@@ -103,32 +121,21 @@ $base-transition-slow: all $base-animation-slow ease-in-out;
 // 高斯模糊半径
 $base-filter-blur: 10px;
 
-// ================================= 引用 =================================
-// 主色
-$base-color-primary-light: lighten($base-color-primary, 20%);
-$base-color-primary-translucent: rgba($base-color-primary, 0.5);
-$base-color-primary-dark: darken($base-color-primary, 20%);
-// 辅助色
-$base-color-secondary-light: lighten($base-color-secondary, 20%);
-$base-color-secondary-translucent: rgba($base-color-secondary, 0.5);
-$base-color-secondary-dark: darken($base-color-secondary, 20%);
-// 成功色
-$base-color-success-light: lighten($base-color-success, 20%);
-$base-color-success-translucent: rgba($base-color-success, 0.5);
-$base-color-success-dark: darken($base-color-success, 20%);
-// 危险色
-$base-color-danger-light: lighten($base-color-danger, 20%);
-$base-color-danger-translucent: rgba($base-color-danger, 0.5);
-$base-color-danger-dark: darken($base-color-danger, 20%);
-// 警告色
-$base-color-warning-light: lighten($base-color-warning, 20%);
-$base-color-warning-translucent: rgba($base-color-warning, 0.5);
-$base-color-warning-dark: darken($base-color-warning, 20%);
-// 信息色
-$base-color-info-light: lighten($base-color-info, 20%);
-$base-color-info-translucent: rgba($base-color-info, 0.5);
-$base-color-info-dark: darken($base-color-info, 20%);
+// 间隙
+$base-gap-xs: 0.4rem;
+$base-gap-sm: 0.8rem;
+$base-gap-md: 1rem; // ~12px
+$base-gap-lg: 1.2rem;
+$base-gap-xl: 1.6rem;
 
+// 布局
+$base-header-height: 5rem;
+$base-footer-height: 6rem;
+$base-container-width: 100%;
+$base-navbar-width: 160px;
+$base-aside-width: 266px;
+
+// ================================= 引用 =================================
 // 文本
 $base-text-align: left;
 $base-text-transform: none;
@@ -143,69 +150,76 @@ $base-text-font-weight: $base-font-weight;
 $base-text-color-light: $base-color-black;
 $base-text-color-light-translucent: rgba($base-text-color-light, 0.5);
 $base-text-color-light-opaque: rgba($base-text-color-light, 0.8);
-$base-text-color-light-hover: darken($base-text-color-light, 20%);
-$base-text-color-light-active: darken($base-text-color-light, 30%);
+$base-text-color-light-hover: color.adjust($base-text-color-light, $lightness: 20%);
+$base-text-color-light-active: color.adjust($base-text-color-light, $lightness: 30%);
+
 $base-text-color-dark: $base-color-white;
 $base-text-color-dark-translucent: rgba($base-text-color-dark, 0.5);
 $base-text-color-dark-opaque: rgba($base-text-color-dark, 0.8);
-$base-text-color-dark-hover: lighten($base-text-color-dark, 20%);
-$base-text-color-dark-active: lighten($base-text-color-dark, 30%);
+$base-text-color-dark-hover: color.adjust($base-text-color-dark, $lightness: 20%);
+$base-text-color-dark-active: color.adjust($base-text-color-dark, $lightness: 30%);
 // 次要文本颜色
 $base-text-color-secondary-light: $base-color-gray-1000;
-$base-text-color-secondary-light-opaque: rgba($base-text-color-secondary-light, 0.8);
-$base-text-color-secondary-light-hover: darken($base-text-color-secondary-light, 20%);
-$base-text-color-secondary-light-active: darken($base-text-color-secondary-light, 30%);
 $base-text-color-secondary-light-translucent: rgba($base-text-color-secondary-light, 0.5);
+$base-text-color-secondary-light-opaque: rgba($base-text-color-secondary-light, 0.8);
+$base-text-color-secondary-light-hover: color.adjust($base-text-color-secondary-light, $lightness: 20%);
+$base-text-color-secondary-light-active: color.adjust($base-text-color-secondary-light, $lightness: 30%);
+
 $base-text-color-secondary-dark: $base-color-gray-100;
 $base-text-color-secondary-dark-translucent: rgba($base-text-color-secondary-dark, 0.5);
 $base-text-color-secondary-dark-opaque: rgba($base-text-color-secondary-dark, 0.8);
-$base-text-color-secondary-dark-hover: lighten($base-text-color-secondary-dark, 20%);
-$base-text-color-secondary-dark-active: lighten($base-text-color-secondary-dark, 30%);
+$base-text-color-secondary-dark-hover: color.adjust($base-text-color-secondary-dark, $lightness: 20%);
+$base-text-color-secondary-dark-active: color.adjust($base-text-color-secondary-dark, $lightness: 30%);
 
 // 按钮
 $base-btn-color-light: $base-color-primary-light;
-$base-btn-color-light-hover: lighten($base-btn-color-light, 20%);
-$base-btn-color-light-active: lighten($base-btn-color-light, 30%);
 $base-btn-color-light-translucent: rgba($base-btn-color-light, 0.5);
+$base-btn-color-light-hover: color.adjust($base-btn-color-light, $lightness: 20%);
+$base-btn-color-light-active: color.adjust($base-btn-color-light, $lightness: 30%);
 $base-btn-color-light-disabled: $base-color-gray-400;
+
 $base-btn-color-dark: $base-color-primary-dark;
-$base-btn-color-dark-hover: darken($base-btn-color-dark, 20%);
-$base-btn-color-dark-active: darken($base-btn-color-dark, 30%);
 $base-btn-color-dark-translucent: rgba($base-btn-color-dark, 0.5);
+$base-btn-color-dark-hover: color.adjust($base-btn-color-dark, $lightness: 20%);
+$base-btn-color-dark-active: color.adjust($base-btn-color-dark, $lightness: 30%);
 $base-btn-color-dark-disabled: $base-color-gray-400;
 
 // 链接
-$base-link-color-light: darken($base-color-primary, 10%);
-$base-link-color-light-hover: darken($base-link-color-light, 20%);
-$base-link-color-light-active: darken($base-link-color-light, 30%);
-$base-link-color-light-visted: darken($base-link-color-light, 10%);
-$base-link-color-dark: lighten($base-color-primary, 10%);
-$base-link-color-dark-hover: lighten($base-link-color-dark, 20%);
-$base-link-color-dark-active: lighten($base-link-color-dark, 30%);
-$base-link-color-dark-visted: lighten($base-link-color-dark, 10%);
+$base-link-color-light: color.adjust($base-color-primary, $lightness: 10%);
+$base-link-color-light-visted: color.adjust($base-link-color-light, $lightness: 10%);
+$base-link-color-light-hover: color.adjust($base-link-color-light, $lightness: 20%);
+$base-link-color-light-active: color.adjust($base-link-color-light, $lightness: 30%);
+
+$base-link-color-dark: color.adjust($base-color-primary, $lightness: -10%);
+$base-link-color-dark-visted: color.adjust($base-link-color-dark, $lightness: 10%);
+$base-link-color-dark-hover: color.adjust($base-link-color-dark, $lightness: 20%);
+$base-link-color-dark-active: color.adjust($base-link-color-dark, $lightness: 30%);
 
 // 整体背景
 $base-bg-color-light: rgba($base-color-gray-200, 0.3);
 $base-bg-color-light-translucent: rgba($base-bg-color-light, 0.5);
 $base-bg-color-light-opaque: rgba($base-bg-color-light, 0.7);
-$base-bg-color-light-hover: lighten($base-bg-color-light, 20%);
-$base-bg-color-light-active: lighten($base-bg-color-light, 30%);
+$base-bg-color-light-hover: color.adjust($base-bg-color-light, $lightness: 20%);
+$base-bg-color-light-active: color.adjust($base-bg-color-light, $lightness: 30%);
+
 $base-bg-color-dark: rgba($base-color-gray-900, 0.3);
 $base-bg-color-dark-translucent: rgba($base-bg-color-dark, 0.5);
 $base-bg-color-dark-opaque: rgba($base-bg-color-dark, 0.7);
-$base-bg-color-dark-hover: darken($base-bg-color-dark, 1%);
-$base-bg-color-dark-active: darken($base-bg-color-dark, 30%);
+$base-bg-color-dark-hover: color.adjust($base-bg-color-dark, $lightness: 20%);
+$base-bg-color-dark-active: color.adjust($base-bg-color-dark, $lightness: 30%);
+
 $base-bg-filter-blur: $base-filter-blur * 2;
 
 // 模块背景
 $base-module-bg-color-light: rgba($base-color-gray-400, 0.3);
 $base-module-bg-color-light-translucent: rgba($base-module-bg-color-light, 0.5);
 $base-module-bg-color-light-opaque: rgba($base-module-bg-color-light, 0.7);
-$base-module-bg-color-light-hover: lighten($base-module-bg-color-light, 20%);
-$base-module-bg-color-light-active: lighten($base-module-bg-color-light, 30%);
+$base-module-bg-color-light-hover: color.adjust($base-module-bg-color-light, $lightness: 20%);
+$base-module-bg-color-light-active: color.adjust($base-module-bg-color-light, $lightness: 30%);
+
 $base-module-bg-color-dark: rgba($base-color-gray-700, 0.3);
 $base-module-bg-color-dark-translucent: rgba($base-module-bg-color-dark, 0.5);
 $base-module-bg-color-dark-opaque: rgba($base-module-bg-color-dark, 0.7);
-$base-module-bg-color-dark-hover: darken($base-module-bg-color-dark, 20%);
-$base-module-bg-color-dark-active: darken($base-module-bg-color-dark, 30%);
+$base-module-bg-color-dark-hover: color.adjust($base-module-bg-color-dark, $lightness: 20%);
+$base-module-bg-color-dark-active: color.adjust($base-module-bg-color-dark, $lightness: 30%);
 $base-module-bg-filter-blur: $base-filter-blur * 4;
