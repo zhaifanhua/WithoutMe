@@ -11,7 +11,7 @@
   import { RouterView } from 'vue-router';
   import AppProvider from '@/components/AppProvider.vue';
   import DefaultLayout from '@/layouts/DefaultLayout.vue';
-  import { initConsole } from '@/app/appInfo';
+  import { initConsole } from '@/utils/app/appInfo';
 
   onMounted(() => {
     initConsole();

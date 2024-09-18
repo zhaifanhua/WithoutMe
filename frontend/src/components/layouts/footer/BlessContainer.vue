@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { siteBaseInfo } from '@/app/siteInfo';
+  import { siteBaseInfo } from '@/utils/app/siteInfo';
 
   const bless = ref(siteBaseInfo.bless);
 </script>

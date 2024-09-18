@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { siteAuthorInfo, siteOptimizationInfo, siteIcpInfo } from '@/app/siteInfo';
+  import { siteAuthorInfo, siteOptimizationInfo, siteIcpInfo } from '@/utils/app/siteInfo';
 
   const siteOptimization = ref(siteOptimizationInfo);
   const siteAuthor = ref(siteAuthorInfo);

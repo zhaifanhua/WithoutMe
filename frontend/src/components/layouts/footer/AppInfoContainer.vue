@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { appInfo } from '@/app/appInfo';
+  import { appInfo } from '@/utils/app/appInfo';
 
   const appVersion = ref({
     version: appInfo.version,
