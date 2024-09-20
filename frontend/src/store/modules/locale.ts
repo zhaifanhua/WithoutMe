@@ -2,7 +2,7 @@ import type { LocaleSetting, LocaleType } from '#/config';
 import { defineStore } from 'pinia';
 import { appStore } from '@/store';
 import { getStorageItem, setStorageItem } from '@/utils/storage/storage';
-import { localeSetting } from '@/settings/localeSetting';
+import { localeSetting } from '@/settings/locale';
 import { LOCALE_KEY } from '@/enums/cacheEnum';
 
 const lsLocaleSetting = getStorageItem<LocaleSetting>(LOCALE_KEY) || localeSetting;

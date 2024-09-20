@@ -1,5 +1,5 @@
 // 页面标题聚焦插件
-import { App, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { App, reactive, ref } from 'vue';
 
 // 获取页面中的 title 标签的内容及 link 标签的图标链接
 const titleElement = document.querySelector('title');
@@ -60,17 +60,13 @@ const handleVisibilityChange = (): void => {
 };
 
 export default {
-  install: (app: App): void => {
+  install: (app: App) => {
     app.mixin({
       mounted() {
-        if (typeof document.addEventListener !== 'undefined') {
-          document.addEventListener('visibilitychange', handleVisibilityChange, false);
-        }
+        document.addEventListener('visibilitychange', handleVisibilityChange, false);
       },
       unmounted() {
-        if (typeof document.removeEventListener !== 'undefined') {
-          document.removeEventListener('visibilitychange', handleVisibilityChange);
-        }
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
       },
     });
   },

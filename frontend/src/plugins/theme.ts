@@ -220,3 +220,10 @@ const useTheme = () => {
 };
 
 export { ThemeMode, ThemeTone, THEME_STORAGE_KEY, getClientLocalTheme, createTheme, useTheme };
+
+export default {
+  install(app: App) {
+    const theme = createTheme(getClientLocalTheme().tone);
+    theme.install(app);
+  },
+};
