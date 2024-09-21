@@ -2,8 +2,8 @@
 
 <template>
   <div class="cursor-container" v-show="cursorContainerDisplay">
-    <div ref="cursor" class="cursor" :style="cursorStyle"></div>
-    <div ref="cursorTrajectory" class="cursor-trajectory" :style="cursorTrajectoryStyle"></div>
+    <div ref="cursor" class="cursor" :class="{active:mouseEventConfig.isMouseDown}" :style="cursorStyle"></div>
+    <div ref="cursorTrajectory" class="cursor-trajectory" :class="{active:mouseEventConfig.isMouseDown}" :style="cursorTrajectoryStyle"></div>
   </div>
 </template>
 
@@ -81,14 +81,14 @@
     cursorConfig.axis.left = lerpStyleLeft(cursorConfig.pageX, cursorConfig.size);
   };
   const mouseDown = (e: MouseOrTouchEvent): void => {
-    cursorRef.value.classList.add('active');
+    mouseEventConfig.isMouseDown=true;
     cursorTrajectoryRef.value.classList.add('active');
 
     mouseEventConfig.isMouseDown = true;
     mouseEventConfig.startY = e.clientY || e.touches[0].clientY || e.targetTouches[0].clientY;
   };
   const mouseUp = (e: MouseOrTouchEvent): void => {
-    cursorRef.value.classList.remove('active');
+     mouseEventConfig.isMouseDown=false;
     cursorTrajectoryRef.value.classList.remove('active');
 
     mouseEventConfig.endY = e.clientY || mouseEventConfig.endY;
