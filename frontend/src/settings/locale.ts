@@ -1,23 +1,23 @@
 import type { LocaleType, LocaleMenu, LocaleSetting } from '#/config';
 
 export const LOCALE: { [key: string]: LocaleType } = {
-  ZH_HANS: 'zh_hans',
-  EN_US: 'en_us',
+  ZH_CN: 'zh-cn',
+  EN_US: 'en-us',
 };
 
 // 语言环境设置
 export const localeSetting: LocaleSetting = {
   showPicker: true,
-  locale: LOCALE.ZH_HANS,
-  fallback: LOCALE.ZH_HANS,
-  availableLocales: [LOCALE.ZH_HANS, LOCALE.EN_US],
+  locale: LOCALE.ZH_CN,
+  fallback: LOCALE.ZH_CN,
+  availableLocales: [LOCALE.ZH_CN, LOCALE.EN_US],
 };
 
 // 语言环境列表
 export const localeList: LocaleMenu[] = [
   {
     text: '简体中文',
-    event: LOCALE.ZH_HANS,
+    event: LOCALE.ZH_CN,
   },
   {
     text: 'English',

@@ -3,7 +3,7 @@
  */
 
 // 语言
-export declare type LocaleType = 'zh_hans' | 'en_us';
+export declare type LocaleType = 'zh-cn' | 'en-us';
 
 export interface LocaleMenu {
   text: string;

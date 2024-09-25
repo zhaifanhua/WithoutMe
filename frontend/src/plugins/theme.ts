@@ -209,21 +209,22 @@ const createTheme = (initTheme: ThemeTone) => {
 
   return {
     ...themeState,
-    install(app: App) {
-      app.provide(ThemeSymbol, themeState);
-    },
   };
 };
 
+// 插件对象
+const themePlugin = {
+  install(app: App) {
+    const initialTheme = getClientLocalTheme().tone;
+    const theme = createTheme(initialTheme);
+    app.provide(ThemeSymbol, theme);
+  },
+};
+
+// 使用主题的组合式函数
 const useTheme = () => {
   return inject(ThemeSymbol) as Omit<ReturnType<typeof createTheme>, 'install'>;
 };
 
-export { ThemeMode, ThemeTone, THEME_STORAGE_KEY, getClientLocalTheme, createTheme, useTheme };
-
-export default {
-  install(app: App) {
-    const theme = createTheme(getClientLocalTheme().tone);
-    theme.install(app);
-  },
-};
+export { ThemeMode, ThemeTone, THEME_STORAGE_KEY, getClientLocalTheme, useTheme };
+export default themePlugin;
