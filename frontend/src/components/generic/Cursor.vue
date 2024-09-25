@@ -2,8 +2,13 @@
 
 <template>
   <div class="cursor-container" v-show="cursorContainerDisplay">
-    <div ref="cursor" class="cursor" :class="{active:mouseEventConfig.isMouseDown}" :style="cursorStyle"></div>
-    <div ref="cursorTrajectory" class="cursor-trajectory" :class="{active:mouseEventConfig.isMouseDown}" :style="cursorTrajectoryStyle"></div>
+    <div ref="cursor" class="cursor" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorStyle"></div>
+    <div
+      ref="cursorTrajectory"
+      class="cursor-trajectory"
+      :class="{ active: mouseEventConfig.isMouseDown }"
+      :style="cursorTrajectoryStyle"
+    ></div>
   </div>
 </template>
 
@@ -81,14 +86,14 @@
     cursorConfig.axis.left = lerpStyleLeft(cursorConfig.pageX, cursorConfig.size);
   };
   const mouseDown = (e: MouseOrTouchEvent): void => {
-    mouseEventConfig.isMouseDown=true;
+    mouseEventConfig.isMouseDown = true;
     cursorTrajectoryRef.value.classList.add('active');
 
     mouseEventConfig.isMouseDown = true;
     mouseEventConfig.startY = e.clientY || e.touches[0].clientY || e.targetTouches[0].clientY;
   };
   const mouseUp = (e: MouseOrTouchEvent): void => {
-     mouseEventConfig.isMouseDown=false;
+    mouseEventConfig.isMouseDown = false;
     cursorTrajectoryRef.value.classList.remove('active');
 
     mouseEventConfig.endY = e.clientY || mouseEventConfig.endY;
@@ -116,12 +121,12 @@
   // 计算样式
   const lerpStyleTop = (y: number, size: number): number => {
     let top = y - size / 2;
-    let scrollHeight = document.body.scrollHeight;
+    let scrollHeight = document.documentElement.scrollHeight;
     return top < 0 ? 0 : top > scrollHeight - size ? scrollHeight - size : top;
   };
   const lerpStyleLeft = (x: number, size: number): number => {
     let left = x - size / 2;
-    let scrollWidth = document.body.scrollWidth;
+    let scrollWidth = document.documentElement.scrollWidth;
     return left < 0 ? 0 : left > scrollWidth - size ? scrollWidth - size : left;
   };
 
