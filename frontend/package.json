@@ -50,6 +50,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^9.28.0",
+    "ncu": "^0.2.1",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "sass": "^1.79.1",
@@ -58,5 +59,10 @@
     "typescript": "^5.6.2",
     "vite": "^5.4.6"
   },
-  "packageManager": "pnpm@8.1.0"
+  "engines": {
+    "node": "^22.9.0",
+    "npm": "^10.8.3",
+    "pnpm": "^9.11.0"
+  },
+  "packageManager": "pnpm@9.11.0"
 }

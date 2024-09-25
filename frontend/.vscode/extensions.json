@@ -9,7 +9,7 @@
     "mrmlnc.vscode-scss",
     "adamwalzer.scss-lint",
     "stylelint.vscode-stylelint",
-    "vscode-icons-team.vscode-icons",
-    "vue.volar"
+    "vue.volar",
+    "pkief.material-icon-theme"
   ]
 }
