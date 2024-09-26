@@ -1,12 +1,8 @@
 // clean.js
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
-
-const directoriesToDelete = [
-  'dist',
-  'node_modules'
-];
+const directoriesToDelete = ["dist", "node_modules"];
 
 // 删除文件夹
 directoriesToDelete.forEach(dir => {

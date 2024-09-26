@@ -1,11 +1,8 @@
 // clean.js
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
-const filesToDelete = [
-  'pnpm-lock.yaml',
-  'package-lock.json'
-];
+const filesToDelete = ["pnpm-lock.yaml", "package-lock.json"];
 
 // 删除文件
 filesToDelete.forEach(file => {
