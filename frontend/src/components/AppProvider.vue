@@ -5,15 +5,14 @@
     <Cursor></Cursor>
     <!-- <Loading></Loading>
     <Notification></Notification> -->
-    <Background></Background>
     <!-- <MusicPlayer></MusicPlayer> -->
+    <Background></Background>
   </div>
   <slot></slot>
 </template>
 
 <script setup lang="ts">
   import Cursor from "@/components/generic/Cursor.vue";
-
   import Loading from "@/components/generic/Loading.vue";
   import Notification from "@/components/generic/Notification.vue";
   import Background from "@/components/generic/Background.vue";

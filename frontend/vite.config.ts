@@ -1,7 +1,7 @@
-import { resolve } from 'node:path';
-import { loadEnv, defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import pkg from './package.json';
+import { resolve } from "node:path";
+import { loadEnv, defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import pkg from "./package.json";
 
 const appInfo: AppInfo = {
   name: pkg.name,
@@ -16,7 +16,7 @@ const appInfo: AppInfo = {
 };
 
 export default defineConfig(({ command, mode }) => {
-  const envConfig = loadEnv(mode, process.cwd(), '');
+  const envConfig = loadEnv(mode, process.cwd(), "");
 
   return {
     root: resolve(__dirname),
@@ -27,53 +27,53 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       alias: [
         {
-          find: '@',
-          replacement: resolve(__dirname, 'src'),
+          find: "@",
+          replacement: resolve(__dirname, "src"),
         },
         {
-          find: '/@',
-          replacement: resolve(__dirname, 'src'),
+          find: "/@",
+          replacement: resolve(__dirname, "src"),
         },
         {
-          find: '#',
-          replacement: resolve(__dirname, 'types'),
+          find: "#",
+          replacement: resolve(__dirname, "types"),
         },
         {
-          find: '/#',
-          replacement: resolve(__dirname, 'types'),
+          find: "/#",
+          replacement: resolve(__dirname, "types"),
         },
         {
-          find: '~',
-          replacement: resolve(__dirname, ''),
+          find: "~",
+          replacement: resolve(__dirname, ""),
         },
         {
-          find: '/~',
-          replacement: resolve(__dirname, ''),
+          find: "/~",
+          replacement: resolve(__dirname, ""),
         },
       ],
     },
     server: {
-      host: '0.0.0.0',
+      host: "0.0.0.0",
       port: 3000,
       open: true,
       proxy: {
         [envConfig.VITE_API_PROXY_URL]: {
           target: envConfig.VITE_API_ONLINE_URL,
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, ''),
+          rewrite: path => path.replace(/^\/api/, ""),
         },
       },
     },
     build: {
-      outDir: 'dist',
-      assetsDir: 'assets',
-      minify: 'terser',
+      outDir: "dist",
+      assetsDir: "assets",
+      minify: "terser",
       sourcemap: true,
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return id.toString().split('node_modules/')[1].split('/')[0].toString();
+            if (id.includes("node_modules")) {
+              return id.toString().split("node_modules/")[1].split("/")[0].toString();
             }
           },
         },

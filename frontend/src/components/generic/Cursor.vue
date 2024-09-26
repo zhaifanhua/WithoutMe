@@ -1,19 +1,17 @@
 <!-- 光标组件 -->
 
 <template>
-  <div class="cursor-container" v-show="cursorContainerDisplay">
-    <div ref="cursor" class="cursor" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorStyle"></div>
-    <div ref="cursorTrajectory" class="cursor-trajectory" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorTrajectoryStyle"></div>
+  <div class="cursor-container" v-show="isCursorVisible">
+    <div class="cursor" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorStyle"></div>
+    <div class="cursor-trajectory" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorTrajectoryStyle"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, reactive, ref, useTemplateRef, computed } from "vue";
+  import { reactive, ref, computed, onMounted, onUnmounted } from "vue";
 
-  // 定义光标容器、是否显示、光标、光标轨迹、光标轨迹速度
-  const cursorRef = useTemplateRef("cursor");
-  const cursorTrajectoryRef = useTemplateRef("cursorTrajectory");
-  const cursorContainerDisplay = ref<boolean>(false);
+  // 定义光标是否显示、光标轨迹速度
+  const isCursorVisible = ref<boolean>(false);
   const cursorSpeed = ref(0.16);
 
   // 定义光标及光标轨迹大小、相对坐标、光标坐标
@@ -49,14 +47,15 @@
   }));
 
   // 初始化函数
-  const init = (): void => {
+  const init = () => {
     // 移动端不显示
-    cursorContainerDisplay.value = "ontouchstart" in window ? false : true;
-
-    loop();
+    isCursorVisible.value = !("ontouchstart" in window);
+    if (isCursorVisible.value) {
+      loop();
+    }
   };
   // 循环动画函数
-  const loop = (): void => {
+  const loop = () => {
     cursorConfig.clientX = lerp(cursorConfig.clientX, cursorConfig.pageX, cursorSpeed.value);
     cursorConfig.clientY = lerp(cursorConfig.clientY, cursorConfig.pageY, cursorSpeed.value);
     cursorTrajectoryConfig.axis.top = lerpStyleTop(cursorConfig.clientY, cursorTrajectoryConfig.size);
@@ -73,33 +72,17 @@
   });
 
   // 鼠标事件
-  const mouseMove = (e: MouseEvent): void => {
+  const mouseMove = (e: MouseEvent) => {
     cursorConfig.pageX = e.pageX;
     cursorConfig.pageY = e.pageY;
     cursorConfig.axis.top = lerpStyleTop(cursorConfig.pageY, cursorConfig.size);
     cursorConfig.axis.left = lerpStyleLeft(cursorConfig.pageX, cursorConfig.size);
   };
-  const mouseDown = (e: MouseEvent): void => {
+  const mouseDown = () => {
     mouseEventConfig.isMouseDown = true;
-    cursorTrajectoryRef.value.classList.add("active");
-
-    mouseEventConfig.isMouseDown = true;
-    mouseEventConfig.startY = e.clientY;
   };
-  const mouseUp = (e: MouseEvent): void => {
+  const mouseUp = () => {
     mouseEventConfig.isMouseDown = false;
-    cursorTrajectoryRef.value.classList.remove("active");
-
-    mouseEventConfig.endY = e.clientY || mouseEventConfig.endY;
-    if (
-      mouseEventConfig.isMouseDown &&
-      mouseEventConfig.startY &&
-      Math.abs(mouseEventConfig.startY - mouseEventConfig.endY) >= cursorConfig.size + cursorTrajectoryConfig.size
-    ) {
-      mouseEventConfig.isMouseDown = false;
-      mouseEventConfig.startY = null;
-      mouseEventConfig.endY = null;
-    }
   };
 
   // 计算光标与光标轨迹距离
@@ -122,10 +105,18 @@
   // 在组件挂载时执行初始化和事件监听
   onMounted(() => {
     init();
-    if (typeof document.body.addEventListener !== "undefined") {
-      document.body.addEventListener("mousedown", mouseDown, false);
-      document.body.addEventListener("mousemove", mouseMove, false);
-      document.body.addEventListener("mouseup", mouseUp, false);
+    if (isCursorVisible.value) {
+      document.addEventListener("mousedown", mouseDown);
+      document.addEventListener("mousemove", mouseMove);
+      document.addEventListener("mouseup", mouseUp);
+    }
+  });
+
+  onUnmounted(() => {
+    if (isCursorVisible.value) {
+      document.removeEventListener("mousedown", mouseDown);
+      document.removeEventListener("mousemove", mouseMove);
+      document.removeEventListener("mouseup", mouseUp);
     }
   });
 </script>

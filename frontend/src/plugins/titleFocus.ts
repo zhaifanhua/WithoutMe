@@ -29,7 +29,7 @@ const linkConfig = reactive({
 });
 
 // 页面可见性变化时的标题与图标链接调整
-const handleVisibilityChange = (): void => {
+const handleVisibilityChange = () => {
   const { onblurTime, focusTime } = setTimeoutConfig.setTimeout;
   const { onblurTitle, focusTitle } = titleConfig.title;
   const { onblurLink, focusLink } = linkConfig.icon;
@@ -59,15 +59,28 @@ const handleVisibilityChange = (): void => {
   }
 };
 
+const setupTitleFocus = () => {
+  document.addEventListener("visibilitychange", handleVisibilityChange, false);
+};
+const cleanupTitleFocus = () => {
+  document.removeEventListener("visibilitychange", handleVisibilityChange);
+};
+
 export default {
   install: (app: App) => {
-    app.mixin({
-      mounted() {
-        document.addEventListener("visibilitychange", handleVisibilityChange, false);
-      },
-      unmounted() {
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
-      },
-    });
+    // 在应用启动时设置事件监听器
+    setupTitleFocus();
+
+    // 在应用卸载时移除事件监听器
+    app.config.globalProperties.$titleFocus = {
+      setup: setupTitleFocus,
+      cleanup: cleanupTitleFocus,
+    };
+
+    // 提供一个全局的组合式函数
+    app.provide("useTitleFocus", () => ({
+      setup: setupTitleFocus,
+      cleanup: cleanupTitleFocus,
+    }));
   },
 };

@@ -4,12 +4,8 @@
 
 import type { App } from "vue";
 
-import titleFocusPlugin from "@/plugins/titleFocus";
-import themePlugin from "@/plugins/theme";
-// import lozadPlugin from '@/plugins/lozad';
+import TitleFocusPlugin from "@/plugins/titleFocus";
 
 export async function setupPlugins(app: App<Element>) {
-  app.use(titleFocusPlugin);
-  app.use(themePlugin);
-  // app.use(lozadPlugin);
+  app.use(TitleFocusPlugin);
 }
