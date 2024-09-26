@@ -1,14 +1,19 @@
 <!-- 光标组件 -->
 
 <template>
-  <div class="cursor-container" v-show="cursorContainerDisplay">
-    <div ref="cursor" class="cursor" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorStyle"></div>
+  <div
+    class="cursor-container"
+    v-show="cursorContainerDisplay">
+    <div
+      ref="cursor"
+      class="cursor"
+      :class="{ active: mouseEventConfig.isMouseDown }"
+      :style="cursorStyle"></div>
     <div
       ref="cursorTrajectory"
       class="cursor-trajectory"
       :class="{ active: mouseEventConfig.isMouseDown }"
-      :style="cursorTrajectoryStyle"
-    ></div>
+      :style="cursorTrajectoryStyle"></div>
   </div>
 </template>
 
@@ -78,21 +83,20 @@
   });
 
   // 鼠标事件
-  type MouseOrTouchEvent = MouseEvent & TouchEvent;
-  const mouseMove = (e: MouseOrTouchEvent): void => {
+  const mouseMove = (e: MouseEvent): void => {
     cursorConfig.pageX = e.pageX;
     cursorConfig.pageY = e.pageY;
     cursorConfig.axis.top = lerpStyleTop(cursorConfig.pageY, cursorConfig.size);
     cursorConfig.axis.left = lerpStyleLeft(cursorConfig.pageX, cursorConfig.size);
   };
-  const mouseDown = (e: MouseOrTouchEvent): void => {
+  const mouseDown = (e: MouseEvent): void => {
     mouseEventConfig.isMouseDown = true;
     cursorTrajectoryRef.value.classList.add('active');
 
     mouseEventConfig.isMouseDown = true;
     mouseEventConfig.startY = e.clientY || e.touches[0].clientY || e.targetTouches[0].clientY;
   };
-  const mouseUp = (e: MouseOrTouchEvent): void => {
+  const mouseUp = (e: MouseEvent): void => {
     mouseEventConfig.isMouseDown = false;
     cursorTrajectoryRef.value.classList.remove('active');
 
@@ -105,11 +109,6 @@
       mouseEventConfig.isMouseDown = false;
       mouseEventConfig.startY = null;
       mouseEventConfig.endY = null;
-    }
-  };
-  const touchMove = (e: MouseOrTouchEvent): void => {
-    if (mouseEventConfig.isMouseDown) {
-      mouseEventConfig.endY = e.touches[0].clientY || e.targetTouches[0].clientY;
     }
   };
 
@@ -135,23 +134,8 @@
     init();
     if (typeof document.body.addEventListener !== 'undefined') {
       document.body.addEventListener('mousedown', mouseDown, false);
-      document.body.addEventListener('touchstart', mouseDown, false);
       document.body.addEventListener('mousemove', mouseMove, false);
-      document.body.addEventListener('touchmove', touchMove, false);
-      document.body.addEventListener('touchend', mouseUp, false);
       document.body.addEventListener('mouseup', mouseUp, false);
-    }
-  });
-
-  // 在组件卸载时移除事件监听
-  onUnmounted(() => {
-    if (typeof document.removeEventListener !== 'undefined') {
-      document.body.removeEventListener('mousedown', mouseDown);
-      document.body.removeEventListener('touchstart', mouseDown);
-      document.body.removeEventListener('mousemove', mouseMove);
-      document.body.removeEventListener('touchmove', touchMove);
-      document.body.removeEventListener('touchend', mouseUp);
-      document.body.removeEventListener('mouseup', mouseUp);
     }
   });
 </script>
