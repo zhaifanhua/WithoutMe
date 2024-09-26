@@ -58,8 +58,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { siteAuthorInfo, siteOptimizationInfo, siteIcpInfo } from '@/utils/app/siteInfo';
+  import { ref } from "vue";
+  import { siteAuthorInfo, siteOptimizationInfo, siteIcpInfo } from "@/utils/app/siteInfo";
 
   const siteOptimization = ref(siteOptimizationInfo);
   const siteAuthor = ref(siteAuthorInfo);
@@ -67,8 +67,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .site-info-container {
     grid-area: site-info-container;

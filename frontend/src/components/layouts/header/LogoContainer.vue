@@ -9,14 +9,14 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref } from "vue";
 
   const env = import.meta.env;
   const siteLogo = ref(env.VITE_SITE_LOGO);
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
+  @import "@/styles/base/mixins.scss";
 
   .logo-container {
     grid-area: logo-container;

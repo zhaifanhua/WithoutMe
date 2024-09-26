@@ -5,7 +5,7 @@
     <div class="player-controls">
       <button @click="prevSong">上一曲</button>
       <button @click="togglePlay" :class="{ playing: isPlaying }">
-        {{ isPlaying ? '暂停' : '播放' }}
+        {{ isPlaying ? "暂停" : "播放" }}
       </button>
       <button @click="nextSong">下一曲</button>
       <button @click="toggleMute" :class="{ muted: isMuted }">静音</button>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch, onMounted, nextTick } from 'vue';
+  import { ref, computed, watch, onMounted, nextTick } from "vue";
 
   interface Song {
     title: string;
@@ -33,9 +33,9 @@
   const songs: Song[] = [
     // 示例歌曲数据
     {
-      title: 'Song 1',
-      url: 'music/1.mp3',
-      lyrics: ['[00:00.00]Lyric line 1', '[00:05.00]Lyric line 2'],
+      title: "Song 1",
+      url: "music/1.mp3",
+      lyrics: ["[00:00.00]Lyric line 1", "[00:05.00]Lyric line 2"],
     },
     // ...更多歌曲
   ];
@@ -110,7 +110,7 @@
 
   onMounted(() => {
     loadSong(0);
-    audioElement.value?.addEventListener('timeupdate', syncLyrics);
+    audioElement.value?.addEventListener("timeupdate", syncLyrics);
   });
 
   watch(isPlaying, newVal => {
@@ -135,7 +135,7 @@
   }
 
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     background-color: $background-color;
     color: $text-color;
     display: flex;

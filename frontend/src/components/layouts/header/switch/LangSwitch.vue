@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
-  import { Icon } from '@iconify/vue';
+  import { computed } from "vue";
+  import { Icon } from "@iconify/vue";
   // import { Language } from '@/language';
   // import { useEnhancer } from '@/app/enhancer';
 
@@ -30,8 +30,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .lang-switch {
     grid-area: lang-switch;

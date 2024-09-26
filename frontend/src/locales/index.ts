@@ -1,9 +1,9 @@
-import type { App } from 'vue';
-import type { I18n, I18nOptions } from 'vue-i18n';
-import { createI18n } from 'vue-i18n';
-import { setHtmlPageLang, setLoadLocalePool } from './common';
-import { localeSetting } from '@/settings/locale';
-import { useLocaleStoreWithOut } from '@/store/modules/locale';
+import type { App } from "vue";
+import type { I18n, I18nOptions } from "vue-i18n";
+import { createI18n } from "vue-i18n";
+import { setHtmlPageLang, setLoadLocalePool } from "./common";
+import { localeSetting } from "@/settings/locale";
+import { useLocaleStoreWithOut } from "@/store/modules/locale";
 
 const { fallback, availableLocales } = localeSetting;
 

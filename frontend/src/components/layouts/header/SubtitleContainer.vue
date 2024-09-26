@@ -9,15 +9,15 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref } from "vue";
 
   const env = import.meta.env;
   const siteSubtitle = ref(env.VITE_SITE_SUBTITLE_CN);
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .subtitle-container {
     grid-area: subtitle-container;

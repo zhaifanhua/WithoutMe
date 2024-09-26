@@ -1,6 +1,6 @@
 // 指令
 
-@import './variables.scss';
+@import "./variables.scss";
 
 // 混合响应 断点配置
 $breakpoints: (
@@ -89,7 +89,7 @@ $z-layers: (
 // 清除浮动
 @mixin useClearFix {
   &::after {
-    content: '';
+    content: "";
     display: table;
     clear: both;
   }

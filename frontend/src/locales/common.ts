@@ -1,5 +1,5 @@
-import { set } from 'lodash-es';
-import type { LocaleType } from '#/config';
+import { set } from "lodash-es";
+import type { LocaleType } from "#/config";
 
 export const loadLocalePool: LocaleType[] = [];
 
@@ -12,7 +12,7 @@ export const loadLocalePool: LocaleType[] = [];
  * @param locale 页面语言的标识符
  */
 export function setHtmlPageLang(locale: LocaleType) {
-  document.querySelector('html')?.setAttribute('lang', locale);
+  document.querySelector("html")?.setAttribute("lang", locale);
 }
 
 /**
@@ -38,7 +38,7 @@ export function setLoadLocalePool(cb: (loadLocalePool: LocaleType[]) => void) {
  * @param prefix - 语言文件夹的前缀，默认为'lang'，用于在文件路径中识别语言文件
  * @returns 返回一个对象，该对象的结构反映了语言文件的路径结构，值是语言文件的内容
  */
-export function genMessage(langs: Record<string, Record<string, any>>, prefix = 'lang') {
+export function genMessage(langs: Record<string, Record<string, any>>, prefix = "lang") {
   const obj: Recordable = {};
 
   // 遍历每个语言文件的路径和内容
@@ -46,13 +46,13 @@ export function genMessage(langs: Record<string, Record<string, any>>, prefix = 
     // 获取语言文件模块的内容，假设是默认导出
     const langFileModule = langs[key].default;
     // 处理文件路径，去除前缀和文件扩展名，得到用于对象属性的键
-    let fileName = key.replace(`./${prefix}/`, '').replace(/^\.\//, '');
-    const lastIndex = fileName.lastIndexOf('.');
+    let fileName = key.replace(`./${prefix}/`, "").replace(/^\.\//, "");
+    const lastIndex = fileName.lastIndexOf(".");
     fileName = fileName.substring(0, lastIndex);
-    const keyList = fileName.split('/');
+    const keyList = fileName.split("/");
     // 移除第一个部分作为模块名，剩余部分组成键路径
     const moduleName = keyList.shift();
-    const objKey = keyList.join('.');
+    const objKey = keyList.join(".");
 
     // 如果有有效的模块名
     if (moduleName) {

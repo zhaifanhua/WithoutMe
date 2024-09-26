@@ -1,10 +1,10 @@
-import { genMessage } from '../common';
+import { genMessage } from "../common";
 
-const modules = import.meta.glob('./zh-cn/**/*.ts');
+const modules = import.meta.glob("./zh-cn/**/*.ts");
 export default {
   message: {
-    ...genMessage(modules, 'zh-cn'),
+    ...genMessage(modules, "zh-cn"),
   },
   momentLocale: null,
-  momentLocaleName: 'zh-cn',
+  momentLocaleName: "zh-cn",
 };

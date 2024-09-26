@@ -11,15 +11,15 @@
 </template>
 
 <script setup lang="ts">
-  import ContentContainer from '@/components/generic/ContentContainer.vue';
-  import LogoContainer from '@/components/layouts/header/LogoContainer.vue';
-  import SubtitleContainer from '@/components/layouts/header/SubtitleContainer.vue';
-  import SwitchContainer from '@/components/layouts/header/SwitchContainer.vue';
+  import ContentContainer from "@/components/generic/ContentContainer.vue";
+  import LogoContainer from "@/components/layouts/header/LogoContainer.vue";
+  import SubtitleContainer from "@/components/layouts/header/SubtitleContainer.vue";
+  import SwitchContainer from "@/components/layouts/header/SwitchContainer.vue";
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .header {
     grid-area: header;
@@ -43,7 +43,7 @@
       display: grid;
       grid-template-rows: 1fr;
       grid-template-columns: auto 1fr auto auto auto auto;
-      grid-template-areas: 'logo-container subtitle-container switch-container';
+      grid-template-areas: "logo-container subtitle-container switch-container";
     }
   }
 </style>

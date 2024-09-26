@@ -1,18 +1,18 @@
 <template>
   <!-- sidebar-start -->
   <aside id="sidebar" class="sidebar">
-    <div> 广告位 </div>
+    <div>广告位</div>
   </aside>
   <!-- sidebar-end -->
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue';
+  import { Icon } from "@iconify/vue";
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .sidebar {
     grid-area: sidebar;

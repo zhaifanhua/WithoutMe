@@ -1,6 +1,6 @@
 // 主题
 
-@import './variables.scss';
+@import "./variables.scss";
 
 $themes: (
   // 浅色主题
@@ -95,7 +95,7 @@ $currentTheme: light;
 @mixin useTheme() {
   @each $theme, $map in $themes {
     $currentTheme: $theme !global;
-    html[data-theme='#{$theme}'] & {
+    html[data-theme="#{$theme}"] & {
       @content;
     }
   }

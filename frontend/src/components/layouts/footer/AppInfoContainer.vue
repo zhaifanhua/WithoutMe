@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { appInfo } from '@/utils/app/appInfo';
+  import { ref } from "vue";
+  import { appInfo } from "@/utils/app/appInfo";
 
   const appVersion = ref({
     version: appInfo.version,
@@ -30,8 +30,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .app-info-container {
     grid-area: app-info-container;

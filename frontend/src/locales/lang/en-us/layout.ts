@@ -1,11 +1,11 @@
 export default {
   home: {
-    name: 'home',
+    name: "home",
   },
   tabs: {
-    work: 'Work',
-    private: 'Private',
-    collect: 'Collect',
-    like: 'Like',
+    work: "Work",
+    private: "Private",
+    collect: "Collect",
+    like: "Like",
   },
 };

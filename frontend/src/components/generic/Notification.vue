@@ -7,9 +7,9 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
-  @import '@/styles/site';
+  @import "@/styles/site";
 
   .notification {
-    @include useZindex('notification');
+    @include useZindex("notification");
   }
 </style>

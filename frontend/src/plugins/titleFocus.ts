@@ -1,12 +1,12 @@
 // 页面标题聚焦插件
-import { App, reactive, ref } from 'vue';
+import { App, reactive, ref } from "vue";
 
 // 获取页面中的 title 标签的内容及 link 标签的图标链接
-const titleElement = document.querySelector('title');
+const titleElement = document.querySelector("title");
 const iconLinkElement = document.querySelector("link[rel~='icon']");
 // 原始标题及图标链接
 const originalTitle = ref(titleElement.textContent);
-const originalIconLink = ref(iconLinkElement.getAttribute('href'));
+const originalIconLink = ref(iconLinkElement.getAttribute("href"));
 
 // 配置项
 const setTimeoutConfig = reactive({
@@ -17,14 +17,14 @@ const setTimeoutConfig = reactive({
 });
 const titleConfig = reactive({
   title: {
-    onblurTitle: '😭 离开我了！',
-    focusTitle: '😉 欢迎回来！',
+    onblurTitle: "😭 离开我了！",
+    focusTitle: "😉 欢迎回来！",
   },
 });
 const linkConfig = reactive({
   icon: {
-    onblurLink: '/images/icon/onblur.svg',
-    focusLink: '/images/icon/focus.svg',
+    onblurLink: "/images/icon/onblur.svg",
+    focusLink: "/images/icon/focus.svg",
   },
 });
 
@@ -39,7 +39,7 @@ const handleVisibilityChange = (): void => {
     if (onblurTime >= 0) {
       setTimeout(() => {
         titleElement.textContent = onblurTitle;
-        iconLinkElement.setAttribute('href', onblurLink);
+        iconLinkElement.setAttribute("href", onblurLink);
       }, onblurTime);
     }
   }
@@ -47,14 +47,14 @@ const handleVisibilityChange = (): void => {
   else {
     if (focusTime >= 0) {
       titleElement.textContent = focusTitle;
-      iconLinkElement.setAttribute('href', focusLink);
+      iconLinkElement.setAttribute("href", focusLink);
       setTimeout(() => {
         titleElement.textContent = originalTitle.value;
-        iconLinkElement.setAttribute('href', originalIconLink.value);
+        iconLinkElement.setAttribute("href", originalIconLink.value);
       }, focusTime);
     } else {
       titleElement.textContent = originalTitle.value;
-      iconLinkElement.setAttribute('href', originalIconLink.value);
+      iconLinkElement.setAttribute("href", originalIconLink.value);
     }
   }
 };
@@ -63,10 +63,10 @@ export default {
   install: (app: App) => {
     app.mixin({
       mounted() {
-        document.addEventListener('visibilitychange', handleVisibilityChange, false);
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
       },
       unmounted() {
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
       },
     });
   },

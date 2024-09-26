@@ -1,28 +1,18 @@
 <!-- 光标组件 -->
 
 <template>
-  <div
-    class="cursor-container"
-    v-show="cursorContainerDisplay">
-    <div
-      ref="cursor"
-      class="cursor"
-      :class="{ active: mouseEventConfig.isMouseDown }"
-      :style="cursorStyle"></div>
-    <div
-      ref="cursorTrajectory"
-      class="cursor-trajectory"
-      :class="{ active: mouseEventConfig.isMouseDown }"
-      :style="cursorTrajectoryStyle"></div>
+  <div class="cursor-container" v-show="cursorContainerDisplay">
+    <div ref="cursor" class="cursor" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorStyle"></div>
+    <div ref="cursorTrajectory" class="cursor-trajectory" :class="{ active: mouseEventConfig.isMouseDown }" :style="cursorTrajectoryStyle"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, reactive, ref, useTemplateRef, computed } from 'vue';
+  import { onMounted, reactive, ref, useTemplateRef, computed } from "vue";
 
   // 定义光标容器、是否显示、光标、光标轨迹、光标轨迹速度
-  const cursorRef = useTemplateRef('cursor');
-  const cursorTrajectoryRef = useTemplateRef('cursorTrajectory');
+  const cursorRef = useTemplateRef("cursor");
+  const cursorTrajectoryRef = useTemplateRef("cursorTrajectory");
   const cursorContainerDisplay = ref<boolean>(false);
   const cursorSpeed = ref(0.16);
 
@@ -48,20 +38,20 @@
 
   // 光标样式
   const cursorStyle = computed(() => ({
-    '--cursor-size': cursorConfig.size + 'px',
-    top: cursorConfig.axis.top + 'px',
-    left: cursorConfig.axis.left + 'px',
+    "--cursor-size": cursorConfig.size + "px",
+    top: cursorConfig.axis.top + "px",
+    left: cursorConfig.axis.left + "px",
   }));
   const cursorTrajectoryStyle = computed(() => ({
-    '--cursor-size': cursorTrajectoryConfig.size + 'px',
-    top: cursorTrajectoryConfig.axis.top + 'px',
-    left: cursorTrajectoryConfig.axis.left + 'px',
+    "--cursor-size": cursorTrajectoryConfig.size + "px",
+    top: cursorTrajectoryConfig.axis.top + "px",
+    left: cursorTrajectoryConfig.axis.left + "px",
   }));
 
   // 初始化函数
   const init = (): void => {
     // 移动端不显示
-    cursorContainerDisplay.value = 'ontouchstart' in window ? false : true;
+    cursorContainerDisplay.value = "ontouchstart" in window ? false : true;
 
     loop();
   };
@@ -91,14 +81,14 @@
   };
   const mouseDown = (e: MouseEvent): void => {
     mouseEventConfig.isMouseDown = true;
-    cursorTrajectoryRef.value.classList.add('active');
+    cursorTrajectoryRef.value.classList.add("active");
 
     mouseEventConfig.isMouseDown = true;
-    mouseEventConfig.startY = e.clientY || e.touches[0].clientY || e.targetTouches[0].clientY;
+    mouseEventConfig.startY = e.clientY;
   };
   const mouseUp = (e: MouseEvent): void => {
     mouseEventConfig.isMouseDown = false;
-    cursorTrajectoryRef.value.classList.remove('active');
+    cursorTrajectoryRef.value.classList.remove("active");
 
     mouseEventConfig.endY = e.clientY || mouseEventConfig.endY;
     if (
@@ -132,16 +122,16 @@
   // 在组件挂载时执行初始化和事件监听
   onMounted(() => {
     init();
-    if (typeof document.body.addEventListener !== 'undefined') {
-      document.body.addEventListener('mousedown', mouseDown, false);
-      document.body.addEventListener('mousemove', mouseMove, false);
-      document.body.addEventListener('mouseup', mouseUp, false);
+    if (typeof document.body.addEventListener !== "undefined") {
+      document.body.addEventListener("mousedown", mouseDown, false);
+      document.body.addEventListener("mousemove", mouseMove, false);
+      document.body.addEventListener("mouseup", mouseUp, false);
     }
   });
 </script>
 
 <style lang="scss">
-  @import '@/styles/base/mixins.scss';
+  @import "@/styles/base/mixins.scss";
   // @import '@/styles/base/themes.scss';
 
   .cursor,

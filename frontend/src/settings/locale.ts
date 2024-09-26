@@ -1,8 +1,8 @@
-import type { LocaleType, LocaleMenu, LocaleSetting } from '#/config';
+import type { LocaleType, LocaleMenu, LocaleSetting } from "#/config";
 
 export const LOCALE: { [key: string]: LocaleType } = {
-  ZH_CN: 'zh-cn',
-  EN_US: 'en-us',
+  ZH_CN: "zh-cn",
+  EN_US: "en-us",
 };
 
 // 语言环境设置
@@ -16,11 +16,11 @@ export const localeSetting: LocaleSetting = {
 // 语言环境列表
 export const localeList: LocaleMenu[] = [
   {
-    text: '简体中文',
+    text: "简体中文",
     event: LOCALE.ZH_CN,
   },
   {
-    text: 'English',
+    text: "English",
     event: LOCALE.EN_US,
   },
 ];

@@ -7,12 +7,12 @@
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue';
+  import { Icon } from "@iconify/vue";
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .main-content {
     grid-area: main-content;

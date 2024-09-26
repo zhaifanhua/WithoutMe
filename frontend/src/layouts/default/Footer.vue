@@ -11,15 +11,15 @@
 </template>
 
 <script setup lang="ts">
-  import ContentContainer from '@/components/generic/ContentContainer.vue';
-  import BlessContainer from '@/components/layouts/footer/BlessContainer.vue';
-  import SiteInfoContainer from '@/components/layouts/footer/SiteInfoContainer.vue';
-  import AppInfoContainer from '@/components/layouts/footer/AppInfoContainer.vue';
+  import ContentContainer from "@/components/generic/ContentContainer.vue";
+  import BlessContainer from "@/components/layouts/footer/BlessContainer.vue";
+  import SiteInfoContainer from "@/components/layouts/footer/SiteInfoContainer.vue";
+  import AppInfoContainer from "@/components/layouts/footer/AppInfoContainer.vue";
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .footer {
     grid-area: footer;
@@ -43,7 +43,7 @@
       display: grid;
       grid-template-rows: 1fr;
       grid-template-columns: auto auto auto;
-      grid-template-areas: 'site-info-container bless-container app-info-container';
+      grid-template-areas: "site-info-container bless-container app-info-container";
     }
   }
 </style>

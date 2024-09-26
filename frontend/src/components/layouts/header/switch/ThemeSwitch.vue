@@ -9,18 +9,18 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted } from 'vue';
-  import { Icon } from '@iconify/vue';
-  import { ThemeMode, ThemeTone } from '@/plugins/app/theme';
+  import { computed, onMounted } from "vue";
+  import { Icon } from "@iconify/vue";
+  import { ThemeMode, ThemeTone } from "@/plugins/app/theme";
   // import { useEnhancer } from '@/app/enhancer';
 
   const { isGreyTheme, theme } = useEnhancer();
   const isDisabled = isGreyTheme;
   const themeIcon = computed(() => {
     const themeIconMap = {
-      [ThemeTone.Light]: 'ph:sun-fill',
-      [ThemeTone.Dark]: 'ph:moon-fill',
-      [ThemeTone.Grey]: 'mingcute:candles-fill',
+      [ThemeTone.Light]: "ph:sun-fill",
+      [ThemeTone.Dark]: "ph:moon-fill",
+      [ThemeTone.Grey]: "mingcute:candles-fill",
     };
     return themeIconMap[theme.theme.value];
   });
@@ -37,8 +37,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .theme-switch {
     grid-area: theme-switch;

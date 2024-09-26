@@ -1,5 +1,5 @@
 // 变量
-@use 'sass:color';
+@use "sass:color";
 
 // ================================= 基础 =================================
 // 颜色
@@ -60,9 +60,9 @@ $base-color-gray-900: #363636;
 $base-color-gray-1000: #1f1f1f;
 
 // 字体
-$base-font-family-primary: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
-$base-font-family-secondary: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-$base-font-family-monospace: 'Courier New', 'Courier', 'monospace';
+$base-font-family-primary: "Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif";
+$base-font-family-secondary: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+$base-font-family-monospace: "Courier New", "Courier", "monospace";
 // 字体大小
 $base-font-size: 1rem; // ~16px
 $base-font-size-sm: $base-font-size * 0.875; // ~14px

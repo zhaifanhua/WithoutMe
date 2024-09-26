@@ -30,6 +30,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,vue,css,scss,less,json,md}\"",
     "update-pkg": "ncu -u",
     "cache-verify": "npm cache verify",
     "clean-lock": "node ./scripts/clean-lock.js",

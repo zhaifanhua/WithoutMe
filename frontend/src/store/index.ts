@@ -1,5 +1,5 @@
-import type { App } from 'vue';
-import { createPinia } from 'pinia';
+import type { App } from "vue";
+import { createPinia } from "pinia";
 
 // 创建应用状态管理
 export const appStore = createPinia();

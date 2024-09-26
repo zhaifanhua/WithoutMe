@@ -5,29 +5,29 @@
  * 主题色调：暗色、亮色、灰色
  */
 
-import { App, inject, ref, readonly } from 'vue';
-import { getStorageItem, setStorageItem } from '@/utils/storage/storage';
+import { App, inject, ref, readonly } from "vue";
+import { getStorageItem, setStorageItem } from "@/utils/storage/storage";
 
-const ThemeSymbol = Symbol('theme');
-const THEME_STORAGE_KEY = 'theme';
+const ThemeSymbol = Symbol("theme");
+const THEME_STORAGE_KEY = "theme";
 
 // 主题模式
 enum ThemeMode {
-  Mourning = 'mourning',
-  Manual = 'manual',
-  System = 'system',
-  Auto = 'auto',
+  Mourning = "mourning",
+  Manual = "manual",
+  System = "system",
+  Auto = "auto",
 }
 // 主题色调
 enum ThemeTone {
-  Light = 'light',
-  Dark = 'dark',
-  Grey = 'grey',
+  Light = "light",
+  Dark = "dark",
+  Grey = "grey",
 }
 // 系统主题查询
 enum SystemThemeQuery {
-  Light = '(prefers-color-scheme: light)',
-  Dark = '(prefers-color-scheme: dark)',
+  Light = "(prefers-color-scheme: light)",
+  Dark = "(prefers-color-scheme: dark)",
 }
 
 interface ReturnTheme {
@@ -40,9 +40,9 @@ interface ReturnTheme {
  */
 const getMourningTheme = (): ReturnTheme | null => {
   const mourningDay = {
-    4.4: '清明节',
-    5.12: '汶川大地震纪念日',
-    12.13: '南京大屠杀死难者国家公祭日',
+    4.4: "清明节",
+    5.12: "汶川大地震纪念日",
+    12.13: "南京大屠杀死难者国家公祭日",
   };
 
   const myDate = new Date();
@@ -50,7 +50,7 @@ const getMourningTheme = (): ReturnTheme | null => {
   const date = myDate.getDate();
   const key = `${mon}.${date}`;
   if (Object.prototype.hasOwnProperty.call(mourningDay, key)) {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = `html {filter: grayscale(100%);}`;
     document.head.appendChild(style);
     return {
@@ -133,9 +133,7 @@ const themes = [ThemeTone.Light, ThemeTone.Dark];
  * @returns themeState
  */
 const createTheme = (initTheme: ThemeTone) => {
-  const theme = ref<ThemeTone>(
-    initTheme === ThemeTone.Dark ? ThemeTone.Dark : initTheme === ThemeTone.Light ? ThemeTone.Light : ThemeTone.Grey
-  );
+  const theme = ref<ThemeTone>(initTheme === ThemeTone.Dark ? ThemeTone.Dark : initTheme === ThemeTone.Light ? ThemeTone.Light : ThemeTone.Grey);
 
   /**
    * 自动设置
@@ -186,12 +184,8 @@ const createTheme = (initTheme: ThemeTone) => {
    * 绑定客户端系统
    */
   const bindClientSystem = () => {
-    window
-      .matchMedia(SystemThemeQuery.Dark)
-      .addEventListener('change', ({ matches }) => matches && manualSet(ThemeTone.Dark));
-    window
-      .matchMedia(SystemThemeQuery.Light)
-      .addEventListener('change', ({ matches }) => matches && manualSet(ThemeTone.Light));
+    window.matchMedia(SystemThemeQuery.Dark).addEventListener("change", ({ matches }) => matches && manualSet(ThemeTone.Dark));
+    window.matchMedia(SystemThemeQuery.Light).addEventListener("change", ({ matches }) => matches && manualSet(ThemeTone.Light));
   };
   /**
    * 切换主题
@@ -223,7 +217,7 @@ const themePlugin = {
 
 // 使用主题的组合式函数
 const useTheme = () => {
-  return inject(ThemeSymbol) as Omit<ReturnType<typeof createTheme>, 'install'>;
+  return inject(ThemeSymbol) as Omit<ReturnType<typeof createTheme>, "install">;
 };
 
 export { ThemeMode, ThemeTone, THEME_STORAGE_KEY, getClientLocalTheme, useTheme };

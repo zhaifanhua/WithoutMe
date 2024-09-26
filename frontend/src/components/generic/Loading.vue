@@ -7,7 +7,7 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
-  @import '@/styles/site';
+  @import "@/styles/site";
 
   .loading {
     position: fixed;
@@ -16,6 +16,6 @@
     width: 100vw;
     height: 5px;
     background-color: rgba(0, 0, 0, 0.5);
-    @include useZindex('loading');
+    @include useZindex("loading");
   }
 </style>

@@ -13,15 +13,15 @@
 </template>
 
 <script setup lang="ts">
-  import ContentContainer from '@/components/generic/ContentContainer.vue';
-  import Navbar from '@/components/layouts/main/Navbar.vue';
-  import MainContent from '@/components/layouts/main/MainContent.vue';
-  import Sidebar from '@/components/layouts/main/Sidebar.vue';
+  import ContentContainer from "@/components/generic/ContentContainer.vue";
+  import Navbar from "@/components/layouts/main/Navbar.vue";
+  import MainContent from "@/components/layouts/main/MainContent.vue";
+  import Sidebar from "@/components/layouts/main/Sidebar.vue";
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .main {
     grid-area: main;
@@ -41,7 +41,7 @@
       display: grid;
       grid-template-rows: 1fr;
       grid-template-columns: auto 1fr auto;
-      grid-template-areas: 'navbar main-content sidebar';
+      grid-template-areas: "navbar main-content sidebar";
     }
   }
 </style>

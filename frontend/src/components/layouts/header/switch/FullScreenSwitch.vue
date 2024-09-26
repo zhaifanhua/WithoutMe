@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
-  import { Icon } from '@iconify/vue';
+  import { ref, computed } from "vue";
+  import { Icon } from "@iconify/vue";
 
   const isFullScreen = ref(false);
 
@@ -21,8 +21,8 @@
 
   const fullScreenIcon = computed(() => {
     const fullScreenIconMap = {
-      [FullScreenKey.True]: 'tdesign:fullscreen-1',
-      [FullScreenKey.False]: 'tdesign:fullscreen-2',
+      [FullScreenKey.True]: "tdesign:fullscreen-1",
+      [FullScreenKey.False]: "tdesign:fullscreen-2",
     };
     return fullScreenIconMap[isFullScreen.value ? FullScreenKey.True : FullScreenKey.False];
   });
@@ -39,14 +39,14 @@
     }
   };
 
-  document.addEventListener('fullscreenchange', () => {
+  document.addEventListener("fullscreenchange", () => {
     isFullScreen.value = document.fullscreenElement !== null;
   });
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @import "@/styles/base/mixins.scss";
+  @import "@/styles/base/themes.scss";
 
   .fullscreen-switch {
     grid-area: fullscreen-switch;
