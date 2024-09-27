@@ -5,7 +5,7 @@
     <Cursor></Cursor>
     <!-- <Loading></Loading>
     <Notification></Notification> -->
-    <!-- <MusicPlayer></MusicPlayer> -->
+    <MusicPlayer></MusicPlayer>
     <Background></Background>
   </div>
   <slot></slot>

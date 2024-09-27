@@ -6,6 +6,6 @@ import type { App } from "vue";
 
 import TitleFocusPlugin from "@/plugins/titleFocus";
 
-export async function setupPlugins(app: App<Element>) {
+export function setupPlugins(app: App<Element>) {
   app.use(TitleFocusPlugin);
 }
