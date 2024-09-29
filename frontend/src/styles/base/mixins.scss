@@ -62,11 +62,12 @@ $breakpoints: (
 $z-layers: (
   background: -1,
   default: 1,
-  dropdown: 1000,
-  modal: 1100,
-  overlay: 1200,
-  loading: 1300,
-  notification: 1400,
+  dropdown: 100,
+  modal: 200,
+  overlay: 300,
+  loading: 400,
+  notification: 500,
+  player: 600,
   cursor: 9999,
 );
 @mixin useZindex($layer: default) {

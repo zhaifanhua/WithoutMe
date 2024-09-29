@@ -30,7 +30,7 @@
 
     @include useFlexBox(row, center, start, center);
     @include useZindex;
-    @include useBackdropFilter($base-bg-filter-blur);
+    // @include useBackdropFilter($base-bg-filter-blur);
     @include useBorderRadius;
     @include useTheme {
       background-color: getVar(bg-color);

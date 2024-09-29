@@ -209,9 +209,9 @@
       return isMuted.value || volume.value === 0 ? "solar:muted-linear" : "solar:volume-linear";
     }),
     // 播放列表
-    list: "solar:playlist-bold",
+    list: "solar:document-text-bold",
     // 歌词
-    lyrics: "material-symbols:lyrics-outline-rounded",
+    lyrics: "solar:text-square-bold",
     // 侧边弹出
     side: computed(() => {
       return isEject.value ? "solar:alt-arrow-right-linear" : "solar:alt-arrow-left-linear";
@@ -341,7 +341,7 @@
 
   // 可以播放
   function onCanPlay() {
-    audioElement.value?.play().catch(e => console.error("Auto-play failed:", e));
+    audioElement.value?.play().catch(e => console.error("音乐自动播放失败，请手动播放"));
   }
 
   // 切换播放模式
@@ -431,7 +431,7 @@
   const progressBarStyle = computed(() => {
     const percentage = (currentTime.value / currentDuration.value) * 100 || 0;
     return {
-      background: `linear-gradient(to right, var(--primary-color) ${percentage}%, var(--background-color) ${percentage}%)`,
+      background: `linear-gradient(to right, var(--bg-color-active) ${percentage}%, var(--bg-color-inactive) ${percentage}%)`,
     };
   });
 
@@ -502,11 +502,10 @@
 </script>
 
 <style scoped lang="scss">
+  @import "@/styles/base/mixins.scss";
+
   $x: 0px;
-  $y: 100px;
-  $z-index: 10000000;
-  $player-z-index: $z-index;
-  $module-z-index: $z-index -1;
+  $y: 30%;
   $width: 360px;
   $player-width: 100%;
   $module-width: 90%;
@@ -516,20 +515,21 @@
   $playlist-height: 300px;
   $lyrics-height: $height;
   $side-height: $height * 0.6;
-  $bg-color-primary: #e7e6e6;
-  $bg-color-secondary: #c4c4c4;
-  $bg-color-active: #0af673;
-  $bg-color-inactive: #666;
+  $bg-color-primary: #ffffff;
+  $bg-color-secondary: #c9c9c9;
   $text-color-primary: #000000;
-  $text-color-secondary: #767676;
-  $lyrics-color-active: #0af673;
-  $lyrics-color-inactive: #666;
+  $text-color-secondary: #535353;
+  $text-color-active: #5effa6;
   $border-radius: 20px;
-  $side-border-radius: 12px;
+  $border-radius-modula: 10px;
+  $border-radius-side: 12px;
   $transition: all 0.3s ease;
   $overflow: hidden;
 
   .music-player {
+    --bg-color-active: #000000;
+    --bg-color-inactive: #c0c0c0;
+
     position: fixed;
     left: $x;
     bottom: $y;
@@ -540,7 +540,7 @@
     flex-direction: column;
     align-items: center;
     overflow: visible;
-    z-index: $player-z-index;
+    @include useZindex(player);
 
     &.eject {
       transform: translateX(-($x + $width)); // 根据播放器宽度调整
@@ -566,7 +566,6 @@
       background-color: $bg-color-secondary;
       transition: $transition;
       opacity: 0;
-      z-index: $module-z-index;
     }
 
     // 播放列表包装器
@@ -574,7 +573,7 @@
       bottom: 100%;
       width: $module-width;
       background-color: $bg-color-secondary;
-      border-radius: $border-radius $border-radius 0 0;
+      border-radius: $border-radius-modula $border-radius-modula 0 0;
       overflow-y: auto;
       margin-bottom: 1px;
 
@@ -592,17 +591,16 @@
           display: flex;
           align-items: center;
           padding: 10px 15px;
-          border-radius: 5px;
           cursor: pointer;
           box-shadow: inset 0 -1px 0 #e0e0e0;
 
           &:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba($bg-color-primary, 0.05);
           }
 
           &.active {
             background-color: rgba($bg-color-primary, 0.1);
-            color: $lyrics-color-active;
+            color: $text-color-active;
           }
 
           .song-index {
@@ -663,7 +661,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: $player-z-index;
       width: $player-width;
       height: $player-height;
       background-color: $bg-color-primary;
@@ -752,9 +749,11 @@
               color: $text-color-secondary;
               cursor: pointer;
 
-              &:hover,
-              &.playing {
+              &:hover {
                 color: $text-color-primary;
+              }
+              &.playing {
+                color: $text-color-active;
               }
             }
           }
@@ -763,36 +762,30 @@
         .right-bottom {
           .progress {
             .slider {
-              width: 100%;
-
+              // 进度条
               input[type="range"] {
-                -webkit-appearance: none;
+                -webkit-appearance: none; // 移除默认样式
                 appearance: none;
                 width: 100%;
-                background-color: rgb(137, 137, 137);
+                height: 4px;
                 border-radius: 2px;
-                outline: none;
-                padding: 0;
-                margin: 0;
+                outline: none; // 移除轮廓
 
-                // 滑块
                 &::-webkit-slider-thumb {
-                  -webkit-appearance: none;
+                  -webkit-appearance: none; // 移除默认样式
                   appearance: none;
-                  height: 8px;
-                  width: 8px;
+                  height: 6px;
+                  width: 6px;
                   border-radius: 50%;
-                  margin-top: -2px;
-                  background-color: $lyrics-color-active;
+                  background-color: var(--bg-color-active);
                   cursor: pointer;
                 }
-
-                // 滑块走过的进度条
-                &::-webkit-slider-runnable-track {
-                  height: 4px;
-                  width: 4px;
-                  background-color: $bg-color-secondary;
-                  border-radius: 2px;
+                &::-moz-range-thumb {
+                  height: 6px;
+                  width: 6px;
+                  border-radius: 50%;
+                  background-color: var(--bg-color-active);
+                  cursor: pointer;
                 }
               }
             }
@@ -814,7 +807,7 @@
       width: $module-width;
       height: 60px;
       background-color: $bg-color-secondary;
-      border-radius: 0 0 $border-radius $border-radius;
+      border-radius: 0 0 $border-radius-modula $border-radius-modula;
       overflow: $overflow;
       margin-top: 1px;
 
@@ -833,13 +826,13 @@
           opacity: 0.7;
           transition: all 0.3s ease;
           font-size: 14px;
-          color: $lyrics-color-inactive;
+          color: $text-color-secondary;
 
           &.active {
             opacity: 1;
             font-weight: bold;
             transform: scale(1.2);
-            color: $lyrics-color-active;
+            color: $text-color-active;
           }
         }
       }
@@ -852,7 +845,6 @@
       right: -$side-width;
       margin-right: -1px;
       transform: translateY(-50%);
-      z-index: $player-z-index + 1;
 
       button {
         background: $bg-color-secondary;
@@ -860,7 +852,7 @@
         color: $text-color-primary;
         width: $side-width;
         height: $side-height;
-        border-radius: 0 $side-border-radius $side-border-radius 0;
+        border-radius: 0 $border-radius-side $border-radius-side 0;
         cursor: pointer;
         transition: $transition;
 
