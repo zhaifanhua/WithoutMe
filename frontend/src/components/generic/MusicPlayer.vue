@@ -1,88 +1,105 @@
 <!-- 音乐播放器组件 -->
 
 <template>
-  <div class="music-player">
-    <!-- 详情包装器 -->
-    <div class="details-wrapper">
-      <!-- 信息容器 -->
-      <div class="info-container">
-        <!-- 封面 -->
-        <div class="cover-container" :class="{ rotating: isPlaying }">
-          <img :src="currentSong.coverUrl" alt="cover" />
-        </div>
-        <!-- 歌名歌手 -->
-        <div class="title-container">
-          <div class="title">{{ currentSong.title }}</div>
-          <div class="artist">{{ currentSong.artist }}</div>
-        </div>
-      </div>
-      <!-- 歌词容器 -->
-      <div class="lyrics-container">
-        <ul class="lyrics" :style="{ transform: `translateY(${lyricsTranslateY}px)` }">
-          <li v-for="(line, index) in parsedLyrics" :key="index" :class="{ active: index === currentLyricIndex }">
-            {{ line.text }}
-          </li>
-        </ul>
-      </div>
-      <!-- 音频元素 -->
-      <audio ref="audioElement" preload="preload" @play="onPlay" @pause="onPause" @canplay="onCanPlay" @ended="onEnded">
-        <source :src="currentSong.musicUrl" type="audio/mp3" />
-      </audio>
-    </div>
+  <div class="music-player" :class="{ eject: isEject }">
+    <!-- 音频元素 -->
+    <audio ref="audioElement" preload="preload" @play="onPlay" @pause="onPause" @canplay="onCanPlay" @ended="onEnded">
+      <source :src="currentSong.musicUrl" type="audio/mp3" />
+    </audio>
 
-    <!-- 控制包装器 -->
-    <div class="control-wrapper">
-      <!-- 进度条控制 -->
-      <div class="progress-control">
-        <div class="time-display">
-          {{ formatTime(currentTime) }}
-        </div>
-        <div class="slider-container">
-          <input type="range" min="0" :max="duration" :value="currentTime" @input="seek" :style="progressBarStyle" />
-        </div>
-        <div class="time-display">
-          {{ formatTime(duration) }}
-        </div>
-      </div>
-      <!-- 播放控制 -->
-      <div class="player-control">
-        <button @click="togglePlayMode" :title="playerButtonTitle.mode">
-          <Icon :icon="playerButtonIcon.mode" />
-        </button>
-        <button @click="prevSong" :title="playerButtonTitle.prev">
-          <Icon :icon="playerButtonIcon.prev" />
-        </button>
-        <button @click="togglePlay" :class="{ playing: isPlaying }" :title="playerButtonTitle.playOrPause">
-          <Icon :icon="playerButtonIcon.playOrPause" />
-        </button>
-        <button @click="nextSong" :title="playerButtonTitle.next">
-          <Icon :icon="playerButtonIcon.next" />
-        </button>
-        <button @click="togglePlaylist" :class="{ active: showPlaylist }" :title="playerButtonTitle.list">
-          <Icon :icon="playerButtonIcon.list" />
-        </button>
-      </div>
-    </div>
-
-    <!-- 音量控制 -->
-    <div class="volume-control">
-      <button @click="toggleMute" class="volume-icon" :class="{ muted: isMuted || volume === 0 }" :title="playerButtonTitle.volume">
-        <Icon :icon="playerButtonIcon.volume" />
-      </button>
-      <div class="percentage-display">{{ Math.round(volume * 100) }}%</div>
-      <div class="slider-container">
-        <input type="range" min="0" max="1" step="0.01" v-model="volume" @input="setVolume" :style="volumeBarStyle" />
-      </div>
-    </div>
-
-    <!-- 播放列表包装器 -->
-    <div class="playlist-wrapper" v-if="showPlaylist">
-      <h3>播放列表</h3>
+    <!-- 列表包装器 -->
+    <div class="playlist-wrapper" :class="{ active: showPlaylist }">
       <ul>
-        <li v-for="(song, index) in songs" :key="index" @dblclick="playSelectedSong(index)" :class="{ active: index === currentSongIndex }">
-          {{ song.title }} - {{ song.artist }}
+        <li v-for="(song, index) in playList" :key="index" @dblclick="playSelectedSong(index)" :class="{ active: index === currentSongIndex }">
+          <span class="song-index">{{ index + 1 }}</span>
+          <span class="song-cover">
+            <img :src="song.coverUrl" :alt="song.artist" />
+          </span>
+          <span class="song-info">
+            <span class="song-name">{{ song.name }}</span>
+            <span class="song-artist">{{ song.artist }}</span>
+          </span>
+          <span class="song-duration">{{ formatTime(song.duration) }}</span>
         </li>
       </ul>
+    </div>
+
+    <!-- 播放器包装器 -->
+    <div class="player-wrapper">
+      <!-- 左侧容器 -->
+      <div class="left-container">
+        <div class="cover" :class="{ rotating: isPlaying }">
+          <img :src="currentSong.coverUrl" :alt="currentSong.artist" />
+        </div>
+      </div>
+
+      <!-- 右侧容器 -->
+      <div class="right-container">
+        <div class="right-top">
+          <!-- 信息 -->
+          <div class="info">
+            <div class="name">{{ currentSong.name }}</div>
+            <div class="artist">{{ currentSong.artist }}</div>
+          </div>
+          <!-- 其他 -->
+          <div class="other">
+            <button @click="toggleLyrics" :class="{ active: showLyrics }" :title="playerTitle.lyrics">
+              <Icon :icon="playerIcon.lyrics" />
+            </button>
+            <button @click="togglePlaylist" :class="{ active: showPlaylist }" :title="playerTitle.list">
+              <Icon :icon="playerIcon.list" />
+            </button>
+          </div>
+        </div>
+        <div class="right-middle">
+          <!-- 控制 -->
+          <div class="control">
+            <button @click="togglePlayMode" :title="playerTitle.mode">
+              <Icon :icon="playerIcon.mode" />
+            </button>
+            <button @click="prevSong" :title="playerTitle.prev">
+              <Icon :icon="playerIcon.prev" />
+            </button>
+            <button @click="togglePlay" :class="{ playing: isPlaying }" :title="playerTitle.playOrPause">
+              <Icon :icon="playerIcon.playOrPause" />
+            </button>
+            <button @click="nextSong" :title="playerTitle.next">
+              <Icon :icon="playerIcon.next" />
+            </button>
+            <button @click="toggleMute" :class="{ muted: isMuted || volume === 0 }" :title="playerTitle.volume">
+              <Icon :icon="playerIcon.volume" />
+            </button>
+          </div>
+        </div>
+        <div class="right-bottom">
+          <!-- 进度条 -->
+          <div class="progress">
+            <div class="slider">
+              <input type="range" min="0" :value="currentTime" :max="currentDuration" @input="seek" :style="progressBarStyle" />
+            </div>
+            <div class="time-display">
+              <span>{{ formatTime(currentTime) }}</span>
+              <span>{{ formatTime(currentDuration) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 歌词包装器 -->
+    <div class="lyrics-wrapper" :class="{ active: showLyrics }">
+      <ul class="lyrics" :style="{ transform: `translateY(${lyricsTranslateY}px)` }">
+        <li v-for="(line, index) in parsedLyrics" :key="index" :class="{ active: index === currentLyricIndex }">
+          {{ line.text }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- 侧边包装器 -->
+    <div class="side-popup-wrapper">
+      <button @click="toggleEject" :class="{ eject: isEject }">
+        <Icon :icon="playerIcon.side" />
+      </button>
     </div>
   </div>
 </template>
@@ -92,12 +109,14 @@
   import axios from "axios";
   import { Icon } from "@iconify/vue";
 
+  //#region 数据类型定义
   interface Song {
-    title: string;
+    name: string;
     artist: string;
     musicUrl: string;
     lyricsUrl: string;
     coverUrl: string;
+    duration: number;
   }
 
   interface LyricLine {
@@ -111,42 +130,55 @@
     SingleLoop = "singleLoop",
     ListLoop = "listLoop",
   }
+  //#endregion
 
-  const songs: Song[] = [
+  //#region 数据
+  const audioElement = useTemplateRef<HTMLAudioElement>("audioElement"); // 音频元素
+  const parsedLyrics = ref<LyricLine[]>([]); // 解析后的歌词
+  const playList: Song[] = [
     // 示例歌曲数据
     {
-      title: "我们都被忘了",
+      name: "我们都被忘了",
       artist: "谢安琪",
       musicUrl: "/audios/musics/1.mp3",
       lyricsUrl: "/audios/lyrics/1.lrc",
       coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
     },
     {
-      title: "2222",
-      artist: "2222",
+      name: "1111",
+      artist: "1111",
       musicUrl: "/audios/musics/1.mp3",
       lyricsUrl: "/audios/lyrics/1.lrc",
       coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
     },
-    // ...更多歌曲
-  ];
+  ]; // 歌曲列表
+  //#endregion
 
-  const parsedLyrics = ref<LyricLine[]>([]);
-  const audioElement = useTemplateRef<HTMLAudioElement>("audioElement");
-  const currentSongIndex = ref(0);
-  const isPlaying = ref(false);
-  const isMuted = ref(false);
-  const currentLyricIndex = ref(0);
-  const volume = ref(1);
-  const lyricsContainerHeight = ref(60);
-  const lineHeight = 20;
-  const currentTime = ref(0);
-  const playMode = ref<PlayMode>(PlayMode.ListLoop);
-  const duration = ref(0);
-  const showPlaylist = ref(false);
+  //#region 播放器信息
+  const isPlaying = ref(false); // 是否播放
+  const isMuted = ref(false); // 是否静音
+  const isEject = ref(false); // 是否弹出
+  const volume = ref(1); // 音量
+  const lyricsContainerHeight = ref(60); // 歌词容器高度
+  const lineHeight = 20; // 行高
+  const playMode = ref<PlayMode>(PlayMode.ListLoop); // 播放模式
+  const showPlaylist = ref(false); // 是否显示播放列表
+  const showLyrics = ref(false); // 是否显示歌词
+  //#endregion
 
-  // 控制按钮图标
-  const playerButtonIcon = reactive({
+  //#region 歌曲信息
+  const currentSongIndex = ref(0); // 当前歌曲索引
+  const currentLyricIndex = ref(0); // 当前歌词索引
+  const currentSong = computed(() => playList[currentSongIndex.value]); // 当前歌曲
+  const currentTime = ref(0); // 当前时间
+  const currentDuration = ref(0); // 当前歌曲时长
+  //#endregion
+
+  //#region 控制信息
+  // 图标
+  const playerIcon = reactive({
     // 播放模式
     mode: computed(() => {
       switch (playMode.value) {
@@ -178,10 +210,16 @@
     }),
     // 播放列表
     list: "solar:playlist-bold",
+    // 歌词
+    lyrics: "material-symbols:lyrics-outline-rounded",
+    // 侧边弹出
+    side: computed(() => {
+      return isEject.value ? "solar:alt-arrow-right-linear" : "solar:alt-arrow-left-linear";
+    }),
   });
 
-  // 控制按钮标题
-  const playerButtonTitle = reactive({
+  // 标题
+  const playerTitle = reactive({
     // 播放模式
     mode: computed(() => {
       switch (playMode.value) {
@@ -209,34 +247,13 @@
     }),
     // 播放列表
     list: "播放列表",
+    // 歌词
+    lyrics: "歌词",
   });
+  //#endregion
 
-  // 当前歌曲
-  const currentSong = computed(() => songs[currentSongIndex.value]);
-
-  // 歌词平移
-  const lyricsTranslateY = computed(() => {
-    const centerPosition = lyricsContainerHeight.value / 2;
-    const activeLyricPosition = currentLyricIndex.value * lineHeight;
-    return centerPosition - activeLyricPosition - lineHeight / 2;
-  });
-
-  // 进度条样式
-  const progressBarStyle = computed(() => {
-    const percentage = (currentTime.value / duration.value) * 100 || 0;
-    return {
-      background: `linear-gradient(to right, var(--primary-color) ${percentage}%, var(--background-color) ${percentage}%)`,
-    };
-  });
-
-  // 音量条样式
-  const volumeBarStyle = computed(() => {
-    const percentage = volume.value * 100;
-    return {
-      background: `linear-gradient(to right, var(--primary-color) ${percentage}%, var(--background-color) ${percentage}%)`,
-    };
-  });
-
+  //#region 方法
+  //#region 获取数据
   // 加载歌曲
   async function loadSong(index: number) {
     currentSongIndex.value = index;
@@ -275,36 +292,9 @@
       })
       .filter((line): line is LyricLine => line !== null);
   }
+  //#endregion
 
-  // 同步歌词
-  function syncLyrics() {
-    if (!audioElement.value || parsedLyrics.value.length === 0) return;
-    const currentTime = audioElement.value.currentTime;
-    const index = parsedLyrics.value.findIndex((line, index) => {
-      const nextLine = parsedLyrics.value[index + 1];
-      return currentTime >= line.time && (!nextLine || currentTime < nextLine.time);
-    });
-    if (index !== -1 && index !== currentLyricIndex.value) {
-      currentLyricIndex.value = index;
-    }
-  }
-
-  // 跳转
-  function seek(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (audioElement.value) {
-      audioElement.value.currentTime = Number(target.value);
-    }
-  }
-
-  // 更新进度
-  function updateProgress() {
-    if (audioElement.value) {
-      currentTime.value = audioElement.value.currentTime;
-      duration.value = audioElement.value.duration;
-    }
-  }
-
+  //#region 切换歌曲
   // 上一首
   function prevSong() {
     if (currentSongIndex.value > 0) {
@@ -329,6 +319,31 @@
     isPlaying.value = !isPlaying.value;
   }
 
+  // 播放
+  function onPlay() {
+    isPlaying.value = true;
+    syncLyrics();
+  }
+
+  // 暂停
+  function onPause() {
+    isPlaying.value = false;
+  }
+
+  // 播放结束
+  function onEnded() {
+    if (playMode.value === PlayMode.SingleLoop) {
+      audioElement.value?.play();
+    } else {
+      nextSong();
+    }
+  }
+
+  // 可以播放
+  function onCanPlay() {
+    audioElement.value?.play().catch(e => console.error("Auto-play failed:", e));
+  }
+
   // 切换播放模式
   function togglePlayMode() {
     const modes = Object.values(PlayMode);
@@ -342,31 +357,24 @@
     switch (playMode.value) {
       case PlayMode.Sequential:
       case PlayMode.ListLoop:
-        return (currentSongIndex.value + 1) % songs.length;
+        return (currentSongIndex.value + 1) % playList.length;
       case PlayMode.Random:
-        return Math.floor(Math.random() * songs.length);
+        return Math.floor(Math.random() * playList.length);
       case PlayMode.SingleLoop:
         return currentSongIndex.value;
     }
   }
 
-  // 播放结束
-  function onEnded() {
-    if (playMode.value === PlayMode.SingleLoop) {
-      audioElement.value?.play();
-    } else {
-      nextSong();
-    }
-  }
+  //#endregion
 
-  // 设置音量
-  function setVolume() {
-    if (audioElement.value) {
-      audioElement.value.volume = volume.value;
-      isMuted.value = volume.value === 0;
-    }
-  }
-
+  //#region 更新音量
+  // 音量条样式
+  const volumeBarStyle = computed(() => {
+    const percentage = volume.value * 100;
+    return {
+      background: `linear-gradient(to right, var(--primary-color) ${percentage}%, var(--background-color) ${percentage}%)`,
+    };
+  });
   // 切换静音
   function toggleMute() {
     if (!audioElement.value) return;
@@ -382,17 +390,69 @@
     audioElement.value.volume = isMuted.value ? 0 : volume.value;
   }
 
-  // 播放
-  function onPlay() {
-    isPlaying.value = true;
-    syncLyrics();
+  // 设置音量
+  function setVolume() {
+    if (audioElement.value) {
+      audioElement.value.volume = volume.value;
+      isMuted.value = volume.value === 0;
+    }
+  }
+  //#endregion
+
+  //#region 更新歌词
+  // 同步歌词
+  function syncLyrics() {
+    if (!audioElement.value || parsedLyrics.value.length === 0) return;
+    const currentTime = audioElement.value.currentTime;
+    const index = parsedLyrics.value.findIndex((line, index) => {
+      const nextLine = parsedLyrics.value[index + 1];
+      return currentTime >= line.time && (!nextLine || currentTime < nextLine.time);
+    });
+    if (index !== -1 && index !== currentLyricIndex.value) {
+      currentLyricIndex.value = index;
+    }
   }
 
-  // 暂停
-  function onPause() {
-    isPlaying.value = false;
+  // 歌词平移
+  const lyricsTranslateY = computed(() => {
+    const centerPosition = lyricsContainerHeight.value / 2;
+    const activeLyricPosition = currentLyricIndex.value * lineHeight;
+    return centerPosition - activeLyricPosition - lineHeight / 2;
+  });
+
+  // 切换歌词
+  function toggleLyrics() {
+    showLyrics.value = !showLyrics.value;
+  }
+  //#endregion
+
+  //#region 更新进度条
+  // 进度条样式
+  const progressBarStyle = computed(() => {
+    const percentage = (currentTime.value / currentDuration.value) * 100 || 0;
+    return {
+      background: `linear-gradient(to right, var(--primary-color) ${percentage}%, var(--background-color) ${percentage}%)`,
+    };
+  });
+
+  // 跳转
+  function seek(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (audioElement.value) {
+      audioElement.value.currentTime = Number(target.value);
+    }
   }
 
+  // 更新进度
+  function updateProgress() {
+    if (audioElement.value) {
+      currentTime.value = audioElement.value.currentTime;
+      currentDuration.value = audioElement.value.duration;
+    }
+  }
+  //#endregion
+
+  //#region 切换列表
   // 切换播放列表
   function togglePlaylist() {
     showPlaylist.value = !showPlaylist.value;
@@ -405,12 +465,12 @@
       audioElement.value.play();
     }
   }
+  //#endregion
+  //#region 方法
 
-  // 可以播放
-  function onCanPlay() {
-    console.log("Audio can play");
-    // 可以在这里自动开始播放，如果需要的话
-    audioElement.value?.play().catch(e => console.error("Auto-play failed:", e));
+  // 切换弹出
+  function toggleEject() {
+    isEject.value = !isEject.value;
   }
 
   // 格式化时间函数
@@ -442,338 +502,370 @@
 </script>
 
 <style scoped lang="scss">
-  $primary-color: #38a6f0;
-  $secondary-color: #00ff6a;
-  $background-color: #ecf0f1;
-  $text-color: #34495e;
-  $button-background-color-hover: #45aac1;
-  $button-background-color-active: #26e2f7;
+  $x: 0px;
+  $y: 100px;
+  $z-index: 10000000;
+  $player-z-index: $z-index;
+  $module-z-index: $z-index -1;
+  $width: 360px;
+  $player-width: 100%;
+  $module-width: 90%;
+  $side-width: 20px;
+  $height: 120px;
+  $player-height: $height;
+  $playlist-height: 300px;
+  $lyrics-height: $height;
+  $side-height: $height * 0.6;
+  $bg-color-primary: #e7e6e6;
+  $bg-color-secondary: #c4c4c4;
+  $bg-color-active: #0af673;
+  $bg-color-inactive: #666;
+  $text-color-primary: #000000;
+  $text-color-secondary: #767676;
+  $lyrics-color-active: #0af673;
+  $lyrics-color-inactive: #666;
+  $border-radius: 20px;
+  $side-border-radius: 12px;
+  $transition: all 0.3s ease;
+  $overflow: hidden;
 
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @mixin glassmorphism {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  }
-
-  @media (max-width: 768px) {
-    .music-player {
-      width: 280px;
-      bottom: 10px;
-      right: 10px;
-      padding: 15px;
-    }
-  }
-
-  // 音乐播放器
   .music-player {
-    --primary-color: #{$primary-color};
-    --background-color: #{$background-color};
-    --text-color: #{$text-color};
-
-    @include glassmorphism;
     position: fixed;
-    bottom: 100px;
-    left: 100px;
-    width: 300px;
-    max-width: 100%;
-    padding: 20px;
-    border-radius: 15px;
-    z-index: 1000;
-    transition: all 0.3s ease;
+    left: $x;
+    bottom: $y;
+    width: $width;
+    height: $height;
+    transition: $transition;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+    z-index: $player-z-index;
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+    &.eject {
+      transform: translateX(-($x + $width)); // 根据播放器宽度调整
     }
 
-    // 详情包装器
-    .details-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 15px;
-
-      // 信息容器
-      .info-container {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 10px;
-
-        // 封面容器
-        .cover-container {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          overflow: hidden;
-          margin-right: 15px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-          animation: rotate 10s linear infinite paused;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
-          &.rotating {
-            animation-play-state: running;
-          }
-        }
-
-        // 歌名歌手
-        .title-container {
-          flex-grow: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          text-align: center;
-
-          .title {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 5px;
-            color: $text-color;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-
-          .artist {
-            font-size: 14px;
-            color: $text-color;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-        }
-      }
-
-      // 歌词容器
-      .lyrics-container {
-        width: 100%;
-        height: 60px;
-        overflow: hidden;
-        position: relative;
-        margin-top: 10px;
-
-        .lyrics {
-          text-align: center;
-          transition: transform 0.5s ease;
-
-          li {
-            height: 20px;
-            line-height: 20px;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            color: $text-color;
-
-            &.active {
-              opacity: 1;
-              font-weight: bold;
-              transform: scale(1.2);
-              color: $secondary-color;
-            }
-          }
-        }
-      }
+    .playlist-wrapper,
+    .lyrics-wrapper,
+    .player-wrapper {
+      width: 100%; // 占满父容器宽度
+      max-width: $player-width; // 最大宽度与播放器主体相同
+      margin: 0 auto; // 水平居中
     }
 
-    // 控制包装器
-    .control-wrapper {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-
-      // 进度条控制
-      .progress-control {
-        width: 100%;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        // 时间显示
-        .time-display {
-          font-size: 12px;
-          color: $text-color;
-          min-width: 40px; // 确保时间显示有足够的空间
-        }
-      }
-
-      // 播放控制
-      .player-control {
-        display: flex;
-        gap: 15px;
-
-        button {
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 10px;
-          border-radius: 10px;
-          transition: all 0.3s ease;
-          color: $text-color;
-
-          &:hover {
-            background-color: $button-background-color-hover;
-            transform: scale(1.1);
-          }
-
-          &.playing {
-            color: $button-background-color-active;
-          }
-
-          &:last-child {
-            font-size: 18px;
-
-            &.active {
-              color: $primary-color;
-            }
-          }
-        }
-      }
-
-      // 音量控制
-      .volume-control {
-        position: relative;
-        display: flex;
-        align-items: center;
-
-        // 音量图标
-        .volume-icon {
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-size: 20px;
-          padding: 5px;
-          margin-right: 10px;
-          transition: all 0.3s ease;
-          color: $text-color;
-
-          &:hover {
-            transform: scale(1.1);
-          }
-
-          &.muted {
-            color: #000;
-          }
-        }
-
-        // 音量百分比
-        .percentage-display {
-          font-size: 12px;
-          color: $text-color;
-          min-width: 40px;
-        }
-      }
-
-      // 进度条和音量条
-      .progress-control,
-      .volume-control {
-        // 音量条
-        .slider-container {
-          flex-grow: 1;
-          margin: 0 10px;
-        }
-
-        // 界限
-        input[type="range"] {
-          -webkit-appearance: none;
-          width: 100%;
-          height: 4px;
-          border-radius: 2px;
-          outline: none;
-          padding: 0;
-          margin: 0;
-
-          &::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: $primary-color;
-            cursor: pointer;
-            transition: all 0.3s ease;
-
-            &:hover {
-              transform: scale(1.2);
-            }
-          }
-
-          &::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: $primary-color;
-            cursor: pointer;
-            transition: all 0.3s ease;
-
-            &:hover {
-              transform: scale(1.2);
-            }
-          }
-        }
-      }
+    // 播放列表和歌词
+    .playlist-wrapper,
+    .lyrics-wrapper {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-height: 0;
+      overflow: hidden;
+      background-color: $bg-color-secondary;
+      transition: $transition;
+      opacity: 0;
+      z-index: $module-z-index;
     }
 
     // 播放列表包装器
     .playlist-wrapper {
-      position: fixed;
-      top: 0;
-      right: -300px; // 初始位置在屏幕右侧
-      width: 300px;
-      height: 100vh;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-      transition: right 0.3s ease;
-      z-index: 1001;
+      bottom: 100%;
+      width: $module-width;
+      background-color: $bg-color-secondary;
+      border-radius: $border-radius $border-radius 0 0;
       overflow-y: auto;
+      margin-bottom: 1px;
 
-      &.show {
-        right: 0; // 显示时滑入屏幕
-      }
-
-      h3 {
-        padding: 20px;
-        margin: 0;
-        font-size: 18px;
-        color: $text-color;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      &.active {
+        max-height: $playlist-height;
+        opacity: 1;
       }
 
       ul {
-        list-style: none;
+        list-style-type: none;
         padding: 0;
-        margin: 0;
+        overflow-y: auto;
 
         li {
-          padding: 15px 20px;
+          display: flex;
+          align-items: center;
+          padding: 10px 15px;
+          border-radius: 5px;
           cursor: pointer;
-          transition: background-color 0.3s ease;
+          box-shadow: inset 0 -1px 0 #e0e0e0;
 
           &:hover {
             background-color: rgba(0, 0, 0, 0.05);
           }
 
           &.active {
-            background-color: rgba($primary-color, 0.2);
-            font-weight: bold;
+            background-color: rgba($bg-color-primary, 0.1);
+            color: $lyrics-color-active;
           }
+
+          .song-index {
+            margin-right: 10px;
+            font-size: 12px;
+            color: $text-color-secondary;
+          }
+
+          .song-cover {
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            overflow: hidden;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+
+          .song-info {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .song-name {
+              font-weight: bold;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              margin-bottom: 2px;
+            }
+
+            .song-artist {
+              font-size: 12px;
+              color: $text-color-secondary;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .song-duration {
+            font-size: 12px;
+            color: $text-color-secondary;
+          }
+        }
+      }
+    }
+
+    // 播放器包装器
+    .player-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: $player-z-index;
+      width: $player-width;
+      height: $player-height;
+      background-color: $bg-color-primary;
+      border-radius: $border-radius;
+      padding: 10px;
+
+      // 左侧容器
+      .left-container {
+        flex: 0 0 auto; // 不伸缩,保持原有大小
+        margin-right: 15px;
+
+        .cover {
+          width: 100px;
+          height: 100px;
+          border-radius: 16px;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+
+      // 右侧容器
+      .right-container {
+        flex: 1; // 占据剩余空间
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .right-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 10px;
+
+          .info {
+            flex: 1;
+            overflow: hidden;
+
+            .name {
+              font-size: 14px;
+              font-weight: bold;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .artist {
+              font-size: 12px;
+              color: $text-color-secondary;
+            }
+          }
+
+          .other {
+            display: flex;
+
+            button {
+              background: none;
+              border: none;
+              font-size: 14px;
+              color: $text-color-secondary;
+              cursor: pointer;
+              margin-left: 10px;
+
+              &:hover,
+              &.active {
+                color: $text-color-primary;
+              }
+            }
+          }
+        }
+
+        .right-middle {
+          .control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button {
+              background: none;
+              border: none;
+              font-size: 16px;
+              color: $text-color-secondary;
+              cursor: pointer;
+
+              &:hover,
+              &.playing {
+                color: $text-color-primary;
+              }
+            }
+          }
+        }
+
+        .right-bottom {
+          .progress {
+            .slider {
+              width: 100%;
+
+              input[type="range"] {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 100%;
+                background-color: rgb(137, 137, 137);
+                border-radius: 2px;
+                outline: none;
+                padding: 0;
+                margin: 0;
+
+                // 滑块
+                &::-webkit-slider-thumb {
+                  -webkit-appearance: none;
+                  appearance: none;
+                  height: 8px;
+                  width: 8px;
+                  border-radius: 50%;
+                  margin-top: -2px;
+                  background-color: $lyrics-color-active;
+                  cursor: pointer;
+                }
+
+                // 滑块走过的进度条
+                &::-webkit-slider-runnable-track {
+                  height: 4px;
+                  width: 4px;
+                  background-color: $bg-color-secondary;
+                  border-radius: 2px;
+                }
+              }
+            }
+
+            .time-display {
+              display: flex;
+              justify-content: space-between;
+              font-size: 12px;
+              color: $text-color-secondary;
+            }
+          }
+        }
+      }
+    }
+
+    // 歌词包装器
+    .lyrics-wrapper {
+      top: 100%;
+      width: $module-width;
+      height: 60px;
+      background-color: $bg-color-secondary;
+      border-radius: 0 0 $border-radius $border-radius;
+      overflow: $overflow;
+      margin-top: 1px;
+
+      &.active {
+        max-height: $lyrics-height;
+        opacity: 1;
+      }
+
+      .lyrics {
+        text-align: center;
+        transition: transform 0.5s ease;
+
+        li {
+          height: 20px;
+          line-height: 20px;
+          opacity: 0.7;
+          transition: all 0.3s ease;
+          font-size: 14px;
+          color: $lyrics-color-inactive;
+
+          &.active {
+            opacity: 1;
+            font-weight: bold;
+            transform: scale(1.2);
+            color: $lyrics-color-active;
+          }
+        }
+      }
+    }
+
+    // 侧边弹出包装器
+    .side-popup-wrapper {
+      position: absolute;
+      top: 50%;
+      right: -$side-width;
+      margin-right: -1px;
+      transform: translateY(-50%);
+      z-index: $player-z-index + 1;
+
+      button {
+        background: $bg-color-secondary;
+        border: none;
+        color: $text-color-primary;
+        width: $side-width;
+        height: $side-height;
+        border-radius: 0 $side-border-radius $side-border-radius 0;
+        cursor: pointer;
+        transition: $transition;
+
+        &.eject {
+          background: $bg-color-primary;
         }
       }
     }
