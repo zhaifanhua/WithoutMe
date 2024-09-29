@@ -7,6 +7,9 @@
       <source :src="currentSong.musicUrl" type="audio/mp3" />
     </audio>
 
+    <!-- 频谱炫彩背景 -->
+    <canvas ref="visualizer" class="visualizer" :style="{ opacity: showColorful ? 0.8 : 0 }"></canvas>
+
     <!-- 列表包装器 -->
     <div class="playlist-wrapper" :class="{ active: showPlaylist }">
       <ul>
@@ -41,8 +44,16 @@
             <div class="name">{{ currentSong.name }}</div>
             <div class="artist">{{ currentSong.artist }}</div>
           </div>
-          <!-- 其他 -->
-          <div class="other">
+          <!-- 特殊 -->
+          <div class="specific">
+            <button
+              @click="toggleColorful"
+              v-bind:class="{ opacity: showColorful ? 0.8 : 0 }"
+              :class="{ active: showColorful }"
+              :title="playerTitle.colorful"
+            >
+              <Icon :icon="playerIcon.colorful" class="colorful" />
+            </button>
             <button @click="toggleLyrics" :class="{ active: showLyrics }" :title="playerTitle.lyrics">
               <Icon :icon="playerIcon.lyrics" />
             </button>
@@ -105,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, useTemplateRef, computed, watch, onMounted, nextTick, reactive } from "vue";
+  import { ref, useTemplateRef, computed, watch, onMounted, onUnmounted, nextTick, reactive } from "vue";
   import axios from "axios";
   import { Icon } from "@iconify/vue";
 
@@ -166,6 +177,12 @@
   const playMode = ref<PlayMode>(PlayMode.ListLoop); // 播放模式
   const showPlaylist = ref(false); // 是否显示播放列表
   const showLyrics = ref(false); // 是否显示歌词
+  const showColorful = ref(false); // 是否显示炫彩
+  const visualizer = useTemplateRef<HTMLCanvasElement | null>("visualizer");
+  let audioContext: AudioContext | null = null;
+  let analyser: AnalyserNode | null = null;
+  let source: MediaElementAudioSourceNode | null = null;
+  let animationFrameId: number | null = null;
   //#endregion
 
   //#region 歌曲信息
@@ -212,6 +229,8 @@
     list: "solar:document-text-bold",
     // 歌词
     lyrics: "solar:text-square-bold",
+    // 炫彩
+    colorful: "ion:color-palette",
     // 侧边弹出
     side: computed(() => {
       return isEject.value ? "solar:alt-arrow-right-linear" : "solar:alt-arrow-left-linear";
@@ -247,8 +266,10 @@
     }),
     // 播放列表
     list: "播放列表",
-    // 歌词
-    lyrics: "歌词",
+    // 开关歌词
+    lyrics: "开关歌词",
+    // 开关炫彩
+    colorful: "开关炫彩",
   });
   //#endregion
 
@@ -367,6 +388,159 @@
 
   //#endregion
 
+  //#region 更新歌词
+  // 同步歌词
+  function syncLyrics() {
+    if (!audioElement.value || parsedLyrics.value.length === 0) return;
+    const currentTime = audioElement.value.currentTime;
+    const index = parsedLyrics.value.findIndex((line, index) => {
+      const nextLine = parsedLyrics.value[index + 1];
+      return currentTime >= line.time && (!nextLine || currentTime < nextLine.time);
+    });
+    if (index !== -1 && index !== currentLyricIndex.value) {
+      currentLyricIndex.value = index;
+    }
+  }
+
+  // 歌词平移
+  const lyricsTranslateY = computed(() => {
+    const centerPosition = lyricsContainerHeight.value / 2;
+    const activeLyricPosition = currentLyricIndex.value * lineHeight;
+    return centerPosition - activeLyricPosition - lineHeight / 2;
+  });
+
+  // 切换歌词
+  function toggleLyrics() {
+    showLyrics.value = !showLyrics.value;
+  }
+  //#endregion
+
+  //#region 更新炫彩
+  // 切换炫彩
+  function toggleColorful() {
+    showColorful.value = !showColorful.value;
+    if (showColorful.value) {
+      drawVisualization(); // 重新启动可视化效果
+    } else {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      // 清除canvas
+      const canvas = visualizer.value;
+      if (canvas) {
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+    }
+  }
+
+  // 设置音频上下文
+  function setupAudioContext() {
+    if (!audioElement.value) return;
+
+    audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    source = audioContext.createMediaElementSource(audioElement.value);
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+  }
+
+  // 绘制可视化
+  function drawVisualization() {
+    if (!showColorful.value || !visualizer.value || !analyser) return;
+
+    const canvas = visualizer.value;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    // 创建离屏canvas用于缓存渐变
+    const offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = width;
+    offscreenCanvas.height = height;
+    const offscreenCtx = offscreenCanvas.getContext("2d");
+
+    if (!offscreenCtx) return;
+
+    // 定义颜色
+    const colors = [
+      { r: 255, g: 0, b: 128 }, // 粉红
+      { r: 255, g: 255, b: 0 }, // 黄色
+      { r: 0, g: 255, b: 255 }, // 青色
+      { r: 128, g: 0, b: 255 }, // 紫色
+    ];
+
+    // 改进的噪声函数,增加频率
+    function noise(x: number, y: number, z: number) {
+      return (Math.sin(x / 5 + y / 4 + z * 2) + Math.sin(x / 4 - y / 3 + z * 3) + Math.sin(-x / 5 + y / 4 + z * 2.5)) / 3;
+    }
+
+    // 颜色插值函数
+    function interpolateColor(color1: any, color2: any, factor: number) {
+      const result = { r: 0, g: 0, b: 0 };
+      result.r = Math.round(color1.r + factor * (color2.r - color1.r));
+      result.g = Math.round(color1.g + factor * (color2.g - color1.g));
+      result.b = Math.round(color1.b + factor * (color2.b - color1.b));
+      return result;
+    }
+
+    let time = 0;
+
+    // 绘制
+    function draw() {
+      animationFrameId = requestAnimationFrame(draw);
+
+      analyser.getByteFrequencyData(dataArray);
+      const average = dataArray.reduce((a, b) => a + b) / bufferLength;
+      const intensity = average / 255;
+
+      // 增加时间增量,使效果更快
+      time += 0.03 * (1 + intensity * 2);
+
+      // 使用音频数据来影响颜色选择
+      const baseColorIndex = Math.floor(intensity * (colors.length - 1));
+
+      for (let x = 0; x < width; x += 2) {
+        for (let y = 0; y < height; y += 2) {
+          const value = (noise(x / 20, y / 20, time) + 1) / 2;
+
+          // 使用音频数据来影响颜色选择
+          const colorIndex = (baseColorIndex + Math.floor(value * 2)) % colors.length;
+          const nextColorIndex = (colorIndex + 1) % colors.length;
+
+          const color1 = colors[colorIndex];
+          const color2 = colors[nextColorIndex];
+          const interpolationFactor = value * (colors.length - 1) - Math.floor(value * (colors.length - 1));
+          const color = interpolateColor(color1, color2, interpolationFactor);
+
+          // 使用音频强度来调整颜色的透明度
+          offscreenCtx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${0.1 + intensity * 0.2})`;
+          offscreenCtx.fillRect(x, y, 2, 2);
+        }
+      }
+
+      // 将离屏canvas的内容绘制到主canvas上
+      ctx.globalCompositeOperation = "source-over";
+      ctx.drawImage(offscreenCanvas, 0, 0);
+
+      // 轻微模糊效果
+      ctx.globalCompositeOperation = "lighter";
+      ctx.filter = "blur(100px)"; // 增加模糊半径
+      ctx.drawImage(canvas, 0, 0);
+      ctx.filter = "none";
+    }
+
+    draw();
+  }
+  //#endregion
+
   //#region 更新音量
   // 音量条样式
   const volumeBarStyle = computed(() => {
@@ -396,33 +570,6 @@
       audioElement.value.volume = volume.value;
       isMuted.value = volume.value === 0;
     }
-  }
-  //#endregion
-
-  //#region 更新歌词
-  // 同步歌词
-  function syncLyrics() {
-    if (!audioElement.value || parsedLyrics.value.length === 0) return;
-    const currentTime = audioElement.value.currentTime;
-    const index = parsedLyrics.value.findIndex((line, index) => {
-      const nextLine = parsedLyrics.value[index + 1];
-      return currentTime >= line.time && (!nextLine || currentTime < nextLine.time);
-    });
-    if (index !== -1 && index !== currentLyricIndex.value) {
-      currentLyricIndex.value = index;
-    }
-  }
-
-  // 歌词平移
-  const lyricsTranslateY = computed(() => {
-    const centerPosition = lyricsContainerHeight.value / 2;
-    const activeLyricPosition = currentLyricIndex.value * lineHeight;
-    return centerPosition - activeLyricPosition - lineHeight / 2;
-  });
-
-  // 切换歌词
-  function toggleLyrics() {
-    showLyrics.value = !showLyrics.value;
   }
   //#endregion
 
@@ -466,7 +613,6 @@
     }
   }
   //#endregion
-  //#region 方法
 
   // 切换弹出
   function toggleEject() {
@@ -479,15 +625,7 @@
     const seconds = Math.floor(time % 60);
     return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   }
-
-  onMounted(() => {
-    loadSong(0);
-    if (audioElement.value) {
-      audioElement.value.addEventListener("timeupdate", updateProgress);
-      audioElement.value.addEventListener("timeupdate", syncLyrics);
-      audioElement.value.volume = volume.value;
-    }
-  });
+  //#endregion
 
   watch(volume, newVolume => {
     if (audioElement.value) {
@@ -497,6 +635,28 @@
     const lyricsContainer = document.querySelector(".lyrics-container");
     if (lyricsContainer) {
       lyricsContainerHeight.value = lyricsContainer.clientHeight;
+    }
+  });
+
+  onMounted(() => {
+    loadSong(0);
+    if (audioElement.value) {
+      audioElement.value.addEventListener("timeupdate", updateProgress);
+      audioElement.value.addEventListener("timeupdate", syncLyrics);
+      audioElement.value.volume = volume.value;
+      setupAudioContext();
+      if (showColorful.value) {
+        drawVisualization();
+      }
+    }
+  });
+
+  onUnmounted(() => {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
+    if (audioContext) {
+      audioContext.close();
     }
   });
 </script>
@@ -519,7 +679,7 @@
   $bg-color-secondary: #c9c9c9;
   $text-color-primary: #000000;
   $text-color-secondary: #535353;
-  $text-color-active: #5effa6;
+  $text-color-active: #00ff2f;
   $border-radius: 20px;
   $border-radius-modula: 10px;
   $border-radius-side: 12px;
@@ -542,8 +702,21 @@
     overflow: visible;
     @include useZindex(player);
 
+    // 弹出
     &.eject {
       transform: translateX(-($x + $width)); // 根据播放器宽度调整
+    }
+
+    // 频谱炫彩背景
+    .visualizer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+      border-radius: $border-radius;
+      transition: opacity 0.3s ease;
     }
 
     .playlist-wrapper,
@@ -563,7 +736,6 @@
       width: 90%;
       max-height: 0;
       overflow: hidden;
-      background-color: $bg-color-secondary;
       transition: $transition;
       opacity: 0;
     }
@@ -572,7 +744,8 @@
     .playlist-wrapper {
       bottom: 100%;
       width: $module-width;
-      background-color: $bg-color-secondary;
+      @include useBackdropFilter($base-bg-filter-blur);
+      background-color: rgba($bg-color-secondary, 0.5);
       border-radius: $border-radius-modula $border-radius-modula 0 0;
       overflow-y: auto;
       margin-bottom: 1px;
@@ -663,7 +836,8 @@
       align-items: center;
       width: $player-width;
       height: $player-height;
-      background-color: $bg-color-primary;
+      @include useBackdropFilter($base-bg-filter-blur);
+      background-color: rgba($bg-color-primary, 0.5);
       border-radius: $border-radius;
       padding: 10px;
 
@@ -717,13 +891,14 @@
             }
           }
 
-          .other {
+          .specific {
             display: flex;
 
             button {
+              margin-top: -10px;
               background: none;
               border: none;
-              font-size: 14px;
+              font-size: 18px;
               color: $text-color-secondary;
               cursor: pointer;
               margin-left: 10px;
@@ -806,7 +981,8 @@
       top: 100%;
       width: $module-width;
       height: 60px;
-      background-color: $bg-color-secondary;
+      @include useBackdropFilter($base-bg-filter-blur);
+      background-color: rgba($bg-color-secondary, 0.5);
       border-radius: 0 0 $border-radius-modula $border-radius-modula;
       overflow: $overflow;
       margin-top: 1px;
@@ -847,8 +1023,9 @@
       transform: translateY(-50%);
 
       button {
-        background: $bg-color-secondary;
         border: none;
+        @include useBackdropFilter($base-bg-filter-blur);
+        background-color: rgba($bg-color-secondary, 0.5);
         color: $text-color-primary;
         width: $side-width;
         height: $side-height;
@@ -857,7 +1034,8 @@
         transition: $transition;
 
         &.eject {
-          background: $bg-color-primary;
+          @include useBackdropFilter($base-bg-filter-blur);
+          background-color: rgba($bg-color-primary, 0.5);
         }
       }
     }
