@@ -35,6 +35,7 @@
     "cache-verify": "npm cache verify",
     "clean-lock": "node ./scripts/clean-lock.js",
     "clean-modules": "node ./scripts/clean-modules.js",
+    "clean-dist": "node ./scripts/clean-dist.js",
     "clean-node": "pnpm run clean-lock && pnpm run clean-modules",
     "reinstall": "pnpm run clean-node && pnpm run bootstrap"
   },

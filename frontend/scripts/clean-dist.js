@@ -1,8 +1,8 @@
-// clean-modules.js
+// clean-dist.js
 import fs from "fs";
 import path from "path";
 
-const directoriesToDelete = ["dist", "node_modules"];
+const directoriesToDelete = ["dist"];
 
 // 删除文件夹
 directoriesToDelete.forEach(dir => {
@@ -11,6 +11,6 @@ directoriesToDelete.forEach(dir => {
     fs.rmSync(dirPath, { recursive: true, force: true });
     console.log(`Deleted directory: ${dirPath}`);
   } else {
-    console.log(`Directory not found: ${dirPath}`);
+    console.warn(`Directory not found: ${dirPath}`);
   }
 });
