@@ -22,8 +22,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "/@/*": ["./src/*"],
-      "#/*": ["./types/*"],
-      "/#/*": ["./types/*"],
+      "#/*": ["src/types/*"],
+      "/#/*": ["src/types/*"],
       "~/*": ["./*"],
       "/~/*": ["./*"]
     }
@@ -32,8 +32,8 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue",
-    "types/**/*.ts",
-    "types/**/*.d.ts",
+    "src/types/**/*.ts",
+    "src/types/**/*.d.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
     "vite.config.ts"

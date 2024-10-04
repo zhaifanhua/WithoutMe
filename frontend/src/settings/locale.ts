@@ -1,4 +1,4 @@
-import type { LocaleType, LocaleMenu, LocaleSetting } from "#/config";
+import type { LocaleType, LocaleMenu, LocaleSetting } from "@/types/config";
 
 export const LOCALE: { [key: string]: LocaleType } = {
   ZH_CN: "zh-cn",

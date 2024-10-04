@@ -36,11 +36,11 @@ export default defineConfig(({ command, mode }) => {
         },
         {
           find: "#",
-          replacement: resolve(__dirname, "types"),
+          replacement: resolve(__dirname, "src/types"),
         },
         {
           find: "/#",
-          replacement: resolve(__dirname, "types"),
+          replacement: resolve(__dirname, "src/types"),
         },
         {
           find: "~",

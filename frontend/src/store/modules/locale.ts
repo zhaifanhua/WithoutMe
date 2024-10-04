@@ -1,4 +1,4 @@
-import type { LocaleSetting, LocaleType } from "#/config";
+import type { LocaleSetting, LocaleType } from "@/types/config";
 import { defineStore } from "pinia";
 import { appStore } from "@/store";
 import { getStorageItem, setStorageItem } from "@/utils/storage/storage";

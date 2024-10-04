@@ -5,11 +5,11 @@
     <Cursor></Cursor>
     <!-- <Loading></Loading>
     <Notification></Notification> -->
-    <!-- <APlayer></APlayer> -->
+    <APlayer></APlayer>
     <Background></Background>
-    <MusicPlayer></MusicPlayer>
+    <!-- <MusicPlayer></MusicPlayer> -->
   </div>
-  <slot></slot>
+  <!-- <slot></slot> -->
 </template>
 
 <script setup lang="ts">
