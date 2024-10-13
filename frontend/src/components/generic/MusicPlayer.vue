@@ -275,16 +275,63 @@
 
   //#region 方法
   //#region 获取数据
+  //   // 加载歌曲
+  //   async function loadSong(index: number) {
+  //     currentSongIndex.value = index;
+  //     await fetchLyrics(currentSong.value.lyricsUrl);
+  //     nextTick(() => {
+  //       if (audioElement.value) {
+  //         audioElement.value.src = currentSong.value.musicUrl;
+  //         audioElement.value.load();
+  //       }
+  //     });
+  // }
+
   // 加载歌曲
   async function loadSong(index: number) {
     currentSongIndex.value = index;
     await fetchLyrics(currentSong.value.lyricsUrl);
-    nextTick(() => {
-      if (audioElement.value) {
-        audioElement.value.src = currentSong.value.musicUrl;
-        audioElement.value.load();
-      }
+
+    const audioUrl = currentSong.value.musicUrl;
+    const chunkSize = 1024 * 1024; // 每次请求1MB
+    let start = 0;
+
+    // 创建音频上下文
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const source = audioContext.createBufferSource();
+    const audioBuffer = await fetchAudioChunk(audioUrl, start, chunkSize);
+
+    // 解码音频数据
+    audioContext.decodeAudioData(audioBuffer, buffer => {
+      source.buffer = buffer;
+      source.connect(audioContext.destination);
+      source.start(0);
     });
+
+    // 边播放边加载
+    source.onended = async () => {
+      start += chunkSize;
+      const nextChunk = await fetchAudioChunk(audioUrl, start, chunkSize);
+      if (nextChunk) {
+        audioContext.decodeAudioData(nextChunk, buffer => {
+          const nextSource = audioContext.createBufferSource();
+          nextSource.buffer = buffer;
+          nextSource.connect(audioContext.destination);
+          nextSource.start(0);
+        });
+      }
+    };
+  }
+
+  // 获取音频分块
+  async function fetchAudioChunk(url: string, start: number, chunkSize: number): Promise<ArrayBuffer> {
+    const response = await axios.get(url, {
+      responseType: "arraybuffer",
+      headers: {
+        Range: `bytes=${start}-${start + chunkSize - 1}`,
+      },
+    });
+    return response.data;
   }
 
   // 获取歌词
