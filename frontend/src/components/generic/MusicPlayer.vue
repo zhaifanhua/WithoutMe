@@ -164,6 +164,70 @@
       coverUrl: "/audios/covers/1.jpg",
       duration: 2546,
     },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "1111",
+      artist: "1111",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "1111",
+      artist: "1111",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "1111",
+      artist: "1111",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "1111",
+      artist: "1111",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
   ]; // 歌曲列表
   //#endregion
 
@@ -275,63 +339,16 @@
 
   //#region 方法
   //#region 获取数据
-  //   // 加载歌曲
-  //   async function loadSong(index: number) {
-  //     currentSongIndex.value = index;
-  //     await fetchLyrics(currentSong.value.lyricsUrl);
-  //     nextTick(() => {
-  //       if (audioElement.value) {
-  //         audioElement.value.src = currentSong.value.musicUrl;
-  //         audioElement.value.load();
-  //       }
-  //     });
-  // }
-
   // 加载歌曲
   async function loadSong(index: number) {
     currentSongIndex.value = index;
     await fetchLyrics(currentSong.value.lyricsUrl);
-
-    const audioUrl = currentSong.value.musicUrl;
-    const chunkSize = 1024 * 1024; // 每次请求1MB
-    let start = 0;
-
-    // 创建音频上下文
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const source = audioContext.createBufferSource();
-    const audioBuffer = await fetchAudioChunk(audioUrl, start, chunkSize);
-
-    // 解码音频数据
-    audioContext.decodeAudioData(audioBuffer, buffer => {
-      source.buffer = buffer;
-      source.connect(audioContext.destination);
-      source.start(0);
-    });
-
-    // 边播放边加载
-    source.onended = async () => {
-      start += chunkSize;
-      const nextChunk = await fetchAudioChunk(audioUrl, start, chunkSize);
-      if (nextChunk) {
-        audioContext.decodeAudioData(nextChunk, buffer => {
-          const nextSource = audioContext.createBufferSource();
-          nextSource.buffer = buffer;
-          nextSource.connect(audioContext.destination);
-          nextSource.start(0);
-        });
+    nextTick(() => {
+      if (audioElement.value) {
+        audioElement.value.src = currentSong.value.musicUrl;
+        audioElement.value.load();
       }
-    };
-  }
-
-  // 获取音频分块
-  async function fetchAudioChunk(url: string, start: number, chunkSize: number): Promise<ArrayBuffer> {
-    const response = await axios.get(url, {
-      responseType: "arraybuffer",
-      headers: {
-        Range: `bytes=${start}-${start + chunkSize - 1}`,
-      },
     });
-    return response.data;
   }
 
   // 获取歌词
@@ -367,6 +384,7 @@
   function prevSong() {
     if (currentSongIndex.value > 0) {
       loadSong(currentSongIndex.value - 1);
+      scrollToCurrentSong();
     }
   }
 
@@ -374,6 +392,7 @@
   function nextSong() {
     const nextIndex = getNextSongIndex();
     loadSong(nextIndex);
+    scrollToCurrentSong();
   }
 
   // 播放/暂停
@@ -522,6 +541,9 @@
       { r: 255, g: 255, b: 0 }, // 黄色
       { r: 0, g: 255, b: 255 }, // 青色
       { r: 128, g: 0, b: 255 }, // 紫色
+      { r: 0, g: 255, b: 0 }, // 绿色
+      { r: 255, g: 0, b: 0 }, // 红色
+      { r: 255, g: 128, b: 0 }, // 橙色
     ];
 
     // 改进的噪声函数,增加频率
@@ -549,7 +571,7 @@
       const intensity = average / 255;
 
       // 增加时间增量,使效果更快
-      time += 0.03 * (1 + intensity * 2);
+      time += 0.05 * (1 + intensity * 2);
 
       // 使用音频数据来影响颜色选择
       const baseColorIndex = Math.floor(intensity * (colors.length - 1));
@@ -623,7 +645,10 @@
   //#region 更新进度条
   // 进度条样式
   const progressBarStyle = computed(() => {
-    const percentage = (currentTime.value / currentDuration.value) * 100 || 0;
+    let percentage = (currentTime.value / currentDuration.value) * 100 || 0;
+    // 解决小圆点在刚开始和快结束时，与进度条出现缝隙的问题
+    percentage = percentage < 10 ? percentage + 1 : percentage;
+    percentage = percentage > 90 ? percentage - 1 : percentage;
     return {
       background: `linear-gradient(to right, var(--bg-color-active) ${percentage}%, var(--bg-color-inactive) ${percentage}%)`,
     };
@@ -641,7 +666,10 @@
   function updateProgress() {
     if (audioElement.value) {
       currentTime.value = audioElement.value.currentTime;
-      currentDuration.value = audioElement.value.duration;
+      // 检查 duration 是否有效
+      if (!isNaN(audioElement.value.duration)) {
+        currentDuration.value = audioElement.value.duration;
+      }
     }
   }
   //#endregion
@@ -658,6 +686,16 @@
     if (audioElement.value) {
       audioElement.value.play();
     }
+  }
+
+  // 滚动到当前歌曲
+  function scrollToCurrentSong() {
+    nextTick(() => {
+      const activeSongElement = document.querySelector(`.playlist-wrapper li.active`);
+      if (activeSongElement) {
+        activeSongElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
   }
   //#endregion
 
@@ -794,8 +832,13 @@
       @include useBackdropFilter($base-bg-filter-blur);
       background-color: rgba($bg-color-secondary, 0.5);
       border-radius: $border-radius-modula $border-radius-modula 0 0;
-      overflow-y: auto;
       margin-bottom: 1px;
+      overflow-y: auto;
+      // 隐藏滚动条
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       &.active {
         max-height: $playlist-height;
@@ -805,14 +848,12 @@
       ul {
         list-style-type: none;
         padding: 0;
-        overflow-y: auto;
 
         li {
           display: flex;
           align-items: center;
           padding: 10px 15px;
           cursor: pointer;
-          box-shadow: inset 0 -1px 0 #e0e0e0;
 
           &:hover {
             background-color: rgba($bg-color-primary, 0.05);
@@ -918,7 +959,6 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding-top: 10px;
 
           .info {
             flex: 1;
@@ -940,15 +980,15 @@
 
           .specific {
             display: flex;
+            margin-bottom: 10px;
 
             button {
-              margin-top: -10px;
+              margin-left: 10px;
               background: none;
               border: none;
               font-size: 18px;
               color: $text-color-secondary;
               cursor: pointer;
-              margin-left: 10px;
 
               &:hover,
               &.active {
@@ -963,11 +1003,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 10px;
 
             button {
               background: none;
               border: none;
-              font-size: 16px;
+              font-size: 18px;
               color: $text-color-secondary;
               cursor: pointer;
 
@@ -989,22 +1030,23 @@
                 -webkit-appearance: none; // 移除默认样式
                 appearance: none;
                 width: 100%;
-                height: 4px;
-                border-radius: 2px;
+                height: 6px;
+                border-radius: 3px;
                 outline: none; // 移除轮廓
 
+                // 圆点
                 &::-webkit-slider-thumb {
                   -webkit-appearance: none; // 移除默认样式
                   appearance: none;
-                  height: 6px;
-                  width: 6px;
+                  height: 10px;
+                  width: 10px;
                   border-radius: 50%;
                   background-color: var(--bg-color-active);
                   cursor: pointer;
                 }
                 &::-moz-range-thumb {
-                  height: 6px;
-                  width: 6px;
+                  height: 10px;
+                  width: 10px;
                   border-radius: 50%;
                   background-color: var(--bg-color-active);
                   cursor: pointer;
@@ -1015,7 +1057,7 @@
             .time-display {
               display: flex;
               justify-content: space-between;
-              font-size: 12px;
+              font-size: 10px;
               color: $text-color-secondary;
             }
           }
