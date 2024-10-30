@@ -15,8 +15,9 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
+  @use "@/styles/base/variables" as variables;
 
   .default-layout {
     display: grid;
@@ -26,7 +27,7 @@
       "header"
       "main"
       "footer";
-    padding-top: $base-header-height + $base-gap-xs;
-    padding-bottom: $base-footer-height + $base-gap-xs;
+    padding-top: variables.$base-header-height + variables.$base-gap-xs;
+    padding-bottom: variables.$base-footer-height + variables.$base-gap-xs;
   }
 </style>

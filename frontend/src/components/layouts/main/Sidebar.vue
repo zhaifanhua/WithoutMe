@@ -11,24 +11,25 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
+  @use "@/styles/base/variables";
 
   .sidebar {
     grid-area: sidebar;
-    margin-left: $base-gap-sm;
-    width: $base-aside-width;
+    margin-left: variables.$base-gap-sm;
+    width: variables.$base-aside-width;
     height: 500px;
     // todo 暂定，后续需要调整为下层组件
-    // @include useBackdropFilter($base-module-bg-filter-blur);
-    @include useZindex(overlay);
-    @include useBorderRadius;
-    @include useTheme {
-      background-color: getVar(module-bg-color);
+    // @include mixins.useBackdropFilter(variables.$base-module-bg-filter-blur);
+    @include mixins.useZindex(overlay);
+    @include mixins.useBorderRadius;
+    @include themes.useTheme {
+      background-color: themes.getVar(module-bg-color);
     }
 
     div {
-      @include useFlexBox;
+      @include mixins.useFlexBox;
     }
   }
 </style>

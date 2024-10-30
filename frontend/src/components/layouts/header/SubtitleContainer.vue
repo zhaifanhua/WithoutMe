@@ -16,14 +16,14 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
 
   .subtitle-container {
     grid-area: subtitle-container;
-    @include useFlexBox;
-    @include useTheme {
-      color: getVar(text-color-secondary-opaque);
+    @include mixins.useFlexBox;
+    @include themes.useTheme {
+      color: themes.getVar(text-color-secondary-opaque);
     }
 
     span {

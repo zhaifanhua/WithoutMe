@@ -8,10 +8,10 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
+  @use "@/styles/base/mixins" as mixins;
 
   .background {
-    @include useZindex("background");
+    @include mixins.useZindex("background");
     position: fixed;
     top: 0;
     left: 0;

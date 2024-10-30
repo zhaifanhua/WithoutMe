@@ -122,8 +122,8 @@
 </script>
 
 <style lang="scss">
-  @import "@/styles/base/mixins.scss";
-  // @import '@/styles/base/themes.scss';
+  @use "@/styles/base/mixins" as mixins;
+  // @use '@/styles/base/themes.scss';
 
   .cursor,
   .cursor-trajectory {
@@ -134,14 +134,14 @@
     transition: 0.25s ease-in-out;
     transition-property: scale, transform, background-color, border-color;
     scale: 1;
-    @include useZindex(cursor);
+    @include mixins.useZindex(cursor);
   }
 
   .cursor {
     border-radius: 50%;
     border-color: transparent;
-    // @include useTheme {
-    //   background-color: getVar(text-color);
+    // @include themes.useTheme {
+    //   background-color: themes.getVar(text-color);
     // }
     background-color: black;
 
@@ -153,8 +153,8 @@
   .cursor-trajectory {
     border-radius: 30%;
     background-color: transparent;
-    // @include useTheme {
-    //   border: 2px solid getVar(text-color);
+    // @include themes.useTheme {
+    //   border: 2px solid themes.getVar(text-color);
     // }
     border: 2px solid black;
 

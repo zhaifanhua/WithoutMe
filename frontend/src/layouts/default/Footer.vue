@@ -18,24 +18,25 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
+  @use "@/styles/base/variables" as variables;
 
   .footer {
     grid-area: footer;
     width: 100%;
-    height: $base-footer-height;
+    height: variables.$base-footer-height;
     position: fixed;
     left: 0;
     bottom: 0;
 
-    @include useFlexBox;
-    @include useZindex(overlay);
-    @include useBackdropFilter($base-bg-filter-blur);
-    @include useBorderRadius($base-border-radius, $base-border-radius, 0, 0);
-    @include useTheme {
-      background-color: getVar(bg-color);
-      border-top: $base-border-width $base-border-style getVar(bg-color-hover);
+    @include mixins.useFlexBox;
+    @include mixins.useZindex(overlay);
+    @include mixins.useBackdropFilter(variables.$base-bg-filter-blur);
+    @include mixins.useBorderRadius(variables.$base-border-radius, variables.$base-border-radius, 0, 0);
+    @include themes.useTheme {
+      background-color: themes.getVar(bg-color);
+      border-top: variables.$base-border-width variables.$base-border-style themes.getVar(bg-color-hover);
     }
 
     // 子元素布局

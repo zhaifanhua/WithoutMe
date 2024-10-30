@@ -37,15 +37,15 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
 
   .theme-switch {
     grid-area: theme-switch;
     width: 30px;
     height: 30px;
-    @include useFlexBox;
-    @include useTransition;
+    @include mixins.useFlexBox;
+    @include mixins.useTransition;
 
     button {
       border: none;
@@ -55,14 +55,14 @@
       cursor: pointer;
       width: 26px;
       height: 26px;
-      @include useFlexBox;
-      @include useTheme {
-        color: getVar(text-color);
+      @include mixins.useFlexBox;
+      @include themes.useTheme {
+        color: themes.getVar(text-color);
       }
 
       &:hover {
-        @include useTheme {
-          background-color: getVar(btn-color-hover);
+        @include themes.useTheme {
+          background-color: themes.getVar(btn-color-hover);
         }
       }
 

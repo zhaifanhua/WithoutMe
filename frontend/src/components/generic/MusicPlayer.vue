@@ -683,7 +683,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/variables" as variables;
 
   $x: 0px;
   $y: 30%;
@@ -721,7 +722,7 @@
     flex-direction: column;
     align-items: center;
     overflow: visible;
-    @include useZindex(player);
+    @include mixins.useZindex(player);
 
     // 弹出
     &.eject {
@@ -765,7 +766,7 @@
     .playlist-wrapper {
       bottom: 100%;
       width: $module-width;
-      @include useBackdropFilter($base-bg-filter-blur);
+      @include mixins.useBackdropFilter(variables.$base-bg-filter-blur);
       background-color: rgba($bg-color-secondary, 0.5);
       border-radius: $border-radius-modula $border-radius-modula 0 0;
       margin-bottom: 1px;
@@ -860,7 +861,7 @@
       align-items: center;
       width: $player-width;
       height: $player-height;
-      @include useBackdropFilter($base-bg-filter-blur);
+      @include mixins.useBackdropFilter(variables.$base-bg-filter-blur);
       background-color: rgba($bg-color-primary, 0.5);
       border-radius: $border-radius;
       padding: 10px;
@@ -1006,7 +1007,7 @@
       top: 100%;
       width: $module-width;
       height: 60px;
-      @include useBackdropFilter($base-bg-filter-blur);
+      @include mixins.useBackdropFilter(variables.$base-bg-filter-blur);
       background-color: rgba($bg-color-secondary, 0.5);
       border-radius: 0 0 $border-radius-modula $border-radius-modula;
       overflow: $overflow;
@@ -1049,7 +1050,7 @@
 
       button {
         border: none;
-        @include useBackdropFilter($base-bg-filter-blur);
+        @include mixins.useBackdropFilter(variables.$base-bg-filter-blur);
         background-color: rgba($bg-color-secondary, 0.5);
         color: $text-color-primary;
         width: $side-width;
@@ -1059,7 +1060,7 @@
         transition: $transition;
 
         &.eject {
-          @include useBackdropFilter($base-bg-filter-blur);
+          @include mixins.useBackdropFilter(variables.$base-bg-filter-blur);
           background-color: rgba($bg-color-primary, 0.5);
         }
       }

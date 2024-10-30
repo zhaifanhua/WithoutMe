@@ -30,16 +30,17 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
+  @use "@/styles/base/variables" as variables;
 
   .navbar {
     grid-area: navbar;
-    margin-right: $base-gap-sm;
-    width: $base-navbar-width;
+    margin-right: variables.$base-gap-sm;
+    width: variables.$base-navbar-width;
     height: 500px;
-    @include useZindex(overlay);
-    @include useBorderRadius;
+    @include mixins.useZindex(overlay);
+    @include mixins.useBorderRadius;
 
     ul {
       width: 100%;
@@ -58,12 +59,12 @@
           font-weight: 600;
           font-size: 18px;
           transition: all 0.2s ease-in-out;
-          @include useFlexBox(row, start, center, center);
-          // @include useBackdropFilter($base-module-bg-filter-blur);
-          @include useBorderRadius;
-          @include useTheme {
-            background-color: getVar(module-bg-color);
-            color: getVar(link-color);
+          @include mixins.useFlexBox(row, start, center, center);
+          // @include mixins.useBackdropFilter(variables.$base-module-bg-filter-blur);
+          @include mixins.useBorderRadius;
+          @include themes.useTheme {
+            background-color: themes.getVar(module-bg-color);
+            color: themes.getVar(link-color);
           }
 
           & > * {
@@ -72,14 +73,14 @@
         }
 
         a:hover {
-          @include useTheme {
-            color: getVar(link-color-hover);
+          @include themes.useTheme {
+            color: themes.getVar(link-color-hover);
           }
         }
 
         a.active {
-          @include useTheme {
-            color: getVar(link-color-active);
+          @include themes.useTheme {
+            color: themes.getVar(link-color-active);
           }
         }
       }

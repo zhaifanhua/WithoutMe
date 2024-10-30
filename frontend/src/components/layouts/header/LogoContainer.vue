@@ -16,11 +16,11 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
+  @use "@/styles/base/mixins" as mixins;
 
   .logo-container {
     grid-area: logo-container;
-    @include useFlexBox;
+    @include mixins.useFlexBox;
 
     .avatar {
       height: 68px;

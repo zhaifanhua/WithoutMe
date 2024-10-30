@@ -28,6 +28,7 @@
   "scripts": {
     "bootstrap": "pnpm install",
     "dev": "vite dev",
+    "debug": "vite dev --debug",
     "build": "vite build",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,vue,css,scss,less,json,md}\"",

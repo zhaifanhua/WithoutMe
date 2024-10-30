@@ -17,11 +17,11 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
+  @use "@/styles/base/mixins" as mixins;
 
   .switch-container {
     grid-area: switch-container;
-    @include useFlexBox;
+    @include mixins.useFlexBox;
 
     // 子元素布局
     .switch-content {

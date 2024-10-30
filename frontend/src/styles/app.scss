@@ -1,7 +1,7 @@
 // 全局样式
 
-@import "./reset.scss";
-@import "./base/variables.scss";
-@import "./base/mixins.scss";
-@import "./base/themes.scss";
-@import "./base/fonts.scss";
+@use "reset" as reset;
+@use "base/variables" as variables;
+@use "base/mixins" as mixins;
+@use "base/themes" as themes;
+@use "base/fonts" as fonts;

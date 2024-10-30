@@ -67,14 +67,14 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
 
   .site-info-container {
     grid-area: site-info-container;
-    @include useFlexBox(column, center, center, center);
-    @include useTheme {
-      color: getVar(text-color-secondary-translucent);
+    @include mixins.useFlexBox(column, center, center, center);
+    @include themes.useTheme {
+      color: themes.getVar(text-color-secondary-translucent);
     }
 
     p {

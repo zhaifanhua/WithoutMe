@@ -20,20 +20,21 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/styles/base/mixins.scss";
-  @import "@/styles/base/themes.scss";
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
+  @use "@/styles/base/variables" as variables;
 
   .main {
     grid-area: main;
-    padding: $base-gap-xs 0;
+    padding: variables.$base-gap-xs 0;
     width: 100%;
 
-    @include useFlexBox(row, center, start, center);
-    @include useZindex;
-    @include useBackdropFilter($base-bg-filter-blur);
-    @include useBorderRadius;
-    @include useTheme {
-      background-color: getVar(bg-color);
+    @include mixins.useFlexBox(row, center, start, center);
+    @include mixins.useZindex;
+    @include mixins.useBackdropFilter(variables.$base-bg-filter-blur);
+    @include mixins.useBorderRadius;
+    @include themes.useTheme {
+      background-color: themes.getVar(bg-color);
     }
 
     // 子元素布局

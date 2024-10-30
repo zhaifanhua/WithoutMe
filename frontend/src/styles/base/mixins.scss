@@ -1,6 +1,7 @@
 // 指令
 
-@import "./variables.scss";
+@use "sass:map";
+@use "variables" as variables;
 
 // 混合响应 断点配置
 $breakpoints: (
@@ -16,7 +17,7 @@ $breakpoints: (
   // 超大屏设备 tv
 );
 @mixin useAutoScale($breakpoint: md) {
-  $scale: map-get($breakpoints, $breakpoint);
+  $scale: map.get($breakpoints, $breakpoint);
   @media only screen and (min-width: $scale) {
     @content;
   }
@@ -24,28 +25,28 @@ $breakpoints: (
 
 // 边框圆角
 @mixin useBorderRadius(
-  $top-left: $base-border-radius,
-  $top-right: $base-border-radius,
-  $bottom-right: $base-border-radius,
-  $bottom-left: $base-border-radius
+  $top-left: variables.$base-border-radius,
+  $top-right: variables.$base-border-radius,
+  $bottom-right: variables.$base-border-radius,
+  $bottom-left: variables.$base-border-radius
 ) {
   border-top-left-radius: $top-left;
   border-top-right-radius: $top-right;
   border-bottom-right-radius: $bottom-right;
   border-bottom-left-radius: $bottom-left;
   // 如果所有参数都相同，可以设置统一的圆角
-  @if $top-left == $top-right == $bottom-right == $bottom-left {
+  @if $top-left == $top-right and $top-left == $bottom-right and $top-left == $bottom-left {
     border-radius: $top-left;
   }
 }
 
 // 阴影
-@mixin useBoxShadow($shadow: $base-box-shadow) {
+@mixin useBoxShadow($shadow: variables.$base-box-shadow) {
   box-shadow: $shadow;
 }
 
 // 过渡效果
-@mixin useTransition($transition: $base-transition) {
+@mixin useTransition($transition: variables.$base-transition) {
   transition: $transition;
 }
 
@@ -71,12 +72,12 @@ $z-layers: (
   cursor: 9999,
 );
 @mixin useZindex($layer: default) {
-  $index: map-get($z-layers, $layer);
+  $index: map.get($z-layers, $layer);
   z-index: $index;
 }
 
 // 高斯模糊
-@mixin useBackdropFilter($blur: $base-filter-blur) {
+@mixin useBackdropFilter($blur: variables.$base-filter-blur) {
   backdrop-filter: blur($blur);
 }
 
