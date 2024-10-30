@@ -4,13 +4,13 @@
     <ul>
       <li>
         <RouterLink to="/">
-          <Icon icon="iconamoon:home-bold" />
+          <Icon icon="iconamoon:home-duotone" />
           <span>主页</span>
         </RouterLink>
       </li>
       <li>
         <RouterLink to="/about">
-          <Icon icon="iconamoon:home-bold" />
+          <Icon icon="tdesign:look-around" />
           <span>关于</span>
         </RouterLink>
       </li>
@@ -26,20 +26,21 @@
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue';
+  import { Icon } from "@iconify/vue";
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
-  @import '@/styles/base/themes.scss';
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
+  @use "@/styles/base/variables" as variables;
 
   .navbar {
     grid-area: navbar;
-    margin-right: 10px;
-    width: 200px;
+    margin-right: variables.$base-gap-sm;
+    width: variables.$base-navbar-width;
     height: 500px;
-    @include useZindex(overlay);
-    @include useBorderRadius;
+    @include mixins.useZindex(overlay);
+    @include mixins.useBorderRadius;
 
     ul {
       width: 100%;
@@ -58,28 +59,28 @@
           font-weight: 600;
           font-size: 18px;
           transition: all 0.2s ease-in-out;
-          @include useFlexBox(row, center, left, center);
-          @include useBackdropFilter($base-module-bg-filter-blur);
-          @include useBorderRadius;
-          @include useTheme {
-            background-color: getVar(module-bg-color);
-            color: getVar(link-color);
+          @include mixins.useFlexBox(row, start, center, center);
+          // @include mixins.useBackdropFilter(variables.$base-module-bg-filter-blur);
+          @include mixins.useBorderRadius;
+          @include themes.useTheme {
+            background-color: themes.getVar(module-bg-color);
+            color: themes.getVar(link-color);
           }
 
           & > * {
-            margin-left: 20px;
+            margin-left: 16px;
           }
         }
 
         a:hover {
-          @include useTheme {
-            color: getVar(link-color-hover);
+          @include themes.useTheme {
+            color: themes.getVar(link-color-hover);
           }
         }
 
         a.active {
-          @include useTheme {
-            color: getVar(link-color-active);
+          @include themes.useTheme {
+            color: themes.getVar(link-color-active);
           }
         }
       }

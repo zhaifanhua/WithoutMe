@@ -7,19 +7,23 @@
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue';
+  import { Icon } from "@iconify/vue";
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
+  @use "@/styles/base/mixins" as mixins;
+  @use "@/styles/base/themes" as themes;
 
   .main-content {
     grid-area: main-content;
     width: 100%;
     height: 100%;
-    @include useZindex;
-    @include useBorderRadius;
+    @include mixins.useZindex;
+    @include mixins.useBorderRadius;
     // todo 暂定，后续需要调整为下层组件
-    @include useBackdropFilter($base-module-bg-filter-blur);
+    // @include mixins.useBackdropFilter(variables.$base-module-bg-filter-blur);
+    @include themes.useTheme {
+      background-color: themes.getVar(module-bg-color);
+    }
   }
 </style>

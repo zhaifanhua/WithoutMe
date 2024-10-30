@@ -1,4 +1,4 @@
-<!-- LOGO容器组件 -->
+<!-- 图标容器组件 -->
 
 <template>
   <div id="logo-container" class="logo-container">
@@ -9,20 +9,18 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref } from "vue";
 
   const env = import.meta.env;
   const siteLogo = ref(env.VITE_SITE_LOGO);
 </script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
+  @use "@/styles/base/mixins" as mixins;
 
   .logo-container {
     grid-area: logo-container;
-    height: 80px;
-    width: 80px;
-    @include useFlexBox;
+    @include mixins.useFlexBox;
 
     .avatar {
       height: 68px;

@@ -9,7 +9,7 @@
  * @param days 过期时间（天数）。如果设置为负数，则删除Cookie
  */
 const setCookie = (name: string, value: string, days: number): void => {
-  let expires = '';
+  let expires = "";
   if (days && days > 0) {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -25,10 +25,10 @@ const setCookie = (name: string, value: string, days: number): void => {
  */
 const getCookie = (name: string): string | null => {
   const nameEQ = `${name}=`;
-  const ca = document.cookie.split(';');
+  const ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    while (c.charAt(0) === " ") c = c.substring(1, c.length);
     if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
@@ -39,7 +39,7 @@ const getCookie = (name: string): string | null => {
  * @param name Cookie的名称
  */
 const deleteCookie = (name: string): void => {
-  setCookie(name, '', -1);
+  setCookie(name, "", -1);
 };
 
 /**
@@ -47,9 +47,9 @@ const deleteCookie = (name: string): void => {
  * @returns {boolean} - 如果浏览器启用了Cookie，则返回true，否则返回false
  */
 const isCookiesEnabled = (): boolean => {
-  const testKey = 'cookieTest';
-  setCookie(testKey, '1', 1);
-  if (getCookie(testKey) === '1') {
+  const testKey = "cookieTest";
+  setCookie(testKey, "1", 1);
+  if (getCookie(testKey) === "1") {
     deleteCookie(testKey);
     return true;
   }

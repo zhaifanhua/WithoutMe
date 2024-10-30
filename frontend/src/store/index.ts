@@ -1,40 +1,10 @@
-/**
- *
- */
+import type { App } from "vue";
+import { createPinia } from "pinia";
 
-import { createPinia } from 'pinia';
-import { useStores } from '@/store/_hook';
-import { GlobalState } from '@/app/state';
-import { getSSRStateValue } from '@/universal';
+// 创建应用状态管理
+export const appStore = createPinia();
 
-export interface UniversalStoreConfig {
-  globalState: GlobalState;
+// 配置状态管理
+export function setupStore(app: App<Element>) {
+  app.use(appStore);
 }
-
-export const createUniversalStore = (config: UniversalStoreConfig) => {
-  const pinia = createPinia();
-  const fetchBasicStore = () => {
-    const stores = useStores(pinia);
-    const initFetchTasks = [];
-    return Promise.all(initFetchTasks);
-  };
-
-  return {
-    get stores() {
-      return useStores(pinia);
-    },
-    state: pinia.state,
-    install: pinia.install,
-    serverPrefetch: fetchBasicStore,
-    hydrate() {
-      const contextStore = getSSRStateValue('store');
-      if (contextStore) {
-        // The data passed from the SSR server is used to initialize the pinia
-        pinia.state.value = contextStore;
-      } else {
-        // fallback: when SSR page error
-        fetchBasicStore();
-      }
-    },
-  };
-};

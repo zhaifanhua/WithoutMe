@@ -6,10 +6,12 @@
     "ms-ceintl.vscode-language-pack-zh-hans",
     "lokalise.i18n-ally",
     "esbenp.prettier-vscode",
-    "mrmlnc.vscode-scss",
-    "adamwalzer.scss-lint",
     "stylelint.vscode-stylelint",
-    "vscode-icons-team.vscode-icons",
-    "vue.volar"
+    "pkief.material-icon-theme",
+    "syler.sass-indented",
+    "mrmlnc.vscode-scss",
+    "antfu.iconify",
+    "streetsidesoftware.code-spell-checker",
+    "heybourn.headwind"
   ]
 }

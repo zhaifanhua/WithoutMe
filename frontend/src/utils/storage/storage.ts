@@ -13,7 +13,7 @@ const setStorageItem = <T>(key: string, value: T, isSession = false): void => {
   try {
     storage.setItem(key, JSON.stringify(value));
   } catch (e) {
-    console.error('Storage is full or storage not available.', e);
+    console.error("Storage is full or storage not available.", e);
   }
 };
 
@@ -52,9 +52,9 @@ const clearStorage = (isSession = false): void => {
  * @returns 存储空间是否已满
  */
 const isStorageFull = (): boolean => {
-  const testKey = 'storageTest';
+  const testKey = "storageTest";
   try {
-    localStorage.setItem(testKey, '1');
+    localStorage.setItem(testKey, "1");
     localStorage.removeItem(testKey);
     return false;
   } catch (e) {

@@ -9,29 +9,29 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-  @import '@/styles/base/mixins.scss';
+  @use "@/styles/base/mixins" as mixins;
 
   .content-container {
-    @include useTransition(all 0.3s ease-in-out);
+    @include mixins.useTransition(all 0.3s ease-in-out);
 
     // 超小屏设备 phone
-    @include useAutoScale(xs) {
+    @include mixins.useAutoScale(xs) {
       width: 100%;
     }
     // 小屏设备 pad
-    @include useAutoScale(sm) {
+    @include mixins.useAutoScale(sm) {
       width: 95%;
     }
     // 中屏设备 notebook
-    @include useAutoScale(md) {
+    @include mixins.useAutoScale(md) {
       width: 90%;
     }
     // 大屏设备 desktop
-    @include useAutoScale(lg) {
+    @include mixins.useAutoScale(lg) {
       width: 85%;
     }
     // 超大屏设备 tv
-    @include useAutoScale(xl) {
+    @include mixins.useAutoScale(xl) {
       width: 80%;
     }
   }

@@ -2,9 +2,11 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "declaration": true,
+    "isolatedModules": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "useDefineForClassFields": true,
     "sourceMap": true,
     "incremental": true,
     "esModuleInterop": true,
@@ -20,8 +22,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "/@/*": ["./src/*"],
-      "#/*": ["./types/*"],
-      "/#/*": ["./types/*"],
+      "#/*": ["src/types/*"],
+      "/#/*": ["src/types/*"],
       "~/*": ["./*"],
       "/~/*": ["./*"]
     }
@@ -30,14 +32,11 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue",
-    "src/**/*.scss",
-    "types/**/*.d.ts",
-    "types/**/*.ts",
+    "src/types/**/*.ts",
+    "src/types/**/*.d.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
-    "mock/**/*.ts",
-    "*.ts",
-    "*.d.ts"
+    "vite.config.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }
