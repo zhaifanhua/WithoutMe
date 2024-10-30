@@ -8,7 +8,7 @@
     <Background></Background>
     <MusicPlayer></MusicPlayer>
   </div>
-  <!-- <slot></slot> -->
+  <slot></slot>
 </template>
 
 <script setup lang="ts">

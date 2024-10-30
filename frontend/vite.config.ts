@@ -67,8 +67,7 @@ export default defineConfig(({ command, mode }) => {
     build: {
       outDir: "dist",
       assetsDir: "assets",
-      minify: "terser",
-      sourcemap: true,
+      sourcemap: false,
       rollupOptions: {
         output: {
           manualChunks(id) {
