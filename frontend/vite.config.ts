@@ -64,6 +64,14 @@ export default defineConfig(({ command, mode }) => {
         },
       },
     },
+    // 设置scss的api类型为modern-compiler, 以支持新的css语法
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern-compiler",
+        },
+      },
+    },
     build: {
       outDir: "dist",
       assetsDir: "assets",
