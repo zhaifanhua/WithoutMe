@@ -34,32 +34,32 @@
         <div class="cover" :class="{ rotating: isPlaying }">
           <img :src="currentSong.coverUrl" :alt="currentSong.artist" />
         </div>
+        <!-- 特殊 -->
+        <div class="specific">
+          <button
+            @click="toggleColorful"
+            v-bind:class="{ opacity: showColorful ? 0.8 : 0 }"
+            :class="{ active: showColorful }"
+            :title="playerTitle.colorful"
+          >
+            <Icon :icon="playerIcon.colorful" class="colorful" />
+          </button>
+          <button @click="toggleLyrics" :class="{ active: showLyrics }" :title="playerTitle.lyrics">
+            <Icon :icon="playerIcon.lyrics" />
+          </button>
+          <button @click="togglePlaylist" :class="{ active: showPlaylist }" :title="playerTitle.list">
+            <Icon :icon="playerIcon.list" />
+          </button>
+        </div>
       </div>
 
       <!-- 右侧容器 -->
       <div class="right-container">
         <div class="right-top">
           <!-- 信息 -->
-          <div class="info">
-            <div class="name">{{ currentSong.name }}</div>
-            <div class="artist">{{ currentSong.artist }}</div>
-          </div>
-          <!-- 特殊 -->
-          <div class="specific">
-            <button
-              @click="toggleColorful"
-              v-bind:class="{ opacity: showColorful ? 0.8 : 0 }"
-              :class="{ active: showColorful }"
-              :title="playerTitle.colorful"
-            >
-              <Icon :icon="playerIcon.colorful" class="colorful" />
-            </button>
-            <button @click="toggleLyrics" :class="{ active: showLyrics }" :title="playerTitle.lyrics">
-              <Icon :icon="playerIcon.lyrics" />
-            </button>
-            <button @click="togglePlaylist" :class="{ active: showPlaylist }" :title="playerTitle.list">
-              <Icon :icon="playerIcon.list" />
-            </button>
+          <div class="current-song-info">
+            <div class="current-song-name">{{ currentSong.name }}</div>
+            <div class="current-song-artist">{{ currentSong.artist }}</div>
           </div>
         </div>
         <div class="right-middle">
@@ -148,6 +148,118 @@
   const parsedLyrics = ref<LyricLine[]>([]); // 解析后的歌词
   const playList: Song[] = [
     // 示例歌曲数据
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "壁上观",
+      artist: "邓寓君(等什么君)",
+      musicUrl: "/audios/musics/2.m4a",
+      lyricsUrl: "/audios/lyrics/2.lrc",
+      coverUrl: "/audios/covers/2.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "壁上观",
+      artist: "邓寓君(等什么君)",
+      musicUrl: "/audios/musics/2.m4a",
+      lyricsUrl: "/audios/lyrics/2.lrc",
+      coverUrl: "/audios/covers/2.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "壁上观",
+      artist: "邓寓君(等什么君)",
+      musicUrl: "/audios/musics/2.m4a",
+      lyricsUrl: "/audios/lyrics/2.lrc",
+      coverUrl: "/audios/covers/2.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "壁上观",
+      artist: "邓寓君(等什么君)",
+      musicUrl: "/audios/musics/2.m4a",
+      lyricsUrl: "/audios/lyrics/2.lrc",
+      coverUrl: "/audios/covers/2.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "壁上观",
+      artist: "邓寓君(等什么君)",
+      musicUrl: "/audios/musics/2.m4a",
+      lyricsUrl: "/audios/lyrics/2.lrc",
+      coverUrl: "/audios/covers/2.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "壁上观",
+      artist: "邓寓君(等什么君)",
+      musicUrl: "/audios/musics/2.m4a",
+      lyricsUrl: "/audios/lyrics/2.lrc",
+      coverUrl: "/audios/covers/2.jpg",
+      duration: 2546,
+    },
+    {
+      name: "我们都被忘了",
+      artist: "谢安琪",
+      musicUrl: "/audios/musics/1.mp3",
+      lyricsUrl: "/audios/lyrics/1.lrc",
+      coverUrl: "/audios/covers/1.jpg",
+      duration: 2546,
+    },
+    {
+      name: "壁上观",
+      artist: "邓寓君(等什么君)",
+      musicUrl: "/audios/musics/2.m4a",
+      lyricsUrl: "/audios/lyrics/2.lrc",
+      coverUrl: "/audios/covers/2.jpg",
+      duration: 2546,
+    },
     {
       name: "我们都被忘了",
       artist: "谢安琪",
@@ -802,7 +914,7 @@
           }
 
           .song-index {
-            margin-right: 10px;
+            margin-right: 14px;
             font-size: 12px;
             color: $text-color-secondary;
           }
@@ -870,10 +982,12 @@
       .left-container {
         flex: 0 0 auto; // 不伸缩,保持原有大小
         margin-right: 15px;
+        max-width: 110px;
 
         .cover {
           width: 100px;
           height: 100px;
+          margin-top: -40px;
           border-radius: 16px;
           overflow: hidden;
 
@@ -881,6 +995,25 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+          }
+        }
+
+        .specific {
+          display: flex;
+
+          button {
+            margin-left: 10px;
+            background: none;
+            margin-top: 10px;
+            border: none;
+            font-size: 18px;
+            color: $text-color-secondary;
+            cursor: pointer;
+
+            &:hover,
+            &.active {
+              color: $text-color-primary;
+            }
           }
         }
       }
@@ -891,46 +1024,25 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        max-width: 220px;
 
         .right-top {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+          .current-song-info {
+            max-width: 220px;
 
-          .info {
-            flex: 1;
-            overflow: hidden;
-
-            .name {
+            .current-song-name {
               font-size: 14px;
+              text-align: center;
               font-weight: bold;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
             }
 
-            .artist {
+            .current-song-artist {
               font-size: 12px;
+              text-align: center;
               color: $text-color-secondary;
-            }
-          }
-
-          .specific {
-            display: flex;
-            margin-bottom: 10px;
-
-            button {
-              margin-left: 10px;
-              background: none;
-              border: none;
-              font-size: 18px;
-              color: $text-color-secondary;
-              cursor: pointer;
-
-              &:hover,
-              &.active {
-                color: $text-color-primary;
-              }
             }
           }
         }
