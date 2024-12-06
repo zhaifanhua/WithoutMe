@@ -38,7 +38,8 @@
     "clean-modules": "node ./scripts/clean-modules.js",
     "clean-dist": "node ./scripts/clean-dist.js",
     "clean-node": "pnpm run clean-lock && pnpm run clean-modules",
-    "reinstall": "pnpm run clean-node && pnpm run bootstrap"
+    "reinstall": "pnpm run clean-node && pnpm run bootstrap",
+    "rebuild": "pnpm run clean-dist && pnpm run build"
   },
   "dependencies": {
     "axios": "^1.7.7",
@@ -65,7 +66,8 @@
     "sass-lint": "^1.13.1",
     "stylelint": "^16.10.0",
     "typescript": "^5.6.3",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "vite-plugin-vue-devtools": "^7.6.7"
   },
   "engines": {
     "node": "^22.9.0",
