@@ -34,7 +34,7 @@
         <div class="cover" :class="{ rotating: isPlaying }">
           <img :src="currentSong.coverUrl" :alt="currentSong.artist" />
         </div>
-        <!-- 特殊 -->
+        <!-- 特殊按钮 -->
         <div class="specific">
           <button
             @click="toggleColorful"
@@ -53,17 +53,17 @@
         </div>
       </div>
 
-      <!-- 右侧容器 -->
-      <div class="right-container">
-        <div class="right-top">
-          <!-- 信息 -->
+      <!-- 中间容器 -->
+      <div class="middle-container">
+        <div class="middle-top">
+          <!-- 歌曲信息 -->
           <div class="current-song-info">
             <div class="current-song-name">{{ currentSong.name }}</div>
             <div class="current-song-artist">{{ currentSong.artist }}</div>
           </div>
         </div>
-        <div class="right-middle">
-          <!-- 控制 -->
+        <div class="middle-middle">
+          <!-- 控制按钮 -->
           <div class="control">
             <button @click="togglePlayMode" :title="playerTitle.mode">
               <Icon :icon="playerIcon.mode" />
@@ -82,17 +82,27 @@
             </button>
           </div>
         </div>
-        <div class="right-bottom">
+        <div class="middle-bottom">
           <!-- 进度条 -->
-          <div class="progress">
-            <div class="slider">
-              <input type="range" min="0" :value="currentTime" :max="currentDuration" @input="seek" :style="progressBarStyle" />
-            </div>
-            <div class="time-display">
-              <span>{{ formatTime(currentTime) }}</span>
-              <span>{{ formatTime(currentDuration) }}</span>
+          <div class="player_progress" @click="seek" @mousedown="startDrag">
+            <div class="player_progress_inner">
+              <div class="player_progress_load" :style="loadStyle"></div>
+              <div class="player_progress_play" :style="playStyle">
+                <i class="player_progress_dot"></i>
+              </div>
             </div>
           </div>
+          <div class="time-display">
+            <span>{{ formatTime(currentSongTime) }}</span>
+            <span>{{ formatTime(currentSongDuration) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧容器 -->
+      <div class="right-container">
+        <div class="volume-control">
+          <div class="volume-bar" @click="setVolume" @mousedown="startVolumeDrag" :style="volumeBarStyle"></div>
         </div>
       </div>
     </div>
@@ -100,7 +110,7 @@
     <!-- 歌词包装器 -->
     <div class="lyrics-wrapper" :class="{ active: showLyrics }">
       <ul class="lyrics" :style="{ transform: `translateY(${lyricsTranslateY}px)` }">
-        <li v-for="(line, index) in parsedLyrics" :key="index" :class="{ active: index === currentLyricIndex }">
+        <li v-for="(line, index) in parsedLyrics" :key="index" :class="{ active: index === currentSongLyricIndex }">
           {{ line.text }}
         </li>
       </ul>
@@ -164,119 +174,8 @@
       coverUrl: "/audios/covers/2.jpg",
       duration: 2546,
     },
-    {
-      name: "我们都被忘了",
-      artist: "谢安琪",
-      musicUrl: "/audios/musics/1.mp3",
-      lyricsUrl: "/audios/lyrics/1.lrc",
-      coverUrl: "/audios/covers/1.jpg",
-      duration: 2546,
-    },
-    {
-      name: "壁上观",
-      artist: "邓寓君(等什么君)",
-      musicUrl: "/audios/musics/2.m4a",
-      lyricsUrl: "/audios/lyrics/2.lrc",
-      coverUrl: "/audios/covers/2.jpg",
-      duration: 2546,
-    },
-    {
-      name: "我们都被忘了",
-      artist: "谢安琪",
-      musicUrl: "/audios/musics/1.mp3",
-      lyricsUrl: "/audios/lyrics/1.lrc",
-      coverUrl: "/audios/covers/1.jpg",
-      duration: 2546,
-    },
-    {
-      name: "壁上观",
-      artist: "邓寓君(等什么君)",
-      musicUrl: "/audios/musics/2.m4a",
-      lyricsUrl: "/audios/lyrics/2.lrc",
-      coverUrl: "/audios/covers/2.jpg",
-      duration: 2546,
-    },
-    {
-      name: "我们都被忘了",
-      artist: "谢安琪",
-      musicUrl: "/audios/musics/1.mp3",
-      lyricsUrl: "/audios/lyrics/1.lrc",
-      coverUrl: "/audios/covers/1.jpg",
-      duration: 2546,
-    },
-    {
-      name: "壁上观",
-      artist: "邓寓君(等什么君)",
-      musicUrl: "/audios/musics/2.m4a",
-      lyricsUrl: "/audios/lyrics/2.lrc",
-      coverUrl: "/audios/covers/2.jpg",
-      duration: 2546,
-    },
-    {
-      name: "我们都被忘了",
-      artist: "谢安琪",
-      musicUrl: "/audios/musics/1.mp3",
-      lyricsUrl: "/audios/lyrics/1.lrc",
-      coverUrl: "/audios/covers/1.jpg",
-      duration: 2546,
-    },
-    {
-      name: "壁上观",
-      artist: "邓寓君(等什么君)",
-      musicUrl: "/audios/musics/2.m4a",
-      lyricsUrl: "/audios/lyrics/2.lrc",
-      coverUrl: "/audios/covers/2.jpg",
-      duration: 2546,
-    },
-    {
-      name: "我们都被忘了",
-      artist: "谢安琪",
-      musicUrl: "/audios/musics/1.mp3",
-      lyricsUrl: "/audios/lyrics/1.lrc",
-      coverUrl: "/audios/covers/1.jpg",
-      duration: 2546,
-    },
-    {
-      name: "壁上观",
-      artist: "邓寓君(等什么君)",
-      musicUrl: "/audios/musics/2.m4a",
-      lyricsUrl: "/audios/lyrics/2.lrc",
-      coverUrl: "/audios/covers/2.jpg",
-      duration: 2546,
-    },
-    {
-      name: "我们都被忘了",
-      artist: "谢安琪",
-      musicUrl: "/audios/musics/1.mp3",
-      lyricsUrl: "/audios/lyrics/1.lrc",
-      coverUrl: "/audios/covers/1.jpg",
-      duration: 2546,
-    },
-    {
-      name: "壁上观",
-      artist: "邓寓君(等什么君)",
-      musicUrl: "/audios/musics/2.m4a",
-      lyricsUrl: "/audios/lyrics/2.lrc",
-      coverUrl: "/audios/covers/2.jpg",
-      duration: 2546,
-    },
-    {
-      name: "我们都被忘了",
-      artist: "谢安琪",
-      musicUrl: "/audios/musics/1.mp3",
-      lyricsUrl: "/audios/lyrics/1.lrc",
-      coverUrl: "/audios/covers/1.jpg",
-      duration: 2546,
-    },
-    {
-      name: "壁上观",
-      artist: "邓寓君(等什么君)",
-      musicUrl: "/audios/musics/2.m4a",
-      lyricsUrl: "/audios/lyrics/2.lrc",
-      coverUrl: "/audios/covers/2.jpg",
-      duration: 2546,
-    },
   ]; // 歌曲列表
+
   //#endregion
 
   //#region 播放器信息
@@ -299,10 +198,11 @@
 
   //#region 歌曲信息
   const currentSongIndex = ref(0); // 当前歌曲索引
-  const currentLyricIndex = ref(0); // 当前歌词索引
+  const currentSongLyricIndex = ref(0); // 当前歌词索引
   const currentSong = computed(() => playList[currentSongIndex.value]); // 当前歌曲
-  const currentTime = ref(0); // 当前时间
-  const currentDuration = ref(0); // 当前歌曲时长
+  const currentSongTime = ref(0); // 当前歌曲时间
+  const currentSongDuration = ref(0); // 当前歌曲时长
+  const loadSongProgress = ref(0); // 当前歌曲加载进度
   //#endregion
 
   //#region 控制信息
@@ -390,6 +290,7 @@
   // 加载歌曲
   async function loadSong(index: number) {
     currentSongIndex.value = index;
+    loadSongProgress.value = 0; // 重置加载进度
     await fetchLyrics(currentSong.value.lyricsUrl);
     nextTick(() => {
       if (audioElement.value) {
@@ -405,7 +306,7 @@
       const response = await axios.get(url);
       parsedLyrics.value = parseLyrics(response.data);
     } catch (error) {
-      console.error("Failed to fetch lyrics:", error);
+      console.error("无法获取歌词：", error);
       parsedLyrics.value = [];
     }
   }
@@ -446,10 +347,17 @@
   // 播放/暂停
   function togglePlay() {
     if (!audioElement.value) return;
+
+    // 初始化音频上下文
+    if (!audioContext) {
+      setupAudioContext();
+    }
+
     if (isPlaying.value) {
       audioElement.value.pause();
     } else {
-      audioElement.value.play();
+      isMuted.value = false; // 更新静音状态
+      audioElement.value.play().catch(e => console.error("播放失败，请手动播放"));
     }
     isPlaying.value = !isPlaying.value;
   }
@@ -511,15 +419,15 @@
       const nextLine = parsedLyrics.value[index + 1];
       return currentTime >= line.time && (!nextLine || currentTime < nextLine.time);
     });
-    if (index !== -1 && index !== currentLyricIndex.value) {
-      currentLyricIndex.value = index;
+    if (index !== -1 && index !== currentSongLyricIndex.value) {
+      currentSongLyricIndex.value = index;
     }
   }
 
   // 歌词平移
   const lyricsTranslateY = computed(() => {
     const centerPosition = lyricsContainerHeight.value / 2;
-    const activeLyricPosition = currentLyricIndex.value * lineHeight;
+    const activeLyricPosition = currentSongLyricIndex.value * lineHeight;
     return centerPosition - activeLyricPosition - lineHeight / 2;
   });
 
@@ -533,6 +441,12 @@
   // 切换炫彩
   function toggleColorful() {
     showColorful.value = !showColorful.value;
+
+    // 初始化音频上下文
+    if (!audioContext) {
+      setupAudioContext();
+    }
+
     if (showColorful.value) {
       drawVisualization(); // 重新启动可视化效果
     } else {
@@ -585,13 +499,13 @@
 
     // 定义颜色
     const colors = [
-      { r: 255, g: 0, b: 128 }, // 粉红
-      { r: 255, g: 255, b: 0 }, // 黄色
-      { r: 0, g: 255, b: 255 }, // 青色
-      { r: 128, g: 0, b: 255 }, // 紫色
-      { r: 0, g: 255, b: 0 }, // 绿色
-      { r: 255, g: 0, b: 0 }, // 红色
-      { r: 255, g: 128, b: 0 }, // 橙色
+      { r: 0, g: 0, b: 255 }, // 蓝
+      { r: 0, g: 255, b: 255 }, // 青
+      { r: 0, g: 255, b: 0 }, // 绿
+      { r: 128, g: 0, b: 255 }, // 紫
+      { r: 255, g: 255, b: 0 }, // 黄
+      { r: 255, g: 128, b: 0 }, // 橙
+      { r: 255, g: 0, b: 0 }, // 红
     ];
 
     // 改进的噪声函数,增加频率
@@ -618,7 +532,7 @@
       const average = dataArray.reduce((a, b) => a + b) / bufferLength;
       const intensity = average / 255;
 
-      // 增加时间增量,使效果更快
+      // 增加间增量,使效果更快
       time += 0.05 * (1 + intensity * 2);
 
       // 使用音频数据来影响颜色选择
@@ -663,7 +577,8 @@
   const volumeBarStyle = computed(() => {
     const percentage = volume.value * 100;
     return {
-      background: `linear-gradient(to right, var(--primary-color) ${percentage}%, var(--background-color) ${percentage}%)`,
+      height: "100%", // 占满父容器的高度
+      background: `linear-gradient(to top, var(--bg-color-active) ${percentage}%, var(--bg-color-inactive) ${percentage}%)`,
     };
   });
   // 切换静音
@@ -682,42 +597,80 @@
   }
 
   // 设置音量
-  function setVolume() {
-    if (audioElement.value) {
+  function setVolume(event: MouseEvent) {
+    if (!audioElement.value) return;
+    const volumeElement = event.currentTarget as HTMLElement;
+    const rect = volumeElement.getBoundingClientRect();
+    const offsetY = rect.bottom - event.clientY;
+    const newVolume = offsetY / rect.height;
+    volume.value = Math.min(Math.max(newVolume, 0), 1);
+    audioElement.value.volume = volume.value;
+    isMuted.value = volume.value === 0;
+  }
+
+  function startVolumeDrag(event: MouseEvent) {
+    if (!audioElement.value) return;
+    const volumeElement = event.currentTarget as HTMLElement;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const rect = volumeElement.getBoundingClientRect();
+      const offsetY = rect.bottom - moveEvent.clientY;
+      const newVolume = offsetY / rect.height;
+      volume.value = Math.min(Math.max(newVolume, 0), 1);
       audioElement.value.volume = volume.value;
       isMuted.value = volume.value === 0;
-    }
+    };
+
+    const onMouseUp = () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
   }
   //#endregion
 
   //#region 更新进度条
-  // 进度条样式
-  const progressBarStyle = computed(() => {
-    let percentage = (currentTime.value / currentDuration.value) * 100 || 0;
-    // 解决小圆点在刚开始和快结束时，与进度条出现缝隙的问题
-    percentage = percentage < 10 ? percentage + 1 : percentage;
-    percentage = percentage > 90 ? percentage - 1 : percentage;
-    return {
-      background: `linear-gradient(to right, var(--bg-color-active) ${percentage}%, var(--bg-color-inactive) ${percentage}%)`,
-    };
-  });
-
   // 跳转
-  function seek(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (audioElement.value) {
-      audioElement.value.currentTime = Number(target.value);
-    }
+  function seek(event: MouseEvent) {
+    if (!audioElement.value || !currentSongDuration.value) return;
+    const progressElement = event.currentTarget as HTMLElement;
+    const rect = progressElement.getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    const newTime = (offsetX / rect.width) * currentSongDuration.value;
+    audioElement.value.currentTime = newTime;
+  }
+
+  function startDrag(event: MouseEvent) {
+    if (!audioElement.value) return;
+    const progressElement = event.currentTarget as HTMLElement;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const rect = progressElement.getBoundingClientRect();
+      const offsetX = moveEvent.clientX - rect.left;
+      const newTime = (offsetX / rect.width) * currentSongDuration.value;
+      audioElement.value.currentTime = newTime;
+    };
+
+    const onMouseUp = () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
   }
 
   // 更新进度
   function updateProgress() {
     if (audioElement.value) {
-      currentTime.value = audioElement.value.currentTime;
+      currentSongTime.value = audioElement.value.currentTime;
       // 检查 duration 是否有效
       if (!isNaN(audioElement.value.duration)) {
-        currentDuration.value = audioElement.value.duration;
+        currentSongDuration.value = audioElement.value.duration;
       }
+      syncLyrics();
     }
   }
   //#endregion
@@ -772,12 +725,15 @@
   });
 
   onMounted(() => {
-    loadSong(0);
+    loadSong(0); // 初始化加载第一首歌曲
     if (audioElement.value) {
       audioElement.value.addEventListener("timeupdate", updateProgress);
-      audioElement.value.addEventListener("timeupdate", syncLyrics);
+      audioElement.value.addEventListener("canplay", onCanPlay);
+      audioElement.value.addEventListener("play", onPlay);
+      audioElement.value.addEventListener("pause", onPause);
+      audioElement.value.addEventListener("ended", onEnded);
+      audioElement.value.addEventListener("progress", updateLoadProgress); // 添加进度事件监听器
       audioElement.value.volume = volume.value;
-      setupAudioContext();
       if (showColorful.value) {
         drawVisualization();
       }
@@ -792,6 +748,32 @@
       audioContext.close();
     }
   });
+
+  const loadStyle = computed(() => {
+    const loadProgress = loadSongProgress.value || 0;
+    return {
+      width: `${loadProgress}%`,
+      marginLeft: "0px",
+    };
+  });
+
+  const playStyle = computed(() => {
+    const playProgress = (currentSongTime.value / currentSongDuration.value) * 100 || 0;
+    return {
+      width: `${playProgress}%`,
+      marginLeft: "0px",
+    };
+  });
+
+  function updateLoadProgress() {
+    if (!audioElement.value) return;
+    const buffered = audioElement.value.buffered;
+    if (buffered.length > 0) {
+      const loaded = buffered.end(buffered.length - 1);
+      const total = audioElement.value.duration;
+      loadSongProgress.value = (loaded / total) * 100;
+    }
+  }
 </script>
 
 <style scoped lang="scss">
@@ -799,7 +781,7 @@
   @use "@/styles/base/variables" as variables;
 
   $x: 0px;
-  $y: 30%;
+  $y: 20%;
   $width: 360px;
   $player-width: 100%;
   $module-width: 90%;
@@ -822,6 +804,7 @@
 
   .music-player {
     --bg-color-active: #000000;
+    --bg-color-semiactive: #808080;
     --bg-color-inactive: #c0c0c0;
 
     position: fixed;
@@ -834,11 +817,12 @@
     flex-direction: column;
     align-items: center;
     overflow: visible;
+    transform: translateX(-($x + $width));
     @include mixins.useZindex(player);
 
     // 弹出
     &.eject {
-      transform: translateX(-($x + $width)); // 根据播放器宽度调整
+      transform: translateX(0); // 根据播放器宽度调整
     }
 
     // 频谱炫彩背景
@@ -980,7 +964,7 @@
 
       // 左侧容器
       .left-container {
-        flex: 0 0 auto; // 不伸缩,保持原有大小
+        flex: auto; // 不伸缩,保持原有大小
         margin-right: 15px;
         max-width: 110px;
 
@@ -1018,15 +1002,15 @@
         }
       }
 
-      // 右侧容器
-      .right-container {
+      // 中间容器
+      .middle-container {
         flex: 1; // 占据剩余空间
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         max-width: 220px;
 
-        .right-top {
+        .middle-top {
           .current-song-info {
             max-width: 220px;
 
@@ -1047,7 +1031,7 @@
           }
         }
 
-        .right-middle {
+        .middle-middle {
           .control {
             display: flex;
             justify-content: space-between;
@@ -1071,43 +1055,97 @@
           }
         }
 
-        .right-bottom {
-          .progress {
-            .slider {
-              // 进度条
-              input[type="range"] {
-                -webkit-appearance: none; // 移除默认样式
-                appearance: none;
-                width: 100%;
-                height: 6px;
-                border-radius: 3px;
-                outline: none; // 移除轮廓
+        .middle-bottom {
+          .player_progress {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            background-color: var(--bg-color-inactive);
+            cursor: pointer;
+            border-radius: 3px;
 
-                // 圆点
-                &::-webkit-slider-thumb {
-                  -webkit-appearance: none; // 移除默认样式
-                  appearance: none;
-                  height: 10px;
-                  width: 10px;
-                  border-radius: 50%;
-                  background-color: var(--bg-color-active);
-                  cursor: pointer;
-                }
-                &::-moz-range-thumb {
-                  height: 10px;
-                  width: 10px;
-                  border-radius: 50%;
-                  background-color: var(--bg-color-active);
-                  cursor: pointer;
-                }
-              }
+            &_inner {
+              position: relative;
+              width: 100%;
+              height: 100%;
             }
 
-            .time-display {
-              display: flex;
-              justify-content: space-between;
-              font-size: 10px;
-              color: $text-color-secondary;
+            &_load {
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 100%;
+              background-color: var(--bg-color-semiactive);
+              border-radius: 3px;
+            }
+
+            &_play {
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 100%;
+              background-color: var(--bg-color-active);
+              border-radius: 3px;
+
+              .player_progress_dot {
+                position: absolute;
+                top: 50%;
+                right: -5px;
+                width: 10px;
+                height: 10px;
+                background-color: var(--bg-color-active);
+                border-radius: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+              }
+            }
+          }
+
+          .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: $text-color-secondary;
+          }
+        }
+      }
+
+      // 右侧容器
+      .right-container {
+        flex: auto;
+        max-width: 30px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .volume-control {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 80%; // 高度占播放器高度的80%
+
+          .volume-bar {
+            position: relative;
+            width: 6px;
+            height: 100%; // 占满父容器的高度
+            background-color: var(--bg-color-inactive);
+            border-radius: 3px;
+            cursor: pointer;
+            overflow: hidden;
+          }
+
+          button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: $text-color-secondary;
+            cursor: pointer;
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: $text-color-primary;
             }
           }
         }
@@ -1152,7 +1190,7 @@
       }
     }
 
-    // 侧边弹出包装器
+    // 侧边包装器
     .side-popup-wrapper {
       position: absolute;
       top: 50%;
