@@ -245,7 +245,7 @@
     colorful: "ion:color-palette",
     // 侧边弹出
     side: computed(() => {
-      return isEject.value ? "solar:alt-arrow-right-linear" : "solar:alt-arrow-left-linear";
+      return isEject.value ? "solar:alt-arrow-left-linear" : "solar:alt-arrow-right-linear";
     }),
   });
 
