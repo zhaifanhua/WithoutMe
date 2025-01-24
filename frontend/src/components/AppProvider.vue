@@ -6,7 +6,7 @@
     <!-- <Loading></Loading>
     <Notification></Notification> -->
     <Background></Background>
-    <MusicPlayer></MusicPlayer>
+    <APlayer></APlayer>
   </div>
   <slot></slot>
 </template>
@@ -16,7 +16,7 @@
   import Loading from "@/components/generic/Loading.vue";
   import Notification from "@/components/generic/Notification.vue";
   import Background from "@/components/generic/Background.vue";
-  import MusicPlayer from "@/components/generic/MusicPlayer.vue";
+  import APlayer from "@/components/advanced/player/audio/APlayer.vue";
 </script>
 
 <style scoped lang="scss"></style>
