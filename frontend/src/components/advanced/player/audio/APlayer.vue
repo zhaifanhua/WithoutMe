@@ -137,8 +137,8 @@
   }
 
   enum PlayMode {
-    Sequential = "sequential",
     Random = "random",
+    Sequential = "sequential",
     SingleLoop = "singleLoop",
     ListLoop = "listLoop",
   }
@@ -156,7 +156,7 @@
   const volumeLevel = ref(1); // 音量
   const lyricsContainerHeight = ref(60); // 歌词容器高度
   const lineHeight = 20; // 行高
-  const playMode = ref<PlayMode>(PlayMode.ListLoop); // 播放模式
+  const playMode = ref<PlayMode>(PlayMode.Random); // 播放模式
   const isPlaylistVisible = ref(false); // 是否显示播放列表
   const isLyricsVisible = ref(false); // 是否显示歌词
   const isVisualizerActive = ref(false); // 是否显示炫彩
