@@ -735,7 +735,7 @@
   $bg-color-secondary: #c9c9c9;
   $text-color-primary: #000000;
   $text-color-secondary: #535353;
-  $text-color-active: #00ff2f;
+  $text-color-active: #a12ceb;
   $border-radius: 20px;
   $border-radius-modula: 10px;
   $border-radius-side: 12px;
