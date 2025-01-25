@@ -22,7 +22,6 @@
             <span class="song-name">{{ song.name }}</span>
             <span class="song-artist">{{ song.artist }}</span>
           </span>
-          <span class="song-duration">{{ formatTime(song.duration) }}</span>
         </li>
       </ul>
     </div>
@@ -881,11 +880,6 @@
               text-overflow: ellipsis;
             }
           }
-
-          .song-duration {
-            font-size: 12px;
-            color: $text-color-secondary;
-          }
         }
       }
     }
@@ -905,14 +899,13 @@
 
       // 左侧容器
       .left-container {
-        flex: auto; // 不伸缩,保持原有大小
-        margin-right: 15px;
+        flex: 0.6; // 不伸缩,保持原有大小
         max-width: 110px;
 
         .cover {
           width: 100px;
           height: 100px;
-          margin-top: -40px;
+          margin-top: -30px;
           border-radius: 16px;
           overflow: hidden;
 
@@ -952,11 +945,13 @@
         max-width: 220px;
 
         .middle-top {
+          max-width: 200px;
+
           .current-song-info {
-            max-width: 220px;
+            max-width: 180px;
 
             .current-song-name {
-              font-size: 14px;
+              font-size: 16px;
               text-align: center;
               font-weight: bold;
               white-space: nowrap;
@@ -965,14 +960,19 @@
             }
 
             .current-song-artist {
-              font-size: 12px;
+              font-size: 14px;
               text-align: center;
               color: $text-color-secondary;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
         }
 
         .middle-middle {
+          max-width: 200px;
+
           .control {
             display: flex;
             justify-content: space-between;
@@ -997,6 +997,8 @@
         }
 
         .middle-bottom {
+          max-width: 200px;
+
           .player_progress {
             position: relative;
             width: 100%;
@@ -1053,8 +1055,8 @@
 
       // 右侧容器
       .right-container {
-        flex: auto;
-        max-width: 30px;
+        flex: 0.2;
+        max-width: 20px;
         height: 100%;
         display: flex;
         align-items: center;
@@ -1090,6 +1092,16 @@
             }
           }
         }
+      }
+
+      .control button,
+      .specific button {
+        transition: transform 0.3s ease; // 添加过渡效果
+      }
+
+      .control button:hover,
+      .specific button:hover {
+        transform: scale(1.4); // 鼠标移上去时放大
       }
     }
 
