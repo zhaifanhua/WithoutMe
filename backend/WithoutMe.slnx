@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/1.Src/" />
+  <Folder Name="/1.Src/1.Common/">
+    <Project Path="src/WithoutMe.Core/WithoutMe.Core.csproj" />
+  </Folder>
+  <Folder Name="/1.Src/2.Infrastructure/">
+    <Project Path="src/WithoutMe.Infrastructure.Caching/WithoutMe.Infrastructure.Caching.csproj" />
+    <Project Path="src/WithoutMe.Infrastructure.Persistence/WithoutMe.Infrastructure.Persistence.csproj" />
+  </Folder>
+  <Folder Name="/1.Src/3.Domain/">
+    <Project Path="src/WithoutMe.Domain.Shared/WithoutMe.Domain.Shared.csproj" />
+    <Project Path="src/WithoutMe.Domain/WithoutMe.Domain.csproj" />
+  </Folder>
+  <Folder Name="/1.Src/4.Application/">
+    <Project Path="src/WithoutMe.Application.Contracts/WithoutMe.Application.Contracts.csproj" />
+    <Project Path="src/WithoutMe.Application/WithoutMe.Application.csproj" />
+  </Folder>
+  <Folder Name="/1.Src/5.Presentation/">
+    <Project Path="src/WithoutMe.Presentation.HttpApi/WithoutMe.Presentation.HttpApi.csproj" />
+    <Project Path="src/WithoutMe.Presentation.WebHost/WithoutMe.Presentation.WebHost.csproj" />
+  </Folder>
+  <Folder Name="/2.Other/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CodeMaid.config" />
+    <File Path="nuget/LICENSE" />
+    <File Path="nuget/readme.md" />
+    <File Path="nuget/readme.png" />
+    <File Path="props/common.props" />
+    <File Path="snks/WithoutMe.snk" />
+  </Folder>
+</Solution>
