@@ -1,6 +1,7 @@
 import { resolve } from "node:path";
 import { loadEnv, defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 import vueDevTools from "vite-plugin-vue-devtools";
 import pkg from "./package.json";
 
@@ -24,7 +25,10 @@ export default defineConfig(({ command, mode }) => {
     define: {
       __APP_INFO__: JSON.stringify(appInfo),
     },
-    plugins: [vue(), vueDevTools()],
+    optimizeDeps: {
+      include: [],
+    },
+    plugins: [vue(),vueJsx(), vueDevTools()],
     resolve: {
       alias: [
         {

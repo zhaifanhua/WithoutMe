@@ -20,6 +20,12 @@
           <span>隐私</span>
         </RouterLink>
       </li>
+      <li>
+        <RouterLink to="/test">
+          <Icon icon="iconamoon:home-bold" />
+          <span>测试</span>
+        </RouterLink>
+      </li>
     </ul>
   </nav>
   <!-- navbar-end -->
