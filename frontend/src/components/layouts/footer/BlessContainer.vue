@@ -10,14 +10,14 @@
 
 <script setup lang="ts">
   import { ref } from "vue";
-  import { siteBaseInfo } from "@/utils/app/siteInfo";
+  import { siteBaseInfo } from "/@/utils/app/siteInfo";
 
   const bless = ref(siteBaseInfo.bless);
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
 
   .bless-container {
     grid-area: bless-container;

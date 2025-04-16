@@ -9,15 +9,15 @@
 </template>
 
 <script setup lang="ts">
-  import Header from "@/layouts/default/Header.vue";
-  import Main from "@/layouts/default/Main.vue";
-  import Footer from "@/layouts/default/Footer.vue";
+  import Header from "/@/layouts/default/Header.vue";
+  import Main from "/@/layouts/default/Main.vue";
+  import Footer from "/@/layouts/default/Footer.vue";
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
-  @use "@/styles/base/variables" as variables;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
+  @use "/@/styles/base/variables" as variables;
 
   .default-layout {
     display: grid;

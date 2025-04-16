@@ -8,6 +8,8 @@ import { setupLibraries } from "./app/setupLibrary";
 import { setupPlugins } from "./app/setupPlugin";
 
 const app = createApp(App);
+
 setupLibraries(app);
 setupPlugins(app);
+
 app.mount("#app");

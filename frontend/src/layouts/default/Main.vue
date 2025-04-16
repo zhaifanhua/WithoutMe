@@ -13,16 +13,16 @@
 </template>
 
 <script setup lang="ts">
-  import ContentContainer from "@/components/generic/ContentContainer.vue";
-  import Navbar from "@/components/layouts/main/Navbar.vue";
-  import MainContent from "@/components/layouts/main/MainContent.vue";
-  import Sidebar from "@/components/layouts/main/Sidebar.vue";
+  import ContentContainer from "/@/components/generic/ContentContainer.vue";
+  import Navbar from "/@/components/layouts/main/Navbar.vue";
+  import MainContent from "/@/components/layouts/main/MainContent.vue";
+  import Sidebar from "/@/components/layouts/main/Sidebar.vue";
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
-  @use "@/styles/base/variables" as variables;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
+  @use "/@/styles/base/variables" as variables;
 
   .main {
     grid-area: main;

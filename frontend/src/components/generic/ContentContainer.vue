@@ -9,7 +9,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/mixins" as mixins;
 
   .content-container {
     @include mixins.useTransition(all 0.3s ease-in-out);

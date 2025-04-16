@@ -11,16 +11,16 @@
 </template>
 
 <script setup lang="ts">
-  import ContentContainer from "@/components/generic/ContentContainer.vue";
-  import BlessContainer from "@/components/layouts/footer/BlessContainer.vue";
-  import SiteInfoContainer from "@/components/layouts/footer/SiteInfoContainer.vue";
-  import AppInfoContainer from "@/components/layouts/footer/AppInfoContainer.vue";
+  import ContentContainer from "/@/components/generic/ContentContainer.vue";
+  import BlessContainer from "/@/components/layouts/footer/BlessContainer.vue";
+  import SiteInfoContainer from "/@/components/layouts/footer/SiteInfoContainer.vue";
+  import AppInfoContainer from "/@/components/layouts/footer/AppInfoContainer.vue";
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
-  @use "@/styles/base/variables" as variables;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
+  @use "/@/styles/base/variables" as variables;
 
   .footer {
     grid-area: footer;

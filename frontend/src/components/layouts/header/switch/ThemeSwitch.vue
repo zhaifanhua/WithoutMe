@@ -11,7 +11,7 @@
 <script setup lang="ts">
   import { computed, onMounted } from "vue";
   import { Icon } from "@iconify/vue";
-  import { ThemeMode, ThemeTone } from "@/plugins/app/theme";
+  import { ThemeMode, ThemeTone } from "/@/plugins/app/theme";
   // import { useEnhancer } from '@/app/enhancer';
 
   const { isGreyTheme, theme } = useEnhancer();
@@ -37,8 +37,8 @@
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
 
   .theme-switch {
     grid-area: theme-switch;

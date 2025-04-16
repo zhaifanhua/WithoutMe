@@ -11,9 +11,9 @@
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
-  @use "@/styles/base/variables";
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
+  @use "/@/styles/base/variables";
 
   .sidebar {
     grid-area: sidebar;

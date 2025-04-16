@@ -122,7 +122,7 @@
 </script>
 
 <style lang="scss">
-  @use "@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/mixins" as mixins;
   // @use '@/styles/base/themes.scss';
 
   .cursor,

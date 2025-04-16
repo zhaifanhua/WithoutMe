@@ -36,9 +36,9 @@
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
-  @use "@/styles/base/variables" as variables;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
+  @use "/@/styles/base/variables" as variables;
 
   .navbar {
     grid-area: navbar;

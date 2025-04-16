@@ -717,8 +717,8 @@
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/variables" as variables;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/variables" as variables;
 
   $x: 0px;
   $y: 20%;

@@ -3,9 +3,9 @@
  */
 
 import type { App } from "vue";
-import { setupStore } from "@/store";
-import { setupI18n } from "@/locales";
-import { setupRouter } from "@/router";
+import { setupStore } from "/@/store";
+import { setupI18n } from "/@/locales";
+import { setupRouter } from "/@/router";
 
 export function setupLibraries(app: App<Element>) {
   setupStore(app);

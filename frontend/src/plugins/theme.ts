@@ -6,7 +6,7 @@
  */
 
 import { App, inject, ref, readonly } from "vue";
-import { getStorageItem, setStorageItem } from "@/utils/storage/storage";
+import { getStorageItem, setStorageItem } from "/@/utils/storage/storage";
 
 const ThemeSymbol = Symbol("theme");
 const THEME_STORAGE_KEY = "theme";

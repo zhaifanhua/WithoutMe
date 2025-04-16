@@ -8,7 +8,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/mixins" as mixins;
 
   .background {
     @include mixins.useZindex("background");

@@ -11,13 +11,13 @@
 </template>
 
 <script setup lang="ts">
-  import LangSwitch from "@/components/layouts/header/switch/LangSwitch.vue";
+  import LangSwitch from "/@/components/layouts/header/switch/LangSwitch.vue";
   // import ThemeSwitch from '@/components/layouts/header/switch/ThemeSwitch.vue';
-  import FullScreenSwitch from "@/components/layouts/header/switch/FullScreenSwitch.vue";
+  import FullScreenSwitch from "/@/components/layouts/header/switch/FullScreenSwitch.vue";
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/mixins" as mixins;
 
   .switch-container {
     grid-area: switch-container;

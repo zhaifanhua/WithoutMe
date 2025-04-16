@@ -11,16 +11,16 @@
 </template>
 
 <script setup lang="ts">
-  import ContentContainer from "@/components/generic/ContentContainer.vue";
-  import LogoContainer from "@/components/layouts/header/LogoContainer.vue";
-  import SubtitleContainer from "@/components/layouts/header/SubtitleContainer.vue";
-  import SwitchContainer from "@/components/layouts/header/SwitchContainer.vue";
+  import ContentContainer from "/@/components/generic/ContentContainer.vue";
+  import LogoContainer from "/@/components/layouts/header/LogoContainer.vue";
+  import SubtitleContainer from "/@/components/layouts/header/SubtitleContainer.vue";
+  import SwitchContainer from "/@/components/layouts/header/SwitchContainer.vue";
 </script>
 
 <style scoped lang="scss">
-  @use "@/styles/base/mixins" as mixins;
-  @use "@/styles/base/themes" as themes;
-  @use "@/styles/base/variables" as variables;
+  @use "/@/styles/base/mixins" as mixins;
+  @use "/@/styles/base/themes" as themes;
+  @use "/@/styles/base/variables" as variables;
 
   .header {
     grid-area: header;

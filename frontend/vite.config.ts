@@ -28,28 +28,16 @@ export default defineConfig(({ command, mode }) => {
     optimizeDeps: {
       include: [],
     },
-    plugins: [vue(),vueJsx(), vueDevTools()],
+    plugins: [vue(), vueJsx(), vueDevTools()],
     resolve: {
       alias: [
-        {
-          find: "@",
-          replacement: resolve(__dirname, "src"),
-        },
         {
           find: "/@",
           replacement: resolve(__dirname, "src"),
         },
         {
-          find: "#",
-          replacement: resolve(__dirname, "src/types"),
-        },
-        {
           find: "/#",
           replacement: resolve(__dirname, "src/types"),
-        },
-        {
-          find: "~",
-          replacement: resolve(__dirname, ""),
         },
         {
           find: "/~",
